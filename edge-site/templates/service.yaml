@@ -1,15 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "edge-site.fullname" . }}
-  labels:
-    {{- include "edge-site.labels" . | nindent 4 }}
+  name: edge-controller
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "edge-site.selectorLabels" . | nindent 4 }}
+    app: foxglove-edge-site
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 9099

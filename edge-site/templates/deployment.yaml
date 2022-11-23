@@ -1,61 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "edge-site.fullname" . }}
-  labels:
-    {{- include "edge-site.labels" . | nindent 4 }}
+  name: site-controller
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "edge-site.selectorLabels" . | nindent 6 }}
+      app: foxglove-edge-site
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "edge-site.selectorLabels" . | nindent 8 }}
+        app: foxglove-edge-site
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "edge-site.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: pv-storage
+          persistentVolumeClaim:
+            claimName: edge-controller-pv-claim
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+        - name: edge-controller
+          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:8fef61e167e6a914e5a70fba70a0fc6ec4d0ce14
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "32Mi"
+              cpu: "100m"
+          volumeMounts:
+            - mountPath: "/var/data"
+              name: pv-storage
+          env:
+            - name: SITE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: foxglove-site
+                  key: token
+                  optional: false
+            - name: DATABASE_CONNECTION_STRING
+              value: sqlite://file:./controller.db
+            - name: STORAGE_ROOT
+              value: /var/data
+            - name: FOXGLOVE_API_URL
+              value: "{{ .Values.globals.foxglove_api_url }}"
