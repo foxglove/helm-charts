@@ -1,13 +1,13 @@
 # Foxglove Helm Charts
 
-[Helm](https://helm.sh) charts for [Foxglove](foxglove.dev)
+> To use the helm charts, see the docs at https://helm-charts.foxglove.dev.
 
-Refer to Helm's [documentation](https://helm.sh/docs/) to get started.
+This repo contains charts and support scripts to manage the Foxglove [helm repo](https://helm.sh/docs/helm/helm_repo/).
 
-Once Helm is set up properly, add the repo as follows:
+The rest of the README is developer notes for updating this repo.
 
-```console
-helm repo add foxglove https://helm-charts.foxglove.dev
-```
+---
 
-Run `helm search repo foxglove` to see the charts.
+## Release a new chart version
+
+Once the chart is working as you desire, open a PR to bump the chart version. Once it is merged to main, the [chart-releaser-action](https://github.com/helm/chart-releaser-action) will package it into a Github Release and update the `index.yaml` file in `gh-pages` with the new chart.
