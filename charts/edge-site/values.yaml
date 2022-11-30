@@ -3,3 +3,6 @@
 globals:
   site_token:
   foxglove_api_url: https://api.foxglove.dev
+
+edge_controller:
+  storageClaim: edge-controller-pv-claim

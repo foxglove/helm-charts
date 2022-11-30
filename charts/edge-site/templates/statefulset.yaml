@@ -1,33 +1,28 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: site-controller
 spec:
   selector:
     matchLabels:
       app: foxglove-edge-site
+  serviceName: "edge-controller"
+  replicas: 1
   template:
     metadata:
       labels:
         app: foxglove-edge-site
     spec:
       volumes:
-        - name: pv-storage
+        - name: storage-root
           persistentVolumeClaim:
-            claimName: edge-controller-pv-claim
+            claimName: "{{ .Values.edge_controller.storageClaim }}"
       containers:
         - name: edge-controller
           image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:8fef61e167e6a914e5a70fba70a0fc6ec4d0ce14
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "32Mi"
-              cpu: "100m"
           volumeMounts:
-            - mountPath: "/var/data"
-              name: pv-storage
+            - mountPath: "/data/edge_storage_root"
+              name: storage-root
           env:
             - name: SITE_TOKEN
               valueFrom:
@@ -36,8 +31,8 @@ spec:
                   key: token
                   optional: false
             - name: DATABASE_CONNECTION_STRING
-              value: sqlite://file:./controller.db
+              value: sqlite://file:/data/edge_storage_root/foxglove.db
             - name: STORAGE_ROOT
-              value: /var/data
+              value: /data/edge_storage_root
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxglove_api_url }}"
