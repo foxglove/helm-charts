@@ -5,4 +5,5 @@ globals:
   foxglove_api_url: https://api.foxglove.dev
 
 edge_controller:
-  storageClaim: edge-controller-pv-claim
+  storageClaim: edge-controller-storage-claim
+  indexClaim: edge-controller-index-claim

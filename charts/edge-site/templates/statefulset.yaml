@@ -17,12 +17,18 @@ spec:
         - name: storage-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edge_controller.storageClaim }}"
+      volumes:
+        - name: index-root
+          persistentVolumeClaim:
+            claimName: "{{ .Values.edge_controller.indexClaim }}"
       containers:
         - name: edge-controller
           image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:8fef61e167e6a914e5a70fba70a0fc6ec4d0ce14
           volumeMounts:
-            - mountPath: "/data/edge_storage_root"
+            - mountPath: "/data/storage"
               name: storage-root
+            - mountPath: "/data/index"
+              name: index-root
           env:
             - name: SITE_TOKEN
               valueFrom:
@@ -31,8 +37,8 @@ spec:
                   key: token
                   optional: false
             - name: DATABASE_CONNECTION_STRING
-              value: sqlite://file:/data/edge_storage_root/foxglove.db?_journal_mode=WAL
+              value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
-              value: /data/edge_storage_root
+              value: /data/storage
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxglove_api_url }}"
