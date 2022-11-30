@@ -17,7 +17,6 @@ spec:
         - name: storage-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edge_controller.storageClaim }}"
-      volumes:
         - name: index-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edge_controller.indexClaim }}"
@@ -29,6 +28,10 @@ spec:
               name: storage-root
             - mountPath: "/data/index"
               name: index-root
+          envFrom:
+            - secretRef:
+              name: cloud-credentials
+              optional: true
           env:
             - name: SITE_TOKEN
               valueFrom:
