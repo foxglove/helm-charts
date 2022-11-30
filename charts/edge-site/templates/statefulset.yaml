@@ -31,7 +31,7 @@ spec:
                   key: token
                   optional: false
             - name: DATABASE_CONNECTION_STRING
-              value: sqlite://file:/data/edge_storage_root/foxglove.db
+              value: sqlite://file:/data/edge_storage_root/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
               value: /data/edge_storage_root
             - name: FOXGLOVE_API_URL
