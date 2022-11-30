@@ -30,8 +30,8 @@ spec:
               name: index-root
           envFrom:
             - secretRef:
-              name: cloud-credentials
-              optional: true
+                name: cloud-credentials
+                optional: true
           env:
             - name: SITE_TOKEN
               valueFrom:
