@@ -22,7 +22,7 @@ spec:
             claimName: "{{ .Values.edge_controller.indexClaim }}"
       containers:
         - name: edge-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:8fef61e167e6a914e5a70fba70a0fc6ec4d0ce14
+          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:915ad5f230594982e230fcd82a105d1720f59537
           volumeMounts:
             - mountPath: "/data/storage"
               name: storage-root
