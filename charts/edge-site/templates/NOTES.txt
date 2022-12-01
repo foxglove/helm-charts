@@ -1,1 +1,13 @@
 Welcome to your Foxglove Edge Site!
+
+See the status of your release:
+
+    helm status -n foxglove foxglove-edge-site
+
+Complete your site installation:
+
+    https://foxglove.dev/docs/data-platform/edge-sites/installation
+
+Import data to your new site:
+
+    https://foxglove.dev/docs/data-platform/edge-sites/manage-data
