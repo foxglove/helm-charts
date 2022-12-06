@@ -20,14 +20,20 @@ spec:
         - name: index-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edge_controller.indexClaim }}"
+        - name: cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
       containers:
         - name: edge-controller
           image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:915ad5f230594982e230fcd82a105d1720f59537
           volumeMounts:
-            - mountPath: "/data/storage"
+            - mountPath: /data/storage
               name: storage-root
-            - mountPath: "/data/index"
+            - mountPath: /data/index
               name: index-root
+            - mountPath: /secrets
+              name: cloud-credentials
           envFrom:
             - secretRef:
                 name: cloud-credentials
@@ -45,3 +51,5 @@ spec:
               value: /data/storage
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxglove_api_url }}"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credential.json
