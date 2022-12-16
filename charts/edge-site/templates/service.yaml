@@ -9,3 +9,6 @@ spec:
     - protocol: TCP
       port: 8888
       targetPort: 9099
+    - protocol: TCP
+      port: 6002
+      targetPort: 6002
