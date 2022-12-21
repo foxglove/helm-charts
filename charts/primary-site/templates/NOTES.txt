@@ -1,0 +1,13 @@
+Welcome to your Foxglove Primary Site!
+
+See the status of your release:
+
+    helm status -n foxglove foxglove-primary-site
+
+Complete your site installation:
+
+    https://foxglove.dev/docs/data-platform/primary-sites/installation
+
+Import data to your new site:
+
+    https://foxglove.dev/docs/data-platform/primary-sites/manage-data
