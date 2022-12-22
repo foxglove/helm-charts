@@ -1,0 +1,18 @@
+apiVersion: v2
+name: primary-site
+description: Foxglove Primary Site
+icon: https://foxglove.dev/images/logo-icon-round.png
+
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+#
+# Example versions:
+# 1.0.0-alpha.0
+# 1.0.0-alpha.1
+# 1.0.0
+version: 0.0.0-alpha.1
+
+appVersion: "0.0.0"

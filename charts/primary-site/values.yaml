@@ -1,0 +1,3 @@
+globals:
+  site_token:
+  foxglove_api_url: https://api.foxglove.dev
