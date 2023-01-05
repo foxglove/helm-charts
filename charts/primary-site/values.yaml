@@ -1,3 +1,12 @@
 globals:
   site_token:
   foxglove_api_url: https://api.foxglove.dev
+
+primary_site:
+  lakeStorageProvider: google_cloud
+  inboxStorageProvider: google_cloud
+  lakeBucketName: foxglove-lake
+
+  serviceAccountAnnotations:
+    inboxListener:
+      iam.gke.io/gcp-service-account: inbox-listener@example-project-id.iam.gserviceaccount.com
