@@ -10,3 +10,5 @@ primary_site:
   serviceAccountAnnotations:
     inboxListener:
       iam.gke.io/gcp-service-account: inbox-listener@example-project-id.iam.gserviceaccount.com
+    garbageCollector:
+      iam.gke.io/gcp-service-account: garbage-collector@example-project-id.iam.gserviceaccount.com
