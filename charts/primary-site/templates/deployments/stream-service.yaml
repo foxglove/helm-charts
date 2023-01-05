@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stream-service
+  labels:
+    app: foxglove-stream-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foxglove-stream-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: foxglove-stream-service
+    spec:
+      containers:
+        - name: stream-service
+          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: cloud-credentials
+                optional: true
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credential.json
+            - name: FOXGLOVE_API_URL
+              value: "{{ .Values.globals.foxglove_api_url }}"
+            - name: PORT
+              value: "8080"
+            - name: STORAGE_PROVIDER
+              value: "{{ .Values.primary_site.lakeStorageProvider }}"
+      serviceAccountName: stream-service
+      terminationGracePeriodSeconds: 30

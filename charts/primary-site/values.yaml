@@ -12,3 +12,5 @@ primary_site:
       iam.gke.io/gcp-service-account: inbox-listener@example-project-id.iam.gserviceaccount.com
     garbageCollector:
       iam.gke.io/gcp-service-account: garbage-collector@example-project-id.iam.gserviceaccount.com
+    streamService:
+      iam.gke.io/gcp-service-account: stream-service@example-project-id.iam.gserviceaccount.com
