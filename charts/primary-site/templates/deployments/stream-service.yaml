@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: stream-service
   labels:
-    app: foxglove-stream-service
+    app: stream-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: foxglove-stream-service
+      app: stream-service
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       labels:
-        app: foxglove-stream-service
+        app: stream-service
     spec:
       volumes:
         - name: cloud-credentials
@@ -26,7 +26,7 @@ spec:
             optional: true
       containers:
         - name: stream-service
-          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
+          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:{{ .Values.globals.imageTag }}
           resources:
             requests:
               cpu: 1000m
@@ -51,10 +51,9 @@ spec:
             - name: PORT
               value: "8080"
             - name: STORAGE_PROVIDER
-              value: "{{ .Values.primarySite.lake.storageProvider }}"
+              value: "{{ .Values.globals.lake.storageProvider }}"
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
-              value: "{{ .Values.primarySite.azure.storageAccountName }}"
+              value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
-              value: "{{ .Values.primarySite.azure.serviceUrl }}"
-      serviceAccountName: stream-service
+              value: "{{ .Values.globals.azure.serviceUrl }}"
       terminationGracePeriodSeconds: 30

@@ -3,11 +3,11 @@ kind: Deployment
 metadata:
   name: inbox-listener
   labels:
-    app: foxglove-inbox-listener
+    app: inbox-listener
 spec:
   selector:
     matchLabels:
-      app: foxglove-inbox-listener
+      app: inbox-listener
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: foxglove-inbox-listener
+        app: inbox-listener
     spec:
       volumes:
         - name: cloud-credentials
@@ -25,7 +25,7 @@ spec:
             optional: true
       containers:
         - name: inbox-listener
-          image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
+          image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Values.globals.imageTag }}
           resources:
             requests:
               cpu: 1000m
@@ -54,13 +54,12 @@ spec:
             - name: MODE
               value: self-managed
             - name: INBOX_STORAGE_PROVIDER
-              value: "{{ .Values.primarySite.inbox.storageProvider }}"
+              value: "{{ .Values.globals.inbox.storageProvider }}"
             - name: LAKE_STORAGE_PROVIDER
-              value: "{{ .Values.primarySite.lake.storageProvider }}"
+              value: "{{ .Values.globals.lake.storageProvider }}"
             - name: STORAGE_LAKE_BUCKET_NAME
-              value: "{{ .Values.primarySite.lake.bucketName }}"
+              value: "{{ .Values.globals.lake.bucketName }}"
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
-              value: "{{ .Values.primarySite.azure.storageAccountName }}"
+              value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
-              value: "{{ .Values.primarySite.azure.serviceUrl }}"
-      serviceAccountName: inbox-listener
+              value: "{{ .Values.globals.azure.serviceUrl }}"
