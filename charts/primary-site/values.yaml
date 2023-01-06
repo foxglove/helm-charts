@@ -16,3 +16,28 @@ globals:
     storageAccountName: ""
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
+
+inboxListener:
+  deployment:
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+streamService:
+  deployment:
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+garbageCollector:
+  schedule: "*/10 * * * *" # every 10 minutes
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3

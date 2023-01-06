@@ -28,11 +28,11 @@ spec:
           image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Values.globals.imageTag }}
           resources:
             requests:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
+              memory: {{ .Values.inboxListener.deployment.resources.requests.memory }}
             limits:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: {{ .Values.inboxListener.deployment.resources.limits.cpu }}
+              memory: {{ .Values.inboxListener.deployment.resources.limits.memory }}
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials

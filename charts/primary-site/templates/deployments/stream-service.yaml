@@ -29,11 +29,11 @@ spec:
           image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:{{ .Values.globals.imageTag }}
           resources:
             requests:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: {{ .Values.streamService.deployment.resources.requests.cpu }}
+              memory: {{ .Values.streamService.deployment.resources.requests.memory }}
             limits:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: {{ .Values.streamService.deployment.resources.limits.cpu }}
+              memory: {{ .Values.streamService.deployment.resources.limits.memory }}
           ports:
             - containerPort: 8080
           volumeMounts:

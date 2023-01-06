@@ -5,10 +5,10 @@ metadata:
   labels:
     app: garbage-collector
 spec:
-  schedule: "*/10 * * * *" # every 10 minutes
   concurrencyPolicy: Forbid
-  failedJobsHistoryLimit: 1
-  successfulJobsHistoryLimit: 3
+  schedule: {{ .Values.garbageCollector.schedule }}
+  failedJobsHistoryLimit: {{ .Values.garbageCollector.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.garbageCollector.successfulJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
