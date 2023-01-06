@@ -1,8 +1,16 @@
 globals:
-  site_token:
-  foxglove_api_url: https://api.foxglove.dev
+  siteToken:
+  foxgloveApiUrl: https://api.foxglove.dev
 
-primary_site:
-  lakeStorageProvider: google_cloud
-  inboxStorageProvider: google_cloud
-  lakeBucketName: foxglove-lake
+primarySite:
+  lake:
+    # Acceptable storageProvider values are: `google_cloud` or `azure`;
+    # If `azure is used`, the `azure.storageAccountName` and `azure.serviceUrl` are required.
+    storageProvider: google_cloud
+    bucketName: foxglove-lake
+  inbox:
+    storageProvider: google_cloud
+
+  azure:
+    storageAccountName:
+    serviceUrl:

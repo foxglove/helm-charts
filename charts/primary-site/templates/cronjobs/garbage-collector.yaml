@@ -32,7 +32,7 @@ spec:
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: /secrets/credential.json
                 - name: FOXGLOVE_API_URL
-                  value: "{{ .Values.globals.foxglove_api_url }}"
+                  value: "{{ .Values.globals.foxgloveApiUrl }}"
                 - name: FOXGLOVE_SITE_TOKEN
                   valueFrom:
                     secretKeyRef:
@@ -42,6 +42,10 @@ spec:
                 - name: MODE
                   value: self-managed
                 - name: STORAGE_PROVIDER
-                  value: "{{ .Values.primary_site.lakeStorageProvider }}"
+                  value: "{{ .Values.primarySite.lake.storageProvider }}"
+                - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
+                  value: "{{ .Values.primarySite.azure.storageAccountName }}"
+                - name: STORAGE_AZURE_SERVICE_URL
+                  value: "{{ .Values.primarySite.azure.serviceUrl }}"
           serviceAccountName: garbage-collector
           restartPolicy: OnFailure
