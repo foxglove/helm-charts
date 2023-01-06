@@ -1,7 +1,6 @@
 globals:
   siteToken:
   foxgloveApiUrl: https://api.foxglove.dev
-  imageTag: db6c30de466b6cd704de25c9ffea63195b4aa0f3
 
   ## Supported storageProvider values are: `google_cloud` or `azure`
   ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values

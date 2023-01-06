@@ -25,7 +25,7 @@ spec:
             optional: true
       containers:
         - name: inbox-listener
-          image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Values.globals.imageTag }}
+          image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}

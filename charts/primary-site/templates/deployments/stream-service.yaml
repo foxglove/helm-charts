@@ -26,7 +26,7 @@ spec:
             optional: true
       containers:
         - name: stream-service
-          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:{{ .Values.globals.imageTag }}
+          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.streamService.deployment.resources.requests.cpu }}
