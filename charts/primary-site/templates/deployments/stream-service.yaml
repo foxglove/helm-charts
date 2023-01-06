@@ -19,6 +19,11 @@ spec:
       labels:
         app: foxglove-stream-service
     spec:
+      volumes:
+        - name: cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
       containers:
         - name: stream-service
           image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
@@ -31,6 +36,9 @@ spec:
               memory: 1Gi
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: /secrets
+              name: cloud-credentials
           envFrom:
             - secretRef:
                 name: cloud-credentials
