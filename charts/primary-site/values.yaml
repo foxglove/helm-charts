@@ -6,9 +6,3 @@ primary_site:
   lakeStorageProvider: google_cloud
   inboxStorageProvider: google_cloud
   lakeBucketName: foxglove-lake
-
-  serviceAccountAnnotations:
-    inboxListener:
-      iam.gke.io/gcp-service-account: inbox-listener@example-project-id.iam.gserviceaccount.com
-    garbageCollector:
-      iam.gke.io/gcp-service-account: garbage-collector@example-project-id.iam.gserviceaccount.com
