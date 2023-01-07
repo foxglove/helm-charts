@@ -1,3 +1,42 @@
 globals:
-  site_token:
-  foxglove_api_url: https://api.foxglove.dev
+  siteToken:
+  foxgloveApiUrl: https://api.foxglove.dev
+
+  ## Supported storageProvider values are: `google_cloud` or `azure`
+  ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values
+  ## are required.
+  lake:
+    storageProvider: google_cloud
+    bucketName: foxglove-lake
+  inbox:
+    storageProvider: google_cloud
+
+  azure:
+    storageAccountName: ""
+    ## For example: https://<resourcegroup>.blob.core.windows.net
+    serviceUrl: ""
+
+inboxListener:
+  deployment:
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+streamService:
+  deployment:
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+garbageCollector:
+  schedule: "*/10 * * * *" # every 10 minutes
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3

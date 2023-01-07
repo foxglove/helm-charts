@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: garbage-collector
+  labels:
+    app: garbage-collector
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "{{ .Values.garbageCollector.schedule }}"
+  failedJobsHistoryLimit: {{ .Values.garbageCollector.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.garbageCollector.successfulJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: cloud-credentials
+              secret:
+                secretName: gcp-cloud-credential
+                optional: true
+          containers:
+            - name: garbage-collector
+              image: us-central1-docker.pkg.dev/foxglove-images/images/garbage-collector:{{ .Chart.AppVersion }}
+              volumeMounts:
+                - mountPath: /secrets
+                  name: cloud-credentials
+              envFrom:
+                - secretRef:
+                    name: cloud-credentials
+                    optional: true
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: /secrets/credential.json
+                - name: FOXGLOVE_API_URL
+                  value: "{{ .Values.globals.foxgloveApiUrl }}"
+                - name: FOXGLOVE_SITE_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: foxglove-site
+                      key: token
+                      optional: false
+                - name: MODE
+                  value: self-managed
+                - name: STORAGE_PROVIDER
+                  value: "{{ .Values.globals.lake.storageProvider }}"
+                - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
+                  value: "{{ .Values.globals.azure.storageAccountName }}"
+                - name: STORAGE_AZURE_SERVICE_URL
+                  value: "{{ .Values.globals.azure.serviceUrl }}"
+          restartPolicy: OnFailure

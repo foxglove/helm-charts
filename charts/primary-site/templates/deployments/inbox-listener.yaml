@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inbox-listener
+  labels:
+    app: inbox-listener
+spec:
+  selector:
+    matchLabels:
+      app: inbox-listener
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: inbox-listener
+    spec:
+      volumes:
+        - name: cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
+      containers:
+        - name: inbox-listener
+          image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
+          resources:
+            requests:
+              cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
+              memory: {{ .Values.inboxListener.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.inboxListener.deployment.resources.limits.cpu }}
+              memory: {{ .Values.inboxListener.deployment.resources.limits.memory }}
+          volumeMounts:
+            - mountPath: /secrets
+              name: cloud-credentials
+          envFrom:
+            - secretRef:
+                name: cloud-credentials
+                optional: true
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credential.json
+            - name: FOXGLOVE_API_URL
+              value: "{{ .Values.globals.foxgloveApiUrl }}"
+            - name: FOXGLOVE_SITE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: foxglove-site
+                  key: token
+                  optional: false
+            - name: MODE
+              value: self-managed
+            - name: INBOX_STORAGE_PROVIDER
+              value: "{{ .Values.globals.inbox.storageProvider }}"
+            - name: LAKE_STORAGE_PROVIDER
+              value: "{{ .Values.globals.lake.storageProvider }}"
+            - name: STORAGE_LAKE_BUCKET_NAME
+              value: "{{ .Values.globals.lake.bucketName }}"
+            - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
+              value: "{{ .Values.globals.azure.storageAccountName }}"
+            - name: STORAGE_AZURE_SERVICE_URL
+              value: "{{ .Values.globals.azure.serviceUrl }}"
