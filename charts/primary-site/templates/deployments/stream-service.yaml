@@ -56,4 +56,16 @@ spec:
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
               value: "{{ .Values.globals.azure.serviceUrl }}"
+          readinessProbe:
+            httpGet:
+              path: /liveness
+              port: 8080
+            periodSeconds: 3
+            timeoutSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 8080
+            periodSeconds: 3
+            timeoutSeconds: 1
       terminationGracePeriodSeconds: 30
