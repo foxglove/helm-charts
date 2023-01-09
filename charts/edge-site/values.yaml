@@ -1,9 +1,9 @@
 # Default values for edge-site.
 
 globals:
-  site_token:
-  foxglove_api_url: https://api.foxglove.dev
+  siteToken:
+  foxgloveApiUrl: https://api.foxglove.dev
 
-edge_controller:
+edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim

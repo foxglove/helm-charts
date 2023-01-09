@@ -16,10 +16,10 @@ spec:
       volumes:
         - name: storage-root
           persistentVolumeClaim:
-            claimName: "{{ .Values.edge_controller.storageClaim }}"
+            claimName: "{{ .Values.edgeController.storageClaim }}"
         - name: index-root
           persistentVolumeClaim:
-            claimName: "{{ .Values.edge_controller.indexClaim }}"
+            claimName: "{{ .Values.edgeController.indexClaim }}"
         - name: cloud-credentials
           secret:
             secretName: gcp-cloud-credential
@@ -50,6 +50,6 @@ spec:
             - name: STORAGE_ROOT
               value: /data/storage
             - name: FOXGLOVE_API_URL
-              value: "{{ .Values.globals.foxglove_api_url }}"
+              value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
