@@ -16,10 +16,10 @@ spec:
       volumes:
         - name: storage-root
           persistentVolumeClaim:
-            claimName: "{{ .Values.edge_controller.storageClaim }}"
+            claimName: "{{ .Values.edgeController.storageClaim }}"
         - name: index-root
           persistentVolumeClaim:
-            claimName: "{{ .Values.edge_controller.indexClaim }}"
+            claimName: "{{ .Values.edgeController.indexClaim }}"
         - name: cloud-credentials
           secret:
             secretName: gcp-cloud-credential
