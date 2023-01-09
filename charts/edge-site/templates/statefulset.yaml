@@ -52,4 +52,4 @@ spec:
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxglove_api_url }}"
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /secrets/credential.json
+              value: /secrets/credentials.json
