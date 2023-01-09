@@ -10,6 +10,7 @@ globals:
     bucketName: foxglove-lake
   inbox:
     storageProvider: google_cloud
+    bucketName: foxglove-inbox
 
   azure:
     storageAccountName: ""

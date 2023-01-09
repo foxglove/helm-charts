@@ -55,6 +55,8 @@ spec:
               value: self-managed
             - name: INBOX_STORAGE_PROVIDER
               value: "{{ .Values.globals.inbox.storageProvider }}"
+            - name: STORAGE_INBOX_BUCKET_NAME
+              value: "{{ .Values.globals.inbox.bucketName }}"
             - name: LAKE_STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
             - name: STORAGE_LAKE_BUCKET_NAME
