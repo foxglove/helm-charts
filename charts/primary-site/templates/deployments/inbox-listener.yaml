@@ -42,7 +42,7 @@ spec:
                 optional: true
           env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /secrets/credential.json
+              value: /secrets/credentials.json
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: FOXGLOVE_SITE_TOKEN
