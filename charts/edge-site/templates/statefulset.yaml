@@ -50,6 +50,6 @@ spec:
             - name: STORAGE_ROOT
               value: /data/storage
             - name: FOXGLOVE_API_URL
-              value: "{{ .Values.globals.foxglove_api_url }}"
+              value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
