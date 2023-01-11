@@ -31,6 +31,7 @@ inboxListener:
       limits:
         cpu: 1000m
         memory: 1Gi
+  env:
 
 streamService:
   name: stream-service
@@ -46,9 +47,11 @@ streamService:
       limits:
         cpu: 1000m
         memory: 1Gi
+  env:
 
 garbageCollector:
   name: garbage-collector
   schedule: "*/10 * * * *" # every 10 minutes
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
+  env:

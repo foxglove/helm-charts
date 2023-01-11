@@ -44,8 +44,6 @@ spec:
                 name: cloud-credentials
                 optional: true
           env:
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /secrets/credentials.json
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT
@@ -56,6 +54,10 @@ spec:
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
               value: "{{ .Values.globals.azure.serviceUrl }}"
+            {{- range $item := .Values.inboxListener.env }}
+            - name: {{ $item.value }}
+              value: {{ $item.value }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /liveness
