@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: garbage-collector
+  name: {{ .Values.garbageCollector.name }}
   labels:
-    app: garbage-collector
+    app: {{ .Values.garbageCollector.name }}
 spec:
   concurrencyPolicy: Forbid
   schedule: "{{ .Values.garbageCollector.schedule }}"
@@ -19,7 +19,7 @@ spec:
                 secretName: gcp-cloud-credential
                 optional: true
           containers:
-            - name: garbage-collector
+            - name: {{ .Values.garbageCollector.name }}
               image: us-central1-docker.pkg.dev/foxglove-images/images/garbage-collector:{{ .Chart.AppVersion }}
               volumeMounts:
                 - mountPath: /secrets

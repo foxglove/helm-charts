@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stream-service
+  name: {{ .Values.streamService.name }}
   labels:
-    app: stream-service
+    app: {{ .Values.streamService.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stream-service
+      app: {{ .Values.streamService.name }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       labels:
-        app: stream-service
+        app: {{ .Values.streamService.name }}
     spec:
       volumes:
         - name: cloud-credentials
@@ -25,7 +25,7 @@ spec:
             secretName: gcp-cloud-credential
             optional: true
       containers:
-        - name: stream-service
+        - name: {{ .Values.streamService.name }}
           image: us-central1-docker.pkg.dev/foxglove-images/images/stream-service:{{ .Chart.AppVersion }}
           resources:
             requests:
