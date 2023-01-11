@@ -17,8 +17,8 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: deployment
-    name: inbox-listener
-    envSourceContainerName: inbox-listener
+    name: {{ .Values.inboxListener.name }}
+    envSourceContainerName: {{ .Values.inboxListener.name }}
   pollingInterval: {{ .Values.inboxListener.deployment.autoscalePollingInterval }}
   cooldownPeriod: {{ .Values.inboxListener.deployment.autoscaleCooldownPeriod }}
   minReplicaCount: {{ .Values.inboxListener.deployment.minReplicas }}

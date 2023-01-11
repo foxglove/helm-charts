@@ -48,6 +48,7 @@ streamService:
         memory: 1Gi
 
 garbageCollector:
+  name: garbage-collector
   schedule: "*/10 * * * *" # every 10 minutes
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
