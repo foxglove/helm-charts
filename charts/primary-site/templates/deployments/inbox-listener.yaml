@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: inbox-listener
+  name: {{ .Values.inboxListener.name }}
   labels:
-    app: inbox-listener
+    app: {{ .Values.inboxListener.name }}
 spec:
   selector:
     matchLabels:
-      app: inbox-listener
+      app: {{ .Values.inboxListener.name }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: inbox-listener
+        app: {{ .Values.inboxListener.name }}
     spec:
       volumes:
         - name: cloud-credentials
@@ -24,7 +24,7 @@ spec:
             secretName: gcp-cloud-credential
             optional: true
       containers:
-        - name: inbox-listener
+        - name: {{ .Values.inboxListener.name }}
           image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
           resources:
             requests:
