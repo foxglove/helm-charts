@@ -1,7 +1,6 @@
 globals:
   siteToken:
   foxgloveApiUrl: https://api.foxglove.dev
-
   ## Supported storageProvider values are: `google_cloud` or `azure`
   ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values
   ## are required.
@@ -11,14 +10,20 @@ globals:
   inbox:
     storageProvider: google_cloud
     bucketName: foxglove-inbox
-
   azure:
     storageAccountName: ""
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
 
 inboxListener:
+  name: inbox-listener
   deployment:
+    scaling:
+      autoscalePollingInterval: 10
+      autoscaleCooldownPeriod: 10
+      minReplicas: 1
+      maxReplicas: 10
+      targetQueueDepth: 2
     resources:
       requests:
         cpu: 1000m
@@ -28,7 +33,12 @@ inboxListener:
         memory: 1Gi
 
 streamService:
+  name: stream-service
   deployment:
+    scaling:
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilization: 80
     resources:
       requests:
         cpu: 1000m

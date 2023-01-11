@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.streamService.name }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.streamService.name }}
+  minReplicas: {{ .Values.streamService.deployment.scaling.minReplicas }}
+  maxReplicas: {{ .Values.streamService.deployment.scaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.streamService.deployment.scaling.targetCPUUtilization }}
+

@@ -1,0 +1,34 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-inbox-listener-auth
+spec:
+  secretTargetRef:
+    - parameter: token
+      name: foxglove-site
+      key: token
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: inbox-listener-scaledobject
+  labels:
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: deployment
+    name: inbox-listener
+    envSourceContainerName: inbox-listener
+  pollingInterval: {{ .Values.inboxListener.deployment.autoscalePollingInterval }}
+  cooldownPeriod: {{ .Values.inboxListener.deployment.autoscaleCooldownPeriod }}
+  minReplicaCount: {{ .Values.inboxListener.deployment.minReplicas }}
+  maxReplicaCount: {{ .Values.inboxListener.deployment.maxReplicas }}
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "{{ .Values.inboxListener.deployment.scaling.targetQueueDepth }}"
+        url: "{{ .Values.globals.foxgloveApiUrl }}/internal/platform/v1/pending-imports-stats"
+        valueLocation: 'unleased'
+        authMode: "bearer"
+      authenticationRef:
+        name: keda-inbox-listener-auth
