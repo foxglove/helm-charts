@@ -2,9 +2,9 @@ globals:
   siteToken:
   foxgloveApiUrl: https://api.foxglove.dev
 
-  ## Supported storageProvider values are: `google_cloud` or `azure`
+  ## Supported storageProvider values are: `google_cloud`, `aws` or `azure`
   ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values
-  ## are required.
+  ## are required. If `aws` is used, then the `@aws.region` value is required.
   lake:
     storageProvider: google_cloud
     bucketName: foxglove-lake
@@ -16,6 +16,10 @@ globals:
     storageAccountName: ""
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
+
+  aws:
+    ## For example: us-east-1
+    region: ""
 
 inboxListener:
   deployment:
