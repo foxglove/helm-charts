@@ -4,6 +4,10 @@ globals:
   siteToken:
   foxgloveApiUrl: https://api.foxglove.dev
 
+  aws:
+    ## For example: us-east-1
+    region: ""
+
 edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
