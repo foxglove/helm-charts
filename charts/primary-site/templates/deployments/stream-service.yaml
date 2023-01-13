@@ -50,6 +50,10 @@ spec:
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT
               value: "8080"
+            - name: AWS_REGION
+              value: "{{ .Values.globals.aws.region }}"
+            - name: AWS_SDK_LOAD_CONFIG
+              value: "true"
             - name: STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
