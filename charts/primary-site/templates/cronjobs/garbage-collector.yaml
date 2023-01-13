@@ -47,6 +47,8 @@ spec:
                   value: "{{ .Values.globals.azure.storageAccountName }}"
                 - name: STORAGE_AZURE_SERVICE_URL
                   value: "{{ .Values.globals.azure.serviceUrl }}"
+                - name: AWS_REGION
+                  value: "{{ .Values.globals.aws.region }}"
                 - name: AWS_SDK_LOAD_CONFIG
                   value: "true"
           restartPolicy: OnFailure

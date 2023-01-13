@@ -17,6 +17,10 @@ globals:
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
 
+  aws:
+    ## For example: us-east-1
+    region: ""
+
 inboxListener:
   deployment:
     resources:
