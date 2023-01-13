@@ -50,28 +50,14 @@ spec:
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT
               value: "8080"
+            - name: AWS_SDK_LOAD_CONFIG
+              value: "true"
             - name: STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
               value: "{{ .Values.globals.azure.serviceUrl }}"
-            - name: AWS_REGION
-              value: "{{ .Values.globals.aws.region }}"
-            - name: AWS_SDK_LOAD_CONFIG
-              value: "true"
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: cloud-credentials
-                  key: AWS_ACCESS_KEY_ID
-                  optional: true
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: cloud-credentials
-                  key: AWS_SECRET_ACCESS_KEY
-                  optional: true
           readinessProbe:
             httpGet:
               path: /liveness
