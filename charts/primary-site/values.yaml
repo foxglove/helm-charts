@@ -23,6 +23,7 @@ globals:
 
 inboxListener:
   deployment:
+    replicas: 1
     resources:
       requests:
         cpu: 1000m
@@ -33,6 +34,7 @@ inboxListener:
 
 streamService:
   deployment:
+    replicas: 1
     resources:
       requests:
         cpu: 1000m
