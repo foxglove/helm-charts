@@ -11,5 +11,5 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Configure Git
+      - name: lint
         run: helm lint charts/*
