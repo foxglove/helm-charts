@@ -26,7 +26,7 @@ spec:
             optional: true
       containers:
         - name: edge-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
+          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:{{ .Chart.AppVersion }}
           volumeMounts:
             - mountPath: /data/storage
               name: storage-root

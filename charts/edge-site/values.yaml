@@ -16,7 +16,7 @@ globals:
     # The cloud provider where the destination inbox bucket lives
     # Values values: aws, azure, google_cloud
     provider:
-    # The bucket name where the deployment will send
+    # The bucket name where the deployment will send the requested files
     bucketName:
 
 edgeController:
