@@ -26,7 +26,7 @@ spec:
             optional: true
       containers:
         - name: edge-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:dcb5b4812e4d0a6054638ea43712f2e7ee5050ab
+          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:{{ .Chart.AppVersion }}
           volumeMounts:
             - mountPath: /data/storage
               name: storage-root
@@ -57,3 +57,7 @@ spec:
               value: "true"
             - name: AWS_REGION
               value: "{{ .Values.globals.aws.region }}"
+            - name: INBOX_STORAGE_PROVIDER
+              value: "{{ .Values.globals.upload.provider }}"
+            - name: INBOX_BUCKET_NAME
+              value: "{{ .Values.globals.upload.bucketName }}"
