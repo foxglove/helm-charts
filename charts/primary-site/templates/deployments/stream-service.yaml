@@ -5,7 +5,7 @@ metadata:
   labels:
     app: stream-service
 spec:
-  replicas: 1
+  replicas: {{ .Values.streamService.deployment.replicas }}
   selector:
     matchLabels:
       app: stream-service
