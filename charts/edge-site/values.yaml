@@ -1,12 +1,23 @@
 # Default values for edge-site.
 
 globals:
+  # The site token provides authentication to the foxglove api for the deployment
   siteToken:
+
+  # The api endpoint the deployment will use as the control plane
   foxgloveApiUrl: https://api.foxglove.dev
 
   aws:
     ## For example: us-east-1
     region: ""
+
+  # This section configures where the deployment will upload files you wish to import into a primary site
+  upload:
+    # The cloud provider where the destination inbox bucket lives
+    # Values values: aws, azure, google_cloud
+    provider:
+    # The bucket name where the deployment will send
+    bucketName:
 
 edgeController:
   storageClaim: edge-controller-storage-claim
