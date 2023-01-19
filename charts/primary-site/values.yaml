@@ -21,6 +21,12 @@ globals:
     ## For example: us-east-1
     region: ""
 
+ingress:
+  # If you are configuring your own ingress controller, set this to 'false'
+  enabled: true
+  className:
+  annotations: {}
+
 inboxListener:
   deployment:
     replicas: 1
