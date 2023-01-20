@@ -35,7 +35,10 @@ spec:
               cpu: {{ .Values.streamService.deployment.resources.limits.cpu }}
               memory: {{ .Values.streamService.deployment.resources.limits.memory }}
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 6001
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials

@@ -12,5 +12,5 @@ spec:
       targetPort: 9099
     - name: metrics
       protocol: TCP
-      port: 6002
-      targetPort: 6002
+      port: 6001
+      targetPort: 6001
