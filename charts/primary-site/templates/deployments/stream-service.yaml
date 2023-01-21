@@ -18,8 +18,8 @@ spec:
     metadata:
       labels:
         app: stream-service
-        {{- with .Values.streamService.deployment.podLabels }}
-        {{- toYaml . | nindent 8 }}
+        {{- range $key, $value := .Values.streamService.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
       volumes:

@@ -18,8 +18,8 @@ spec:
     metadata:
       labels:
         app: inbox-listener
-        {{- with .Values.inboxListener.deployment.podLabels }}
-        {{- toYaml . | nindent 8 }}
+        {{- range $key, $value := .Values.inboxListener.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
       volumes:

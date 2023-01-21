@@ -13,8 +13,8 @@ spec:
     metadata:
       labels:
         app: site-controller
-        {{- with .Values.siteController.deployment.podLabels }}
-        {{- toYaml . | nindent 8 }}
+        {{- range $key, $value := .Values.siteController.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
       containers:
