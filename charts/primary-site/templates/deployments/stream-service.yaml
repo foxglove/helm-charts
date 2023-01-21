@@ -18,6 +18,9 @@ spec:
     metadata:
       labels:
         app: stream-service
+        {{- range $key, $value := .Values.streamService.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       volumes:
         - name: cloud-credentials
@@ -35,7 +38,10 @@ spec:
               cpu: {{ .Values.streamService.deployment.resources.limits.cpu }}
               memory: {{ .Values.streamService.deployment.resources.limits.memory }}
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 6001
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials
@@ -44,8 +50,10 @@ spec:
                 name: cloud-credentials
                 optional: true
           env:
+            {{ with lookup "v1" "Secret" .Release.Namespace "cloud-credentials" }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
+            {{ end }}
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT

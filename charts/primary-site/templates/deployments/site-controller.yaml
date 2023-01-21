@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: site-controller
+  labels:
+    app: site-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: site-controller
+  template:
+    metadata:
+      labels:
+        app: site-controller
+        {{- range $key, $value := .Values.siteController.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    spec:
+      containers:
+        - name: site-controller
+          image: us-central1-docker.pkg.dev/foxglove-images/images/site-controller:{{ .Chart.AppVersion }}
+          resources:
+            requests:
+              cpu: {{ .Values.siteController.deployment.resources.requests.cpu }}
+              memory: {{ .Values.siteController.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.siteController.deployment.resources.limits.cpu }}
+              memory: {{ .Values.siteController.deployment.resources.limits.memory }}
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 6002
+          ports:
+            - name: metrics
+              containerPort: 6001
+          env:
+            - name: FOXGLOVE_API_URL
+              value: {{ .Values.globals.foxgloveApiUrl }}
+            - name: FOXGLOVE_SITE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: foxglove-site
+                  key: token
+            - name: MODE
+              value: self-managed
