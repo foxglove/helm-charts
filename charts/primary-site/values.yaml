@@ -30,7 +30,7 @@ ingress:
   tls:
     ## E.g.:
     ## - hosts:
-    ##   - azure-demo.foxglove.dev
+    ##   - www.example.com
     ##   secretName: ingress-tls-csi
 
 inboxListener:
