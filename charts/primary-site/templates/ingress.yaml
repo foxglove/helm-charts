@@ -12,6 +12,9 @@ spec:
   {{- if .className }}
   ingressClassName: {{ .className | quote }}
   {{- end }}
+  {{- if .tls }}
+  tls: {{- .tls | toYaml | trim | nindent 4 }}
+  {{- end }}
   rules:
     - host:
       http:

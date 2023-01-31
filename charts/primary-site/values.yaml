@@ -22,10 +22,16 @@ globals:
     region: ""
 
 ingress:
-  # If you are configuring your own ingress controller, set this to 'false'
+  ## If you are configuring your own ingress controller, set this to 'false'
   enabled: true
   className:
   annotations: {}
+  ## This section is only required if TLS is to be enabled for this ingress
+  tls:
+    ## E.g.:
+    ## - hosts:
+    ##   - azure-demo.foxglove.dev
+    ##   secretName: ingress-tls-csi
 
 inboxListener:
   deployment:
