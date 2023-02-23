@@ -61,3 +61,7 @@ spec:
               value: "{{ .Values.globals.upload.provider }}"
             - name: INBOX_BUCKET_NAME
               value: "{{ .Values.globals.upload.bucketName }}"
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: "{{ .Values.edgeController.metrics.namespace }}"
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: "{{ .Values.edgeController.metrics.subsystem }}"

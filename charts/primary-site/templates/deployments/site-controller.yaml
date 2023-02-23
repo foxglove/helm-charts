@@ -44,3 +44,7 @@ spec:
                   key: token
             - name: MODE
               value: self-managed
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: {{ .Values.siteController.deployment.metrics.namespace }}
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: {{ .Values.siteController.deployment.metrics.subsystem }}

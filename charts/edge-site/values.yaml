@@ -22,3 +22,7 @@ globals:
 edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
+  metrics:
+    namespace: ""
+    subsystem: ""
+  serviceLabels: {}

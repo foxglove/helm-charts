@@ -68,6 +68,10 @@ spec:
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
               value: "{{ .Values.globals.azure.serviceUrl }}"
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: "{{ .Values.streamService.deployment.metrics.namespace }}"
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: "{{ .Values.streamService.deployment.metrics.subsystem }}"
           readinessProbe:
             httpGet:
               path: /liveness
