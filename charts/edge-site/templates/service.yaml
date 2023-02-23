@@ -2,6 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: edge-controller
+  labels:
+    app: foxglove-edge-site
+    {{- range $key, $value := .Values.edgeController.serviceLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   selector:
     app: foxglove-edge-site
