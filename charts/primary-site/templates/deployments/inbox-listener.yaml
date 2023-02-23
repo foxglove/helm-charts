@@ -78,3 +78,7 @@ spec:
               value: "{{ .Values.globals.aws.region }}"
             - name: AWS_SDK_LOAD_CONFIG
               value: "true"
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: "{{ .Values.inboxListener.deployment.metrics.namespace }}"
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: "{{ .Values.inboxListener.deployment.metrics.subsystem }}"

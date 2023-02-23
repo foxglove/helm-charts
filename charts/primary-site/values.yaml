@@ -39,11 +39,15 @@ inboxListener:
     resources:
       requests:
         cpu: 1000m
-        memory: 1Gi
+        memory: 4Gi
       limits:
         cpu: 1000m
-        memory: 1Gi
+        memory: 4Gi
     podLabels: {}
+    metrics:
+      namespace: ""
+      subsystem: ""
+
 
 streamService:
   deployment:
@@ -51,11 +55,14 @@ streamService:
     resources:
       requests:
         cpu: 1000m
-        memory: 1Gi
+        memory: 2Gi
       limits:
         cpu: 1000m
-        memory: 1Gi
+        memory: 2Gi
     podLabels: {}
+    metrics:
+      namespace: ""
+      subsystem: ""
 
 siteController:
   deployment:
@@ -67,6 +74,9 @@ siteController:
         cpu: 250m
         memory: 250Mi
     podLabels: {}
+    metrics:
+      namespace: ""
+      subsystem: ""
 
 garbageCollector:
   schedule: "*/10 * * * *" # every 10 minutes
