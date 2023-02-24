@@ -21,6 +21,10 @@ spec:
         {{- range $key, $value := .Values.inboxListener.deployment.podLabels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
+      annotations:
+        {{- range $key, $value := .Values.inboxListener.deployment.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       volumes:
         - name: cloud-credentials
