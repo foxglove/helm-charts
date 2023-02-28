@@ -53,6 +53,8 @@ inboxListener:
 
 
 streamService:
+  service:
+    annotations: {}
   deployment:
     replicas: 1
     resources:
