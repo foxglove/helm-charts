@@ -26,6 +26,8 @@ ingress:
   enabled: true
   className:
   annotations: {}
+  # set the host value for an ingress
+  host:
   ## This section is only required if TLS is to be enabled for this ingress
   tls:
     ## E.g.:
