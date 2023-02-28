@@ -65,3 +65,7 @@ spec:
               value: "{{ .Values.edgeController.metrics.namespace }}"
             - name: PROMETHEUS_METRICS_SUBSYSTEM
               value: "{{ .Values.edgeController.metrics.subsystem }}"
+            {{- range $item := .Values.edgeController.env }}
+            - name: {{ $item.name }}
+              value: {{ $item.value }}
+            {{- end }}
