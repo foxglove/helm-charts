@@ -46,6 +46,7 @@ inboxListener:
         cpu: 1000m
         memory: 4Gi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -62,6 +63,7 @@ streamService:
         cpu: 1000m
         memory: 2Gi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -76,6 +78,7 @@ siteController:
         cpu: 250m
         memory: 250Mi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
