@@ -16,7 +16,7 @@ spec:
   tls: {{- .tls | toYaml | trim | nindent 4 }}
   {{- end }}
   rules:
-    - host:
+    - host: {{ .host }}
       http:
         paths:
           - path: /

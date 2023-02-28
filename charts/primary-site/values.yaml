@@ -26,6 +26,8 @@ ingress:
   enabled: true
   className:
   annotations: {}
+  # set the host value for an ingress
+  host:
   ## This section is only required if TLS is to be enabled for this ingress
   tls:
     ## E.g.:
@@ -44,6 +46,7 @@ inboxListener:
         cpu: 1000m
         memory: 4Gi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -62,6 +65,7 @@ streamService:
         cpu: 1000m
         memory: 2Gi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -76,6 +80,7 @@ siteController:
         cpu: 250m
         memory: 250Mi
     podLabels: {}
+    podAnnotations: {}
     metrics:
       namespace: ""
       subsystem: ""
