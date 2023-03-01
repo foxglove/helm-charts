@@ -54,10 +54,8 @@ spec:
                 name: cloud-credentials
                 optional: true
           env:
-            {{ with lookup "v1" "Secret" .Release.Namespace "cloud-credentials" }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
-            {{ end }}
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT
