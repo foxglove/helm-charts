@@ -29,7 +29,10 @@ spec:
                     name: cloud-credentials
                     optional: true
               env:
-                {{ with lookup "v1" "Secret" .Release.Namespace "cloud-credentials" }}
+                {{ with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credentials" }}
+                ## The lookup is required here. The pod may have access to GCP through other means, but
+                ## the credentials in this env var take precedence, even if it's empty. An empty variable
+                ## essentially blocks GCP access.
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: /secrets/credentials.json
                 {{ end }}
