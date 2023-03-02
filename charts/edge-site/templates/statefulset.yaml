@@ -27,6 +27,13 @@ spec:
       containers:
         - name: edge-controller
           image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:{{ .Chart.AppVersion }}
+          resources:
+            requests:
+              memory: {{ .Values.edgeController.resources.requests.memory }}
+              cpu: {{ .Values.edgeController.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.edgeController.resources.limits.memory }}
+              cpu: {{ .Values.edgeController.resources.limits.cpu }}
           volumeMounts:
             - mountPath: /data/storage
               name: storage-root
