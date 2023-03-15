@@ -50,7 +50,16 @@ inboxListener:
     metrics:
       namespace: ""
       subsystem: ""
-
+    env: {}
+      # AWS_COPY_WORKER_COUNT: adjust the number of concurrent workers for
+      # copying s3 objects (default: 10)
+      # - name: AWS_COPY_WORKER_COUNT
+      #   value: 10
+      #
+      # AWS_COPY_PART_SIZE_BYTES: size in bytes of multipart copy batch part
+      # sizes (default 100MB)
+      # - name: AWS_COPY_PART_SIZE_BYTES
+      #   value: 104857600
 
 streamService:
   service:
@@ -69,6 +78,7 @@ streamService:
     metrics:
       namespace: ""
       subsystem: ""
+    env: {}
 
 siteController:
   deployment:
@@ -84,6 +94,7 @@ siteController:
     metrics:
       namespace: ""
       subsystem: ""
+    env: {}
 
 garbageCollector:
   schedule: "*/10 * * * *" # every 10 minutes

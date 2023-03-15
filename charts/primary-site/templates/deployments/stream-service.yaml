@@ -79,6 +79,10 @@ spec:
               value: "{{ .Values.streamService.deployment.metrics.namespace }}"
             - name: PROMETHEUS_METRICS_SUBSYSTEM
               value: "{{ .Values.streamService.deployment.metrics.subsystem }}"
+            {{- range $item := .Values.streamService.deployment.env }}
+            - name: {{ $item.name }}
+              value: {{ $item.value | quote}}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /liveness
