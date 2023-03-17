@@ -19,6 +19,14 @@ globals:
     # The bucket name where the deployment will send the requested files
     bucketName:
 
+  # If using an S3-compatible service as the controller store provider, configure its endpoint here.
+  s3CompatibleService:
+    # Url including scheme of the base API endpoint for this service. `http` and `https` schemes
+    # are supported.
+    url: ""
+    # If your service is configured with a region (eg. us-east-1), set it here.
+    region: ""
+
 edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
@@ -32,5 +40,6 @@ edgeController:
     limits:
       memory: "256Mi"
       cpu: "250m"
+  storageProvider: "local"
   serviceLabels: {}
   env: []

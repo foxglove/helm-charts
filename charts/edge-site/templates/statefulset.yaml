@@ -56,6 +56,12 @@ spec:
               value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
               value: /data/storage
+            - name: CONTROLLER_STORAGE_PROVIDER
+              value: "{{ .Values.edgeController.storageProvider }}"
+            - name: S3_COMPATIBLE_SERVICE_URL
+              value: "{{ .Values.globals.s3CompatibleService.url }}"
+            - name: S3_COMPATIBLE_SERVICE_REGION
+              value: "{{ .Values.globals.s3CompatibleService.region }}"
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: GOOGLE_APPLICATION_CREDENTIALS
