@@ -33,4 +33,4 @@ edgeController:
       memory: "256Mi"
       cpu: "250m"
   serviceLabels: {}
-  env: {}
+  env: []
