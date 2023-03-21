@@ -57,3 +57,6 @@ spec:
                 - name: AWS_SDK_LOAD_CONFIG
                   value: "true"
           restartPolicy: OnFailure
+          {{- if .Values.garbageCollector.deployment.serviceAccount.enabled }}
+          serviceAccount: garbage-collector-sa
+          {{- end}}

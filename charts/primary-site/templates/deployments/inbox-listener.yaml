@@ -93,3 +93,6 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+      {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
+      serviceAccount: inbox-listener-sa
+      {{- end}}

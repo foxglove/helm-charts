@@ -1,0 +1,12 @@
+{{- with .Values.garbageCollector.deployment.serviceAccount }}
+{{- if .enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: garbage-collector-sa
+  annotations:
+    {{- range $key, $value := .annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+{{- end }}
+{{- end }}

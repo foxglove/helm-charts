@@ -61,6 +61,16 @@ inboxListener:
       # - name: AWS_COPY_PART_SIZE_BYTES
       #   value: 104857600
 
+    serviceAccount:
+      enabled: false
+      annotations: {}
+      ## Service accounts are not required by default. You can use them on AWS to allow
+      ## the deployment assume an IAM role.
+      ## E.g:
+      ## enabled: true
+      ## annotations:
+      ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-inbox-listener-sa-role
+
 streamService:
   service:
     annotations: {}
@@ -79,6 +89,15 @@ streamService:
       namespace: ""
       subsystem: ""
     env: []
+    serviceAccount:
+      enabled: false
+      annotations: {}
+      ## Service accounts are not required by default. You can use them on AWS to allow
+      ## the deployment assume an IAM role.
+      ## E.g:
+      ## enabled: true
+      ## annotations:
+      ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-stream-service-sa-role
 
 siteController:
   deployment:
@@ -100,3 +119,13 @@ garbageCollector:
   schedule: "*/10 * * * *" # every 10 minutes
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
+  deployment:
+    serviceAccount:
+      enabled: false
+      annotations: {}
+      ## Service accounts are not required by default. You can use them on AWS to allow
+      ## the deployment assume an IAM role.
+      ## E.g:
+      ## enabled: true
+      ## annotations:
+      ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-garbage-collector-sa-role
