@@ -59,7 +59,7 @@ spec:
               value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
               value: /data/storage
-            - name: CONTROLLER_STORAGE_PROVIDER
+            - name: RECORDING_STORAGE_PROVIDER
               value: "{{ .Values.edgeController.storageProvider }}"
             - name: S3_COMPATIBLE_SERVICE_URL
               value: "{{ .Values.globals.s3CompatibleService.url }}"
