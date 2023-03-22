@@ -45,6 +45,9 @@ spec:
             - secretRef:
                 name: cloud-credentials
                 optional: true
+            - secretRef:
+                name: recording-storage-credentials
+                optional: true
           env:
             - name: SITE_TOKEN
               valueFrom:

@@ -28,6 +28,7 @@ globals:
     region: ""
 
 edgeController:
+  storageProvider: "local"
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
   metrics:
@@ -40,6 +41,5 @@ edgeController:
     limits:
       memory: "256Mi"
       cpu: "250m"
-  storageProvider: "local"
   serviceLabels: {}
   env: []
