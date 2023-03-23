@@ -96,3 +96,6 @@ spec:
             periodSeconds: 3
             timeoutSeconds: 1
       terminationGracePeriodSeconds: 30
+      {{- if .Values.streamService.deployment.serviceAccount.enabled }}
+      serviceAccount: stream-service
+      {{- end}}
