@@ -14,9 +14,11 @@ spec:
         app: foxglove-edge-site
     spec:
       volumes:
+        {{ if eq .Values.edgeController.storageProvider "local" }}
         - name: storage-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edgeController.storageClaim }}"
+        {{ end }}
         - name: index-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edgeController.indexClaim }}"
