@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: garbage-collector-sa
+  name: garbage-collector
   annotations:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}

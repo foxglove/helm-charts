@@ -58,5 +58,5 @@ spec:
                   value: "true"
           restartPolicy: OnFailure
           {{- if .Values.garbageCollector.deployment.serviceAccount.enabled }}
-          serviceAccount: garbage-collector-sa
+          serviceAccount: garbage-collector
           {{- end}}

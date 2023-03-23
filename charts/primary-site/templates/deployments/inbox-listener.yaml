@@ -94,5 +94,5 @@ spec:
               value: {{ $item.value | quote}}
             {{- end }}
       {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
-      serviceAccount: inbox-listener-sa
+      serviceAccount: inbox-listener
       {{- end}}
