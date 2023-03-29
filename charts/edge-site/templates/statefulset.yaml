@@ -37,8 +37,10 @@ spec:
               memory: {{ .Values.edgeController.resources.limits.memory }}
               cpu: {{ .Values.edgeController.resources.limits.cpu }}
           volumeMounts:
+            {{ if eq .Values.recordingStorage.provider "local" }}
             - mountPath: /data/storage
               name: storage-root
+            {{ end }}
             - mountPath: /data/index
               name: index-root
             - mountPath: /secrets
