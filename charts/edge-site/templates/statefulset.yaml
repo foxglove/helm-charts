@@ -14,9 +14,11 @@ spec:
         app: foxglove-edge-site
     spec:
       volumes:
+        {{ if eq .Values.recordingStorage.provider "local" }}
         - name: storage-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edgeController.storageClaim }}"
+        {{ end }}
         - name: index-root
           persistentVolumeClaim:
             claimName: "{{ .Values.edgeController.indexClaim }}"
@@ -35,8 +37,10 @@ spec:
               memory: {{ .Values.edgeController.resources.limits.memory }}
               cpu: {{ .Values.edgeController.resources.limits.cpu }}
           volumeMounts:
+            {{ if eq .Values.recordingStorage.provider "local" }}
             - mountPath: /data/storage
               name: storage-root
+            {{ end }}
             - mountPath: /data/index
               name: index-root
             - mountPath: /secrets
@@ -44,6 +48,9 @@ spec:
           envFrom:
             - secretRef:
                 name: cloud-credentials
+                optional: true
+            - secretRef:
+                name: recording-storage-credentials
                 optional: true
           env:
             - name: SITE_TOKEN
@@ -56,6 +63,12 @@ spec:
               value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
               value: /data/storage
+            - name: RECORDING_STORAGE_PROVIDER
+              value: "{{ .Values.recordingStorage.provider }}"
+            - name: RECORDING_STORAGE_S3_COMPATIBLE_SERVICE_URL
+              value: "{{ .Values.recordingStorage.s3CompatibleServiceUrl }}"
+            - name: RECORDING_STORAGE_S3_COMPATIBLE_SERVICE_REGION
+              value: "{{ .Values.recordingStorage.s3CompatibleServiceRegion }}"
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: GOOGLE_APPLICATION_CREDENTIALS

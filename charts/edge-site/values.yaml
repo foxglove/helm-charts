@@ -19,6 +19,16 @@ globals:
     # The bucket name where the deployment will send the requested files
     bucketName:
 
+# Configuration for recording storage, defaults to the persistent volume configured by
+# `edgeController.storageClaim`
+recordingStorage:
+  provider: "local"
+  # If storing recordings on an S3-compatible service, set `provider` to "s3_compatible"
+  # The service URL eg. https://my-minio-service.mycompany.com
+  s3CompatibleServiceUrl: ""
+  # If your service is configured with a region (eg. us-east-1), set it here.
+  s3CompatibleServiceRegion: ""
+
 edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
