@@ -26,6 +26,9 @@ recordingStorage:
   # If storing recordings on an S3-compatible service, set `provider` to "s3_compatible"
   # The service URL eg. https://my-minio-service.mycompany.com
   s3CompatibleServiceUrl: ""
+  # If storing recordings on an S3-compatible service, set the bucket name where the recordings are
+  # stored.
+  bucketName: ""
   # If your service is configured with a region (eg. us-east-1), set it here.
   s3CompatibleServiceRegion: ""
 

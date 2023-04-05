@@ -65,6 +65,8 @@ spec:
               value: /data/storage
             - name: RECORDING_STORAGE_PROVIDER
               value: "{{ .Values.recordingStorage.provider }}"
+            - name: RECORDING_STORAGE_BUCKET_NAME
+              value: "{{ .Values.recordingStorage.bucketName }}"
             - name: RECORDING_STORAGE_S3_COMPATIBLE_SERVICE_URL
               value: "{{ .Values.recordingStorage.s3CompatibleServiceUrl }}"
             - name: RECORDING_STORAGE_S3_COMPATIBLE_SERVICE_REGION
