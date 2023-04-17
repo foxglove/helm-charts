@@ -46,6 +46,8 @@ spec:
                       optional: false
                 - name: MODE
                   value: self-managed
+                - name: STORAGE_LAKE_BUCKET_NAME
+                  value: "{{ .Values.globals.lake.bucketName }}"
                 - name: STORAGE_PROVIDER
                   value: "{{ .Values.globals.lake.storageProvider }}"
                 - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
