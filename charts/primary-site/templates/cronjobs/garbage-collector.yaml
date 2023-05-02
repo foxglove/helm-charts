@@ -58,6 +58,10 @@ spec:
                   value: "{{ .Values.globals.aws.region }}"
                 - name: AWS_SDK_LOAD_CONFIG
                   value: "true"
+                {{- range $item := .Values.garbageCollector.deployment.env }}
+                - name: {{ $item.name }}
+                  value: {{ $item.value | quote}}
+                {{- end }}
           restartPolicy: OnFailure
           {{- if .Values.garbageCollector.deployment.serviceAccount.enabled }}
           serviceAccount: garbage-collector
