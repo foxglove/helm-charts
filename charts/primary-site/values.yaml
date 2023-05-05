@@ -120,6 +120,7 @@ garbageCollector:
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
   deployment:
+    env: []
     serviceAccount:
       enabled: false
       annotations: {}
