@@ -60,6 +60,11 @@ inboxListener:
       # sizes (default 100MB)
       # - name: AWS_COPY_PART_SIZE_BYTES
       #   value: 104857600
+      # AWS_WRITER_PART_SIZE_BYTES: size in bytes of multipart write part
+      # sizes. This influences the size of a buffer created per-topic in the
+      # inbox listener.
+      # - name: AWS_WRITER_PART_SIZE_BYTES
+      #   value: 5242880
 
     serviceAccount:
       enabled: false
