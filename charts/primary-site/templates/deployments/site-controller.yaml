@@ -56,3 +56,10 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+            {{- range $k, $v := .Values.siteController.deployment.envSecret }}
+            - name: {{ $k }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $v }}
+                  key: {{ $k }}
+            {{- end }}

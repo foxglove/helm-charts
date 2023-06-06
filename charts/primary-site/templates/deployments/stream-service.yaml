@@ -80,8 +80,14 @@ spec:
             - name: PROMETHEUS_METRICS_SUBSYSTEM
               value: "{{ .Values.streamService.deployment.metrics.subsystem }}"
             {{- range $item := .Values.streamService.deployment.env }}
-            - name: {{ $item.name }}
-              value: {{ $item.value | quote}}
+            - {{ . | toYaml | indent 4 | trim }}
+            {{- end }}
+            {{- range $k, $v := .Values.streamService.deployment.envSecret }}
+            - name: {{ $k }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $v }}
+                  key: {{ $k }}
             {{- end }}
           readinessProbe:
             httpGet:

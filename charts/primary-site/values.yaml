@@ -65,7 +65,27 @@ inboxListener:
       # inbox listener.
       # - name: AWS_WRITER_PART_SIZE_BYTES
       #   value: 5242880
-
+    envSecret: {}
+      # Specify these as SECRET_KEY: secret-name, and they will be translated
+      # to a structure like
+      # name: SECRET_KEY
+      # valueFrom:
+      #   secretKeyRef:
+      #     name: secret-name
+      #     key: SECRET_KEY
+      #
+      #     For example, to configure AWS_SECRET_ACCESS_KEY, you can create a
+      #     kubernetes secret called "aws-secrets" and configure here as,
+      #
+      # AWS_SECRET_ACCESS_KEY: aws-secrets
+      #
+      # and it will be translated to,
+      #
+      # name: AWS_SECRET_ACCESS_KEY
+      # valueFrom:
+      #   secretKeyRef:
+      #     name: aws-secrets
+      #     key: AWS_SECRET_ACCESS_KEY
     serviceAccount:
       enabled: false
       annotations: {}
@@ -94,6 +114,7 @@ streamService:
       namespace: ""
       subsystem: ""
     env: []
+    envSecret: {}
     serviceAccount:
       enabled: false
       annotations: {}
@@ -119,6 +140,7 @@ siteController:
       namespace: ""
       subsystem: ""
     env: []
+    envSecret: {}
 
 garbageCollector:
   schedule: "*/10 * * * *" # every 10 minutes
@@ -126,6 +148,7 @@ garbageCollector:
   successfulJobsHistoryLimit: 3
   deployment:
     env: []
+    envSecret: {}
     serviceAccount:
       enabled: false
       annotations: {}

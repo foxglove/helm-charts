@@ -62,6 +62,13 @@ spec:
                 - name: {{ $item.name }}
                   value: {{ $item.value | quote}}
                 {{- end }}
+                {{- range $k, $v := .Values.garbageCollector.deployment.envSecret }}
+                - name: {{ $k }}
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ $v }}
+                      key: {{ $k }}
+                {{- end }}
           restartPolicy: OnFailure
           {{- if .Values.garbageCollector.deployment.serviceAccount.enabled }}
           serviceAccount: garbage-collector

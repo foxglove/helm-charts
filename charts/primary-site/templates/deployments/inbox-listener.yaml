@@ -93,6 +93,13 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+            {{- range $k, $v := .Values.inboxListener.deployment.envSecret }}
+            - name: {{ $k }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $v }}
+                  key: {{ $k }}
+            {{- end }}
       {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
       serviceAccount: inbox-listener
       {{- end}}
