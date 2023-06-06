@@ -47,3 +47,4 @@ edgeController:
       cpu: "250m"
   serviceLabels: {}
   env: []
+  envSecret: {}

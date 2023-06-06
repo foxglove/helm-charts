@@ -91,3 +91,10 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value }}
             {{- end }}
+            {{- range $k, $v := .Values.edgeController.envSecret }}
+            - name: {{ $k }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $v }}
+                  key: {{ $k }}
+            {{- end }}
