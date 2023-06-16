@@ -41,11 +41,13 @@ spec:
           env:
             - name: FOXGLOVE_API_URL
               value: {{ .Values.globals.foxgloveApiUrl }}
+            {{- if .Values.globals.siteToken }}
             - name: FOXGLOVE_SITE_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: foxglove-site
                   key: token
+            {{- end }}
             - name: MODE
               value: self-managed
             - name: PROMETHEUS_METRICS_NAMESPACE

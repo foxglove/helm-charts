@@ -28,6 +28,10 @@ spec:
                 - secretRef:
                     name: cloud-credentials
                     optional: true
+                {{- range $k := .Values.globals.secrets }}
+                - secretRef:
+                    name: {{ $k }}
+                {{- end }}
               env:
                 {{ with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
                 ## The lookup is required here. The pod may have access to GCP through other means, but
@@ -38,12 +42,14 @@ spec:
                 {{ end }}
                 - name: FOXGLOVE_API_URL
                   value: "{{ .Values.globals.foxgloveApiUrl }}"
+                {{- if .Values.globals.siteToken }}
                 - name: FOXGLOVE_SITE_TOKEN
                   valueFrom:
                     secretKeyRef:
                       name: foxglove-site
                       key: token
                       optional: false
+                {{- end }}
                 - name: MODE
                   value: self-managed
                 - name: STORAGE_LAKE_BUCKET_NAME

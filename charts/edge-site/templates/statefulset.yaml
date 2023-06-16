@@ -52,13 +52,19 @@ spec:
             - secretRef:
                 name: recording-storage-credentials
                 optional: true
+            {{- range $k := .Values.globals.secrets }}
+            - secretRef:
+                name: {{ $k }}
+            {{- end }}
           env:
+            {{- if .Values.globals.siteToken }}
             - name: SITE_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: foxglove-site
                   key: token
                   optional: false
+            {{- end }}
             - name: DATABASE_CONNECTION_STRING
               value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
             - name: STORAGE_ROOT
