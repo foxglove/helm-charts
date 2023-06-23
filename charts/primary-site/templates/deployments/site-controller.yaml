@@ -38,6 +38,10 @@ spec:
           ports:
             - name: metrics
               containerPort: 6001
+          envFrom:
+            - secretRef:
+                name: foxglove-site-token
+                optional: true
           env:
             - name: FOXGLOVE_API_URL
               value: {{ .Values.globals.foxgloveApiUrl }}

@@ -1,16 +1,11 @@
 globals:
-  # The site token provides authentication to the foxglove api for the deployment
-  # DEPRECATED: Instead, define a Secret containing FOXGLOVE_SITE_TOKEN and include
-  # it in the list below.
-  siteToken:
-
   # Environment Secrets
   # List installed Secrets in the foxglove namespace that will be loaded as
-  # environment variables. A single Secret can contain multiple values.
+  # environment variables. A single Secret can contain multiple key-value pairs.
   secrets:
   ## E.g.:
-  ## - foxglove-site-token
   ## - arbitrary-secret
+  ## - another-secret
 
   foxgloveApiUrl: https://api.foxglove.dev
 
