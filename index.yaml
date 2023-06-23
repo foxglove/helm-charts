@@ -3,6 +3,17 @@ entries:
   edge-site:
   - apiVersion: v2
     appVersion: e7b0c025f49d6421b2c74070713b21ee7b94d609
+    created: "2023-06-23T20:12:38.65836778Z"
+    description: Foxglove Edge Site
+    digest: 172c62d53aa24f8bbbebda89c1225f14ec4131b54e877b547801929f81988a20
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: edge-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/edge-site-0.0.18/edge-site-0.0.18.tgz
+    version: 0.0.18
+  - apiVersion: v2
+    appVersion: e7b0c025f49d6421b2c74070713b21ee7b94d609
     created: "2023-06-20T19:39:07.078175617Z"
     description: Foxglove Edge Site
     digest: 2c64b5c9a4be386dc58583b137d669e292612f4227d2bc865a16a1e2f640b859
@@ -312,6 +323,17 @@ entries:
   primary-site:
   - apiVersion: v2
     appVersion: e7b0c025f49d6421b2c74070713b21ee7b94d609
+    created: "2023-06-23T20:12:38.794041847Z"
+    description: Foxglove Primary Site
+    digest: f7bec902744fec89c1ab315572df810378d83ca14ea0de6c33ba8dca94d797b1
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: primary-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.24/primary-site-0.0.24.tgz
+    version: 0.0.24
+  - apiVersion: v2
+    appVersion: e7b0c025f49d6421b2c74070713b21ee7b94d609
     created: "2023-06-20T19:39:07.201449387Z"
     description: Foxglove Primary Site
     digest: 50e5850a958832256ac62957cd376acbffda69951ebf4eeb4bf2abfbf8440529
@@ -607,4 +629,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.0-alpha.1/primary-site-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-06-20T19:39:07.201974597Z"
+generated: "2023-06-23T20:12:38.79478005Z"
