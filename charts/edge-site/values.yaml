@@ -50,5 +50,7 @@ edgeController:
     limits:
       memory: "256Mi"
       cpu: "250m"
+  podLabels: {}
+  podAnnotations: {}
   serviceLabels: {}
   env: []
