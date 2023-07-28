@@ -12,6 +12,13 @@ spec:
     metadata:
       labels:
         app: foxglove-edge-site
+        {{- range $key, $value := .Values.edgeController.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      annotations:
+        {{- range $key, $value := .Values.edgeController.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       volumes:
         {{ if eq .Values.recordingStorage.provider "local" }}
