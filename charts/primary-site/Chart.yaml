@@ -13,6 +13,6 @@ type: application
 # 1.0.0-alpha.0
 # 1.0.0-alpha.1
 # 1.0.0
-version: "0.0.27"
+version: "0.0.28"
 
-appVersion: "78d49697c3448fede0214abb1242bbc675090f88"
+appVersion: "8d8536236b5ed2e288a0f5b50dd4f9c0831792c7"
