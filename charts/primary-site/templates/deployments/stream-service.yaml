@@ -90,18 +90,29 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+          startupProbe:
+            httpGet:
+              port: 8080
+              path: "/liveness"
+            # Ping every second until ready, up to 30s.
+            initialDelaySeconds: 0
+            periodSeconds: 1
+            timeoutSeconds: 1
+            failureThreshold: 30
           readinessProbe:
             httpGet:
               path: /liveness
               port: 8080
             periodSeconds: 3
             timeoutSeconds: 1
+            failureThreshold: 10
           livenessProbe:
             httpGet:
               path: /liveness
               port: 8080
             periodSeconds: 3
             timeoutSeconds: 1
+            failureThreshold: 20
       terminationGracePeriodSeconds: 30
       {{- if .Values.streamService.deployment.serviceAccount.enabled }}
       serviceAccount: stream-service
