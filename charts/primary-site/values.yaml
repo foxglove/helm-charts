@@ -54,6 +54,7 @@ inboxListener:
         memory: 4Gi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -97,6 +98,7 @@ streamService:
         memory: 2Gi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -122,6 +124,7 @@ siteController:
         memory: 250Mi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
