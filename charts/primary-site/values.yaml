@@ -58,7 +58,8 @@ inboxListener:
     metrics:
       namespace: ""
       subsystem: ""
-    env: []
+    env:
+      []
       # AWS_COPY_WORKER_COUNT: adjust the number of concurrent workers for
       # copying s3 objects (default: 10)
       # - name: AWS_COPY_WORKER_COUNT
@@ -136,6 +137,7 @@ garbageCollector:
   successfulJobsHistoryLimit: 3
   deployment:
     env: []
+    nodeSelectors: {}
     serviceAccount:
       enabled: false
       annotations: {}
