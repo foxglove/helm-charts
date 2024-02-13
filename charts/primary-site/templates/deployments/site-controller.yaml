@@ -62,7 +62,7 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
-      {{- if ne .Values.siteController.deployment.nodeSelectors {} }}
+      {{- if .Values.siteController.deployment.nodeSelectors }}
       nodeSelector:
         {{- range $key, $value := .Values.siteController.deployment.nodeSelectors }}
         {{ $key }}: {{ $value | quote }}
