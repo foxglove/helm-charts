@@ -105,3 +105,9 @@ spec:
       {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
       serviceAccount: inbox-listener
       {{- end}}
+      {{- if .Values.inboxListener.deployment.nodeSelectors }}
+      nodeSelector:
+        {{- range $key, $value := .Values.inboxListener.deployment.nodeSelectors }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end}}

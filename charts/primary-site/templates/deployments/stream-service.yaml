@@ -117,3 +117,9 @@ spec:
       {{- if .Values.streamService.deployment.serviceAccount.enabled }}
       serviceAccount: stream-service
       {{- end}}
+      {{- if .Values.streamService.deployment.nodeSelectors }}
+      nodeSelector:
+        {{- range $key, $value := .Values.streamService.deployment.nodeSelectors }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end}}

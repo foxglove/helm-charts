@@ -54,10 +54,12 @@ inboxListener:
         memory: 4Gi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
-    env: []
+    env:
+      []
       # AWS_COPY_WORKER_COUNT: adjust the number of concurrent workers for
       # copying s3 objects (default: 10)
       # - name: AWS_COPY_WORKER_COUNT
@@ -97,6 +99,7 @@ streamService:
         memory: 2Gi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -122,6 +125,7 @@ siteController:
         memory: 250Mi
     podLabels: {}
     podAnnotations: {}
+    nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
@@ -133,6 +137,7 @@ garbageCollector:
   successfulJobsHistoryLimit: 3
   deployment:
     env: []
+    nodeSelectors: {}
     serviceAccount:
       enabled: false
       annotations: {}
