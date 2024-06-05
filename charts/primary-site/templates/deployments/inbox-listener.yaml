@@ -38,12 +38,19 @@ spec:
             requests:
               cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
               memory: {{ .Values.inboxListener.deployment.resources.requests.memory }}
+              {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+              ephemeral-storage: {{ .Values.inboxListener.deployment.localScratch.capacityBytes }}
+              {{- end}}
             limits:
               cpu: {{ .Values.inboxListener.deployment.resources.limits.cpu }}
               memory: {{ .Values.inboxListener.deployment.resources.limits.memory }}
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials
+            {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+            - mountPath: /local-scratch
+              name: local-scratch
+            {{- end }}
           ports:
             - name: metrics
               containerPort: 6001
@@ -102,6 +109,12 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+            {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+            - name: LOCAL_SCRATCH_ROOT
+              value: "/local-scratch"
+            - name: LOCAL_SCRATCH_CAPACITY_BYTES
+              value: "{{ .Values.inboxListener.deployment.localScratch.capacityBytes }}"
+            {{- end }}
       {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
       serviceAccount: inbox-listener
       {{- end}}
@@ -111,3 +124,9 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end}}
+      {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+      volumes:
+      - name: local-scratch
+        emptyDir:
+          sizeLimit: {{ .Values.inboxListener.deployment.localScratch.capacityBytes }}
+      {{- end }}
