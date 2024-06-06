@@ -79,7 +79,7 @@ inboxListener:
       # the lake. If the message timestamps in a file are highly out-of-order, this limit may be
       # exceeded. If the limit is exceeded, local disk or lake storage is used instead of memory.
       # - name: SCRATCH_BUFFER_CAPACITY_BYTES
-      #   value: 1073741824
+      #   value: "1073741824"
     localScratch:
       # If your primary site is expected to process unindexed MCAP or ROS 1 BAG files, consider
       # configuring your inbox listener deployment with local scratch storage. We recommend
