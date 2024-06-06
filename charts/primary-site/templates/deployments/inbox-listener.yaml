@@ -49,6 +49,9 @@ spec:
             limits:
               cpu: {{ .Values.inboxListener.deployment.resources.limits.cpu }}
               memory: {{ .Values.inboxListener.deployment.resources.limits.memory }}
+              {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+              ephemeral-storage: {{ .Values.inboxListener.deployment.localScratch.capacityBytes }}
+              {{- end}}
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials

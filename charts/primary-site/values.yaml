@@ -85,7 +85,7 @@ inboxListener:
       # configuring your inbox listener deployment with local scratch storage. We recommend
       # allocating at least three times as much capacity as your largest expected input file size.
       enabled: false
-      capacityBytes: 107374182400
+      capacityBytes: "107374182400"
 
     serviceAccount:
       enabled: false
