@@ -31,6 +31,11 @@ spec:
           secret:
             secretName: gcp-cloud-credential
             optional: true
+        {{- if .Values.inboxListener.deployment.localScratch.enabled }}
+        - name: local-scratch
+          emptyDir:
+            sizeLimit: {{ .Values.inboxListener.deployment.localScratch.capacityBytes }}
+        {{- end }}
       containers:
         - name: inbox-listener
           image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
@@ -124,9 +129,3 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end}}
-      {{- if .Values.inboxListener.deployment.localScratch.enabled }}
-      volumes:
-      - name: local-scratch
-        emptyDir:
-          sizeLimit: {{ .Values.inboxListener.deployment.localScratch.capacityBytes }}
-      {{- end }}
