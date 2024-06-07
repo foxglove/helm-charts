@@ -74,6 +74,18 @@ inboxListener:
       # inbox listener.
       # - name: AWS_WRITER_PART_SIZE_BYTES
       #   value: 5242880
+      # SCRATCH_BUFFER_CAPACITY_BYTES: The maximum buffer size that will be used when reading
+      # indexed MCAP. During processing, some file data is read into memory before being written to
+      # the lake. If the message timestamps in a file are highly out-of-order, this limit may be
+      # exceeded. If the limit is exceeded, local disk or lake storage is used instead of memory.
+      # - name: SCRATCH_BUFFER_CAPACITY_BYTES
+      #   value: "1073741824"
+    localScratch:
+      # If your primary site is expected to process unindexed MCAP or ROS 1 BAG files, consider
+      # configuring your inbox listener deployment with local scratch storage. We recommend
+      # allocating at least three times as much capacity as your largest expected input file size.
+      enabled: false
+      capacityBytes: "107374182400"
 
     serviceAccount:
       enabled: false
