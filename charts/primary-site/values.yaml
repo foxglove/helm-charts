@@ -56,8 +56,8 @@ inboxListener:
     podAnnotations: {}
     nodeSelectors: {}
     metrics:
-      namespace: ""
-      subsystem: ""
+      namespace: "foxglove_data_platform"
+      subsystem: "inbox_listener"
     env:
       []
       # AWS_COPY_WORKER_COUNT: adjust the number of concurrent workers for
@@ -113,8 +113,8 @@ streamService:
     podAnnotations: {}
     nodeSelectors: {}
     metrics:
-      namespace: ""
-      subsystem: ""
+      namespace: "foxglove_data_platform"
+      subsystem: "stream_service"
     env: []
     serviceAccount:
       enabled: false
@@ -139,8 +139,8 @@ siteController:
     podAnnotations: {}
     nodeSelectors: {}
     metrics:
-      namespace: ""
-      subsystem: ""
+      namespace: "foxglove_data_platform"
+      subsystem: "site_controller"
     env: []
 
 garbageCollector:

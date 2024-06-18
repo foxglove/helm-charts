@@ -41,8 +41,8 @@ edgeController:
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
   metrics:
-    namespace: ""
-    subsystem: ""
+    namespace: "foxglove_data_platform"
+    subsystem: "edge_controller"
   resources:
     requests:
       memory: "256Mi"
