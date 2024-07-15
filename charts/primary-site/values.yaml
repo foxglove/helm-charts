@@ -9,7 +9,7 @@ globals:
 
   foxgloveApiUrl: https://api.foxglove.dev
 
-  ## Supported storageProvider values are: `google_cloud`, `aws` or `azure`
+  ## Supported storageProvider values are: `google_cloud`, `aws`, `azure`, or `s3_compatible`.
   ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values
   ## are required. If `aws` is used, then the `@aws.region` value is required.
   lake:
