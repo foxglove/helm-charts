@@ -97,6 +97,19 @@ inboxListener:
       ## annotations:
       ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-inbox-listener-sa-role
 
+  # To enable the autoscaling built into this chart, you must install KEDA first
+  # helm repo add kedacore https://kedacore.github.io/charts
+  # helm repo update
+  # helm install keda kedacore/keda --namespace keda --create-namespace
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 10
+    # This value, supplied as duration string (https://pkg.go.dev/time#ParseDuration) determines how long a pod will
+    # wait for new work items. It is unlikely that this value should be changed. The value should only be set when
+    # using this auto-scaling.
+    maxWaitForWork: "30s"
+
 streamService:
   service:
     annotations: {}
@@ -127,6 +140,8 @@ streamService:
       ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-stream-service-sa-role
 
 siteController:
+  service:
+    annotations: {}
   deployment:
     resources:
       requests:
