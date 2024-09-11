@@ -76,8 +76,12 @@ spec:
               value: "{{ .Values.globals.aws.region }}"
             - name: AWS_SDK_LOAD_CONFIG
               value: "true"
-            - name: STORAGE_PROVIDER
+            - name: LAKE_STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
+            - name: INBOX_STORAGE_PROVIDER
+              value: "{{ .Values.globals.inbox.storageProvider }}"
+            - name: STORAGE_INBOX_BUCKET_NAME
+              value: "{{ .Values.globals.inbox.bucketName }}"
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL
