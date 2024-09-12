@@ -108,7 +108,6 @@ inboxListener:
     minReplicas: 1
     # maxReplicas can be raised if you constantly have a very large number of incoming files to process
     # it should be set to a value that allows your site to process incoming files at peak load
-    # 10 is a good default for a moderate-use site
     maxReplicas: 10
     # This value, supplied as duration string (https://pkg.go.dev/time#ParseDuration) determines how long a pod will
     # wait for new work items. It is unlikely that this value should be changed. The value should only be set when
