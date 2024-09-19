@@ -118,7 +118,7 @@ inboxListener:
     successfulJobsHistoryLimit: 50
     # how many failed jobs to keep in Kubernetes history, this is a safe default, but may be lowered if desired.
     failedJobsHistoryLimit: 100
-    # how often to poll the autoscaling metric, this is a safe default
+    # how often to poll the autoscaling metric in seconds, provided as an integer. this is a safe default.
     pollingInterval: 30
 
 streamService:
