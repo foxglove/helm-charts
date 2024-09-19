@@ -6,9 +6,9 @@ metadata:
 spec:
   minReplicaCount: {{ .Values.inboxListener.autoscaling.minReplicas }}
   maxReplicaCount: {{ .Values.inboxListener.autoscaling.maxReplicas }}
-  successfulJobsHistoryLimit: 50
-  failedJobsHistoryLimit: 100
-  pollingInterval: 30
+  successfulJobsHistoryLimit: {{ .Values.inboxListener.autoscaling.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.inboxListener.autoscaling.failedJobsHistoryLimit }}
+  pollingInterval: {{ .Values.inboxListener.autoscaling.pollingInterval }}
   jobTargetRef:
     parallelism: 1
     activeDeadlineSeconds: 86400

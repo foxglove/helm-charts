@@ -113,6 +113,13 @@ inboxListener:
     # wait for new work items. It is unlikely that this value should be changed. The value should only be set when
     # using this auto-scaling.
     maxWaitForWork: "30s"
+    # how many successful jobs to keep in Kubernetes history, this is a safe default, but may be lowered if
+    # desired.
+    successfulJobsHistoryLimit: 50
+    # how many failed jobs to keep in Kubernetes history, this is a safe default, but may be lowered if desired.
+    failedJobsHistoryLimit: 100
+    # how often to poll the autoscaling metric, this is a safe default
+    pollingInterval: 30
 
 streamService:
   service:
