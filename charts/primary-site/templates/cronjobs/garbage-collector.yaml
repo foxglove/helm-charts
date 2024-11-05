@@ -67,6 +67,8 @@ spec:
                   value: "{{ .Values.globals.aws.region }}"
                 - name: AWS_SDK_LOAD_CONFIG
                   value: "true"
+                - name: PRIMARY_SITE_VERSION
+                  value: "{{ .Chart.version }}"
                 {{- range $item := .Values.garbageCollector.deployment.env }}
                 - name: {{ $item.name }}
                   value: {{ $item.value | quote}}
