@@ -91,7 +91,7 @@ spec:
             - name: PROMETHEUS_METRICS_SUBSYSTEM
               value: "{{ .Values.streamService.deployment.metrics.subsystem }}"
             - name: PRIMARY_SITE_VERSION
-              value: "{{ .Chart.version }}"
+              value: "{{ .Chart.Version }}"
             {{- range $item := .Values.streamService.deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
