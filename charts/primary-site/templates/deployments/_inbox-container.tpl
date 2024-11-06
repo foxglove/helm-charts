@@ -107,6 +107,8 @@ template:
             value: "{{ .Values.inboxListener.deployment.metrics.namespace }}"
           - name: PROMETHEUS_METRICS_SUBSYSTEM
             value: "{{ .Values.inboxListener.deployment.metrics.subsystem }}"
+          - name: PRIMARY_SITE_VERSION
+            value: "{{ .Chart.Version }}"
           {{- range $item := .Values.inboxListener.deployment.env }}
           - name: {{ $item.name }}
             value: {{ $item.value | quote}}
