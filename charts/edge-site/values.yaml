@@ -16,16 +16,17 @@ globals:
     ## For example: us-east-1
     region: ""
 
-  # This section configures where the deployment will upload files you wish to import into a primary site
+  # This section configures where the deployment will upload files you wish to import.
   upload:
     # Upload to either a Foxglove-hosted or self-managed primary site.
     # Values: "self-managed", "hosted"
     primarySiteMode: self-managed
-    # The cloud provider where the self-managed primary site inbox bucket lives.
-    # If `primarySiteMode` is set to `hosted`, these values are ignored.
+    # The cloud provider where the self-managed primary site inbox bucket lives. Ignored if
+    # `primarySiteMode` is set to `hosted`.
     # Values: aws, azure, google_cloud
     provider:
-    # The self-managed primary site inbox bucket name
+    # The self-managed primary site inbox bucket name. Ignored if `primarySiteMode` is set to
+    # `hosted`.
     bucketName:
 
 # Configuration for recording storage, defaults to the persistent volume configured by
