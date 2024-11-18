@@ -6,8 +6,8 @@ See the status of your release:
 
 Complete your site installation:
 
-    https://foxglove.dev/docs/data-platform/primary-sites/installation
+    https://docs.foxglove.dev/docs/primary-sites/self-hosting/installation
 
 Import data to your new site:
 
-    https://foxglove.dev/docs/data-platform/primary-sites/manage-data
+    https://docs.foxglove.dev/docs/primary-sites/self-hosting/manage-data
