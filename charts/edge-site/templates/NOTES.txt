@@ -6,8 +6,8 @@ See the status of your release:
 
 Complete your site installation:
 
-    https://foxglove.dev/docs/data-platform/edge-sites/installation
+    https://docs.foxglove.dev/docs/edge-sites/installation
 
 Import data to your new site:
 
-    https://foxglove.dev/docs/data-platform/edge-sites/manage-data
+    https://docs.foxglove.dev/docs/edge-sites/manage-data
