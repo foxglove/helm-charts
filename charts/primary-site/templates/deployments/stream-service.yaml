@@ -68,6 +68,14 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
             {{ end }}
+            {{- if .Values.globals.proxy.enabled }}
+            - name: HTTP_PROXY
+              value: {{ .Values.globals.proxy.httpProxy }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.globals.proxy.httpsProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.globals.proxy.noProxy }}
+            {{- end }}
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             - name: PORT

@@ -45,6 +45,14 @@ spec:
           env:
             - name: FOXGLOVE_API_URL
               value: {{ .Values.globals.foxgloveApiUrl }}
+            {{- if .Values.globals.proxy.enabled }}
+            - name: HTTP_PROXY
+              value: {{ .Values.globals.proxy.httpProxy }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.globals.proxy.httpsProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.globals.proxy.noProxy }}
+          {{- end }}
             {{- if .Values.globals.siteToken }}
             - name: FOXGLOVE_SITE_TOKEN
               valueFrom:

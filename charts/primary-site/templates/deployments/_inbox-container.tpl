@@ -123,4 +123,12 @@ template:
           - name: LOCAL_SCRATCH_CAPACITY_BYTES
             value: "{{ .Values.inboxListener.deployment.localScratch.capacityBytes }}"
           {{- end }}
+          {{- if .Values.globals.proxy.enabled }}
+          - name: HTTP_PROXY
+            value: {{ .Values.globals.proxy.httpProxy }}
+          - name: HTTPS_PROXY
+            value: {{ .Values.globals.proxy.httpsProxy }}
+          - name: NO_PROXY
+            value: {{ .Values.globals.proxy.noProxy }}
+          {{- end }}
 {{- end -}}

@@ -18,6 +18,13 @@ globals:
   inbox:
     storageProvider: google_cloud
     bucketName: foxglove-inbox
+  
+  proxy:
+  ## If you are running behind a proxy, otherwise set this to 'false'
+    enabled: true
+    httpProxy: ""
+    httpsProxy: ""
+    noProxy: ""
 
   azure:
     storageAccountName: ""
