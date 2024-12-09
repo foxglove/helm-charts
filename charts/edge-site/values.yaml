@@ -59,3 +59,8 @@ edgeController:
   podAnnotations: {}
   serviceLabels: {}
   env: []
+  # Customize init containers here
+  initContainers: {}
+  # Customize volumes here
+  extraVolumes: []
+  extraVolumeMounts: []

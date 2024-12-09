@@ -52,6 +52,11 @@ ingress:
 inboxListener:
   deployment:
     replicas: 1
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 1000m
@@ -133,6 +138,11 @@ streamService:
     annotations: {}
   deployment:
     replicas: 1
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 1000m
@@ -161,6 +171,11 @@ siteController:
   service:
     annotations: {}
   deployment:
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 250m
@@ -181,6 +196,11 @@ garbageCollector:
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
   deployment:
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     env: []
     nodeSelectors: {}
     serviceAccount:
