@@ -33,6 +33,13 @@ spec:
           secret:
             secretName: gcp-cloud-credential
             optional: true
+        {{- if .Values.edgeController.extraVolumes }}
+        {{ toYaml .Values.edgeController.extraVolumes| indent 8 }}
+        {{- end }}
+      {{- if .Values.edgeController.initContainers }}
+      initContainers:
+        {{- toYaml .Values.edgeController.initContainers | indent 10 }}
+      {{- end }}
       containers:
         - name: edge-controller
           image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:{{ .Chart.AppVersion }}
@@ -44,6 +51,9 @@ spec:
               memory: {{ .Values.edgeController.resources.limits.memory }}
               cpu: {{ .Values.edgeController.resources.limits.cpu }}
           volumeMounts:
+            {{- if .Values.edgeController.extraVolumeMounts }}
+            {{ toYaml .Values.edgeController.extraVolumeMounts | indent 12 }}
+            {{- end }}
             {{ if eq .Values.recordingStorage.provider "local" }}
             - mountPath: /data/storage
               name: storage-root
