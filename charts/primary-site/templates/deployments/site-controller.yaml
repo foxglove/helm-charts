@@ -21,9 +21,17 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
+      {{- if .Values.siteController.deployment.extraVolumes }}
+      volumes:
+        {{- toYaml .Values.siteController.deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- if .Values.siteController.deployment.initContainers }}
+      initContainers:
+{{ toYaml .Values.siteController.deployment.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: site-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/site-controller:{{ .Chart.AppVersion }}
+          image: {{ .Values.siteController.deployment.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.siteController.deployment.resources.requests.cpu }}
@@ -42,6 +50,10 @@ spec:
             - secretRef:
                 name: foxglove-site-token
                 optional: true
+          {{- if .Values.siteController.deployment.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.siteController.deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
           env:
             - name: FOXGLOVE_API_URL
               value: {{ .Values.globals.foxgloveApiUrl }}

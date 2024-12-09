@@ -16,6 +16,9 @@ template:
         secret:
           secretName: gcp-cloud-credential
           optional: true
+      {{- if .Values.inboxListener.deployment.extraVolumes }}
+        {{- toYaml .Values.inboxListener.deployment.extraVolumes | nindent 6 }}
+      {{- end }}
       {{- if .Values.inboxListener.deployment.localScratch.enabled }}
       - name: local-scratch
         emptyDir:
@@ -30,9 +33,13 @@ template:
     {{- if .Values.inboxListener.deployment.serviceAccount.enabled }}
     serviceAccount: inbox-listener
     {{- end}}
+    {{- if .Values.inboxListener.deployment.initContainers }}
+    initContainers:
+      {{- toYaml .Values.inboxListener.deployment.initContainers | nindent 6 }}
+    {{- end }}
     containers:
       - name: inbox-listener
-        image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
+        image: {{ .Values.inboxListener.deployment.image }}:{{ .Chart.AppVersion }}
         resources:
           requests:
             cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
@@ -52,6 +59,9 @@ template:
           {{- if .Values.inboxListener.deployment.localScratch.enabled }}
           - mountPath: /local-scratch
             name: local-scratch
+          {{- end }}
+          {{- if .Values.inboxListener.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.inboxListener.deployment.extraVolumeMounts | nindent 10 }}
           {{- end }}
         ports:
           - name: metrics
