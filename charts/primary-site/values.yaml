@@ -51,7 +51,13 @@ ingress:
 
 inboxListener:
   deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener"
     replicas: 1
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 1000m
@@ -132,7 +138,13 @@ streamService:
   service:
     annotations: {}
   deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/stream-server"
     replicas: 1
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 1000m
@@ -161,6 +173,12 @@ siteController:
   service:
     annotations: {}
   deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/site-controller"
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     resources:
       requests:
         cpu: 250m
@@ -181,6 +199,12 @@ garbageCollector:
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
   deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/garbage-collector"
+    # Customize init containers here
+    initContainers: {}
+    # Customize volumes here
+    extraVolumes: []
+    extraVolumeMounts: []
     env: []
     nodeSelectors: {}
     serviceAccount:
