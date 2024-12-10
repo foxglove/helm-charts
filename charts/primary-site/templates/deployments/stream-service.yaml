@@ -40,7 +40,7 @@ spec:
       {{- end }}
       containers:
         - name: stream-service
-          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-server:{{ .Chart.AppVersion }}
+          image: {{ .Values.streamService.deployment.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.streamService.deployment.resources.requests.cpu }}

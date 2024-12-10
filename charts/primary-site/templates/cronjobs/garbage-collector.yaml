@@ -27,7 +27,7 @@ spec:
           {{- end }}
           containers:
             - name: garbage-collector
-              image: us-central1-docker.pkg.dev/foxglove-images/images/garbage-collector:{{ .Chart.AppVersion }}
+              image: {{ .Values.garbageCollector.deployment.image }}:{{ .Chart.AppVersion }}
               volumeMounts:
                 - mountPath: /secrets
                   name: cloud-credentials

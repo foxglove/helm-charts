@@ -31,7 +31,7 @@ spec:
       {{- end }}
       containers:
         - name: site-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/site-controller:{{ .Chart.AppVersion }}
+          image: {{ .Values.siteController.deployment.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.siteController.deployment.resources.requests.cpu }}

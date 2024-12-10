@@ -39,7 +39,7 @@ template:
     {{- end }}
     containers:
       - name: inbox-listener
-        image: us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener:{{ .Chart.AppVersion }}
+        image: {{ .Values.inboxListener.deployment.image }}:{{ .Chart.AppVersion }}
         resources:
           requests:
             cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}

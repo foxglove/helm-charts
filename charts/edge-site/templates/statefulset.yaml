@@ -42,7 +42,7 @@ spec:
       {{- end }}
       containers:
         - name: edge-controller
-          image: us-central1-docker.pkg.dev/foxglove-images/images/edge-controller:{{ .Chart.AppVersion }}
+          image: {{ .Values.edgeController.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
               memory: {{ .Values.edgeController.resources.requests.memory }}
