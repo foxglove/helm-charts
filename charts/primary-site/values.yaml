@@ -19,9 +19,9 @@ globals:
     storageProvider: google_cloud
     bucketName: foxglove-inbox
   
+  ## Optionally used to configure http/https proxy egress
   proxy:
-  ## If you are running behind a proxy, otherwise set this to 'false'
-    enabled: true
+    enabled: false
     httpProxy: ""
     httpsProxy: ""
     noProxy: ""
