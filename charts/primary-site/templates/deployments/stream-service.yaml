@@ -31,9 +31,16 @@ spec:
           secret:
             secretName: gcp-cloud-credential
             optional: true
+      {{- if .Values.streamService.deployment.extraVolumes }}
+        {{- toYaml .Values.streamService.deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- if .Values.streamService.deployment.initContainers }}
+      initContainers:
+        {{- toYaml .Values.streamService.deployment.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: stream-service
-          image: us-central1-docker.pkg.dev/foxglove-images/images/stream-server:{{ .Chart.AppVersion }}
+          image: {{ .Values.streamService.deployment.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
               cpu: {{ .Values.streamService.deployment.resources.requests.cpu }}
@@ -49,6 +56,9 @@ spec:
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials
+          {{- if .Values.streamService.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.streamService.deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
           envFrom:
             - secretRef:
                 name: cloud-credentials

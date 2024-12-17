@@ -18,12 +18,22 @@ spec:
               secret:
                 secretName: gcp-cloud-credential
                 optional: true
+            {{- if .Values.garbageCollector.deployment.extraVolumes }}
+              {{- toYaml .Values.garbageCollector.deployment.extraVolumes | nindent 12 }}
+            {{- end }}
+          {{- if .Values.garbageCollector.deployment.initContainers }}
+          initContainers:
+            {{- toYaml .Values.garbageCollector.deployment.initContainers | nindent 12 }}
+          {{- end }}
           containers:
             - name: garbage-collector
-              image: us-central1-docker.pkg.dev/foxglove-images/images/garbage-collector:{{ .Chart.AppVersion }}
+              image: {{ .Values.garbageCollector.deployment.image }}:{{ .Chart.AppVersion }}
               volumeMounts:
                 - mountPath: /secrets
                   name: cloud-credentials
+                {{- if .Values.garbageCollector.deployment.extraVolumeMounts }}
+                  {{- toYaml .Values.garbageCollector.deployment.extraVolumeMounts | nindent 16 }}
+                {{- end }}
               envFrom:
                 - secretRef:
                     name: cloud-credentials

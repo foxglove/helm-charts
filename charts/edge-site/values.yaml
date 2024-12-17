@@ -43,6 +43,7 @@ recordingStorage:
   s3CompatibleServiceRegion: ""
 
 edgeController:
+  image: "us-central1-docker.pkg.dev/foxglove-images/images/edge-controller"
   storageClaim: edge-controller-storage-claim
   indexClaim: edge-controller-index-claim
   metrics:
@@ -59,3 +60,6 @@ edgeController:
   podAnnotations: {}
   serviceLabels: {}
   env: []
+  initContainers: []
+  extraVolumes: []
+  extraVolumeMounts: []
