@@ -19,7 +19,8 @@ spec:
         format: "prometheus"
         targetValue: "2"
         url: "http://site-controller.{{.Release.Namespace}}.svc.cluster.local:6001/metrics"
-        valueLocation: "{{ with .Values.siteController.deployment.metrics.namespace }}{{ . }}{{else}}foxglove_data_platform{{ end }}_{{ with .Values.siteController.deployment.metrics.subsystem }}{{ . }}{{else}}site_controller{{ end }}_unleased_pending_import_count"
+        valueLocation: "
+        {{ with .Values.siteController.deployment.metrics.namespace }}{{ . }}_{{ end }}{{ with .Values.siteController.deployment.metrics.subsystem }}{{ . }}_{{ end }}unleased_pending_import_count"
 {{- else }}
 apiVersion: apps/v1
 kind: Deployment
