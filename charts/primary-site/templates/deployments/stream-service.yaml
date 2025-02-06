@@ -40,8 +40,8 @@ spec:
       {{- end }}
       containers:
         - name: stream-service
-          ## If the betaOptOut flag is enabled, fall back to the legacy stream server image
-          {{- $image := ternary "legacyImage" "image" .Values.streamService.betaOptOut }}
+          ## If the useLegacyImage flag is enabled, fall back to the legacy stream server image
+          {{- $image := ternary "legacyImage" "image" .Values.streamService.useLegacyImage }}
           image: {{ index .Values.streamService.deployment $image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
