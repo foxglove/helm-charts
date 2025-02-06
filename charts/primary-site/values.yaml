@@ -133,10 +133,13 @@ inboxListener:
     pollingInterval: 30
 
 streamService:
+  # This chart defaults to a new version of the stream server. To disable this set the `betaOptOut` flag to true.
+  betaOptOut: false
   service:
     annotations: {}
   deployment:
-    image: "us-central1-docker.pkg.dev/foxglove-images/images/stream-server"
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/beta-stream-server"
+    legacyImage: "us-central1-docker.pkg.dev/foxglove-images/images/stream-server"
     replicas: 1
     initContainers: []
     extraVolumes: []
