@@ -133,8 +133,8 @@ inboxListener:
     pollingInterval: 30
 
 streamService:
-  # This chart defaults to a new version of the stream server. To disable this set the `betaOptOut` flag to true.
-  betaOptOut: false
+  # This chart defaults to a new version of the stream server. To revert to the legacy image, set the `useLegacyImage` flag to true.
+  useLegacyImage: false
   service:
     annotations: {}
   deployment:
