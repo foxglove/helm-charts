@@ -12,6 +12,10 @@ globals:
   # The api endpoint the deployment will use as the control plane
   foxgloveApiUrl: https://api.foxglove.dev
 
+  # To enable/disable persistence for the edge controller.
+  persistence:
+    enabled: true
+
   aws:
     ## For example: us-east-1
     region: ""
@@ -32,6 +36,7 @@ globals:
 # Configuration for recording storage, defaults to the persistent volume configured by
 # `edgeController.storageClaim`
 recordingStorage:
+  enabled: false
   provider: "local"
   # If storing recordings on an S3-compatible service, set `provider` to "s3_compatible"
   # The service URL eg. https://my-minio-service.mycompany.com
