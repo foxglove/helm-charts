@@ -1,11 +1,11 @@
 {{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
-{{- if eq $indexingStrategy "split-files" }}
-{{- with .Values.inboxListener.deployment.serviceAccount }}
+{{- if eq $indexingStrategy "index-in-place" }}
+{{- with .Values.indexer.deployment.serviceAccount }}
 {{- if .enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: inbox-listener
+  name: indexer
   annotations:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}

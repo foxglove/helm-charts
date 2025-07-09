@@ -1,3 +1,4 @@
+{{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -71,7 +72,7 @@ spec:
                 name: {{ $k }}
             {{- end }}
           env:
-            {{ with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
+            {{- with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
             ## The lookup is required here. The pod may have access to GCP through other means, but
             ## the credentials in this env var take precedence, even if it's empty. An empty variable
             ## essentially blocks GCP access.
@@ -94,12 +95,17 @@ spec:
               value: "{{ .Values.globals.aws.region }}"
             - name: AWS_SDK_LOAD_CONFIG
               value: "true"
+            {{- if eq $indexingStrategy "split-files" }}
             - name: LAKE_STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
             - name: INBOX_STORAGE_PROVIDER
               value: "{{ .Values.globals.inbox.storageProvider }}"
             - name: STORAGE_INBOX_BUCKET_NAME
               value: "{{ .Values.globals.inbox.bucketName }}"
+            {{- else if eq $indexingStrategy "index-in-place" }}
+            - name: LAKE_STORAGE_PROVIDER
+              value: "{{ .Values.globals.indexInPlace.storageProvider }}"
+            {{- end }}
             - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
               value: "{{ .Values.globals.azure.storageAccountName }}"
             - name: STORAGE_AZURE_SERVICE_URL

@@ -9,16 +9,26 @@ globals:
 
   foxgloveApiUrl: https://api.foxglove.dev
 
+  ## Supported indexingStrategy values are: `split-files` and `index-in-place`.
+  ## If none is provided, `split-files` is the default.
+  indexingStrategy: split-files
+
   ## Supported storageProvider values are: `google_cloud`, `aws`, `azure`, or `s3_compatible`.
   ## If `azure` is used, then the `@azure.storageAccountName` and `@azure.serviceUrl` values
   ## are required. If `aws` is used, then the `@aws.region` value is required.
+  ##
+  ## The `lake` and `inbox` configuration are required for the `split-files` indexing strategy.
+  ## The `indexInPlace` configuration is required for the `index-in-place` indexing strategy.
   lake:
     storageProvider: google_cloud
     bucketName: foxglove-lake
   inbox:
     storageProvider: google_cloud
     bucketName: foxglove-inbox
-  
+  indexInPlace:
+    storageProvider: google_cloud
+    bucketName: foxglove-index-in-place
+
   ## Configure an http/https egress proxy if your environment requires outgoing connections to be proxied. Set `enabled` to `true` and appropriate values for `httpProxy`, `httpsProxy` and `noProxy`.
   proxy:
     enabled: false
@@ -49,8 +59,9 @@ ingress:
     ##   - www.example.com
     ##   secretName: ingress-tls-csi
 
+# The inbox listener is only deployed if `indexingStrategy` is `split-files`.
 inboxListener:
-  # This chart defaults to a legacy version of the stream server. Set `useLegacyImage` to `false` to
+  # This chart defaults to a legacy version of the inbox listener. Set `useLegacyImage` to `false` to
   # use the new image. This value will default to `false` in a future version.
   useLegacyImage: true
   deployment:
@@ -73,8 +84,7 @@ inboxListener:
     metrics:
       namespace: ""
       subsystem: ""
-    env:
-      []
+    env: []
       # AWS_COPY_WORKER_COUNT: adjust the number of concurrent workers for
       # copying s3 objects (default: 10)
       # - name: AWS_COPY_WORKER_COUNT
@@ -136,6 +146,34 @@ inboxListener:
     # how often to poll the autoscaling metric in seconds, provided as an integer. this is a safe default.
     pollingInterval: 30
 
+# The indexer is only deployed if `indexingStrategy` is `index-in-place`.
+indexer:
+  service:
+    annotations: {}
+  deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/indexer"
+    replicas: 1
+    initContainers: []
+    extraVolumes: []
+    extraVolumeMounts: []
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+    podLabels: {}
+    podAnnotations: {}
+    nodeSelectors: {}
+    metrics:
+      namespace: ""
+      subsystem: ""
+    env: []
+    serviceAccount:
+      enabled: false
+      annotations: {}
+
 streamService:
   service:
     annotations: {}
@@ -192,6 +230,7 @@ siteController:
       subsystem: ""
     env: []
 
+# The garbage collector is only deployed if `indexingStrategy` is `split-files`.
 garbageCollector:
   schedule: "*/10 * * * *" # every 10 minutes
   failedJobsHistoryLimit: 1
