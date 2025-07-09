@@ -1,3 +1,5 @@
+{{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
+{{- if eq $indexingStrategy "split-files" }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -46,7 +48,7 @@ spec:
                     name: {{ $k }}
                 {{- end }}
               env:
-                {{ with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
+                {{- with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
                 ## The lookup is required here. The pod may have access to GCP through other means, but
                 ## the credentials in this env var take precedence, even if it's empty. An empty variable
                 ## essentially blocks GCP access.
@@ -101,3 +103,4 @@ spec:
             {{ $key }}: {{ $value | quote }}
             {{- end }}
           {{- end}}
+{{- end }}

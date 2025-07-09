@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "objectStore": {
+      "type": "object",
+      "properties": {
+        "bucketName": {
+          "type": "string"
+        },
+        "storageProvider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "azure",
+            "google_cloud",
+            "s3_compatible"
+          ]
+        }
+      },
+      "requiredProperties": [
+        "bucketName",
+        "storageProvider"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "globals": {
+      "type": "object",
+      "properties": {
+        "foxgloveApiUrl": {
+          "type": "string"
+        },
+        "indexingStrategy": {
+          "type": "string",
+          "enum": [
+            "index-in-place",
+            "split-files"
+          ]
+        },
+        "lake": {
+          "$ref": "#/definitions/objectStore"
+        },
+        "inbox": {
+          "$ref": "#/definitions/objectStore"
+        },
+        "indexInPlace": {
+          "$ref": "#/definitions/objectStore"
+        }
+      },
+      "requiredProperties": [
+        "foxgloveApiUrl"
+      ]
+    }
+  },
+  "requiredProperties": [
+    "globals"
+  ]
+}

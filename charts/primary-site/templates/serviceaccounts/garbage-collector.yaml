@@ -1,3 +1,5 @@
+{{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
+{{- if eq $indexingStrategy "split-files" }}
 {{- with .Values.garbageCollector.deployment.serviceAccount }}
 {{- if .enabled }}
 apiVersion: v1
@@ -8,5 +10,6 @@ metadata:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
