@@ -95,6 +95,8 @@ spec:
               value: "{{ .Values.globals.aws.region }}"
             - name: AWS_SDK_LOAD_CONFIG
               value: "true"
+            - name: SITE_INDEXING_STRATEGY
+              value: "{{ $indexingStrategy }}"
             {{- if eq $indexingStrategy "split-files" }}
             - name: LAKE_STORAGE_PROVIDER
               value: "{{ .Values.globals.lake.storageProvider }}"
