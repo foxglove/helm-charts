@@ -13,10 +13,6 @@ type: application
 # 1.0.0-alpha.0
 # 1.0.0-alpha.1
 # 1.0.0
-<<<<<<< HEAD
 version: "0.0.74"
-=======
-version: "0.0.72-alpha.0"
->>>>>>> 3acec5e (fix indexer templating)
 
-appVersion: "68b2a1458609ef92263409a8e47a6eaa0ed9aea5"
+appVersion: "dcc5a9fa47127aef60715244ad19d8349c57d241"
