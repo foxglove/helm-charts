@@ -28,9 +28,13 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
-      {{- if .Values.indexer.deployment.extraVolumes }}
       volumes:
-        {{- toYaml .Values.indexer.deployment.extraVolumes | nindent 6 }}
+        - name: cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
+      {{- if .Values.indexer.deployment.extraVolumes }}
+        {{- toYaml .Values.indexer.deployment.extraVolumes | nindent 8 }}
       {{- end }}
       {{- if .Values.indexer.deployment.nodeSelectors }}
       nodeSelector:
@@ -43,7 +47,7 @@ spec:
       {{- end}}
       {{- if .Values.indexer.deployment.initContainers }}
       initContainers:
-        {{- toYaml .Values.indexer.deployment.initContainers | nindent 6 }}
+        {{- toYaml .Values.indexer.deployment.initContainers | nindent 8 }}
       {{- end }}
       containers:
         - name: indexer
@@ -55,9 +59,11 @@ spec:
             limits:
               cpu: {{ .Values.indexer.deployment.resources.limits.cpu }}
               memory: {{ .Values.indexer.deployment.resources.limits.memory }}
-          {{- if .Values.indexer.deployment.extraVolumeMounts }}
           volumeMounts:
-            {{- toYaml .Values.indexer.deployment.extraVolumeMounts | nindent 10 }}
+            - mountPath: /secrets
+              name: cloud-credentials
+          {{- if .Values.indexer.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.indexer.deployment.extraVolumeMounts | nindent 12 }}
           {{- end }}
           ports:
             - name: metrics
@@ -74,6 +80,13 @@ spec:
                 name: foxglove-site-token
                 optional: true
           env:
+            {{- with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
+            ## The lookup is required here. The pod may have access to GCP through other means, but
+            ## the credentials in this env var take precedence, even if it's empty. An empty variable
+            ## essentially blocks GCP access.
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credentials.json
+            {{- end }}
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
             {{- if .Values.globals.siteToken }}
