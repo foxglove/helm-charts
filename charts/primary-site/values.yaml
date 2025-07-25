@@ -208,6 +208,7 @@ streamService:
       ## annotations:
       ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-stream-service-sa-role
 
+# The site-controller is only deployed if `indexingStrategy` is `split-files`.
 siteController:
   service:
     annotations: {}

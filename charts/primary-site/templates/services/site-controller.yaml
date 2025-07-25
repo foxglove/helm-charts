@@ -1,3 +1,5 @@
+{{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
+{{- if eq $indexingStrategy "split-files" }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,3 +17,4 @@ spec:
       targetPort: 6001
   selector:
     app: site-controller
+{{- end }}
