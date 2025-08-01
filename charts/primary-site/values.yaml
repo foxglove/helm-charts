@@ -50,9 +50,9 @@ ingress:
     ##   secretName: ingress-tls-csi
 
 inboxListener:
-  # This chart defaults to a legacy version of the stream server. Set `useLegacyImage` to `false` to
-  # use the new image. This value will default to `false` in a future version.
-  useLegacyImage: true
+  # The inbox listener image was recently rewritten. Set `useLegacyImage` to `false` to
+  # revert to the legacy version. This option will be removed in a future chart version.
+  useLegacyImage: false
   deployment:
     legacyImage: "us-central1-docker.pkg.dev/foxglove-images/images/legacy-inbox-listener"
     image: "us-central1-docker.pkg.dev/foxglove-images/images/inbox-listener"
