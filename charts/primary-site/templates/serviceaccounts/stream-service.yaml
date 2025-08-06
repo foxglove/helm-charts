@@ -1,9 +1,10 @@
-{{- with .Values.streamService.deployment.serviceAccount }}
+{{- $values :=  mustMerge (.Values.queryEngine | default dict) (.Values.streamService | default dict) }}
+{{- with $values.deployment.serviceAccount }}
 {{- if .enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: stream-service
+  name: query-engine
   annotations:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}
