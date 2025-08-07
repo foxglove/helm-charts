@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: queryEngine
+  name: query-engine
   annotations:
     {{- range $key, $value := $values.service.annotations }}
     {{ $key }}: {{ $value | quote }}

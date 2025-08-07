@@ -175,7 +175,7 @@ indexer:
       enabled: false
       annotations: {}
 
-streamService:
+queryEngine:
   service:
     annotations: {}
   deployment:
