@@ -1,5 +1,5 @@
 {{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
-{{- $values :=  mustMerge (.Values.queryEngine | default dict) (.Values.streamService | default dict) }}
+{{- $values :=  include "primary-site.mergedQueryEngineValues" . | fromYaml -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
