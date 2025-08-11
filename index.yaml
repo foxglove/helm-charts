@@ -476,6 +476,17 @@ entries:
     version: 0.0.0-alpha.0
   primary-site:
   - apiVersion: v2
+    appVersion: 68b2a1458609ef92263409a8e47a6eaa0ed9aea5
+    created: "2025-08-11T22:02:26.793195314Z"
+    description: Foxglove Primary Site
+    digest: 2695c1fa98fe0bbc0b612054eb73d411ec5644467f07c3a0adfb649a8de8d2e5
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: primary-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.73/primary-site-0.0.73.tgz
+    version: 0.0.73
+  - apiVersion: v2
     appVersion: 476c134b9f1ae4a33f446d7f28ba4b583026b70a
     created: "2025-08-01T05:28:35.873310801Z"
     description: Foxglove Primary Site
@@ -1311,4 +1322,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.0-alpha.1/primary-site-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2025-08-01T05:28:35.873747802Z"
+generated: "2025-08-11T22:02:26.79367734Z"
