@@ -1,0 +1,134 @@
+{{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
+{{- if eq $indexingStrategy "index-in-place" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indexer
+  labels:
+    app: indexer
+spec:
+  replicas: {{ .Values.indexer.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: indexer
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: indexer
+        {{- range $key, $value := .Values.indexer.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      annotations:
+        {{- range $key, $value := .Values.indexer.deployment.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    spec:
+      volumes:
+        - name: cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
+      {{- if .Values.indexer.deployment.extraVolumes }}
+        {{- toYaml .Values.indexer.deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- if .Values.indexer.deployment.nodeSelectors }}
+      nodeSelector:
+        {{- range $key, $value := .Values.indexer.deployment.nodeSelectors }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end}}
+      {{- if .Values.indexer.deployment.serviceAccount.enabled }}
+      serviceAccount: indexer
+      {{- end}}
+      {{- if .Values.indexer.deployment.initContainers }}
+      initContainers:
+        {{- toYaml .Values.indexer.deployment.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: indexer
+          image: {{ .Values.indexer.deployment.image }}:{{ .Chart.AppVersion }}
+          resources:
+            requests:
+              cpu: {{ .Values.indexer.deployment.resources.requests.cpu }}
+              memory: {{ .Values.indexer.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.indexer.deployment.resources.limits.cpu }}
+              memory: {{ .Values.indexer.deployment.resources.limits.memory }}
+          volumeMounts:
+            - mountPath: /secrets
+              name: cloud-credentials
+          {{- if .Values.indexer.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.indexer.deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: metrics
+              containerPort: 6001
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 6002
+          envFrom:
+            - secretRef:
+                name: cloud-credentials
+                optional: true
+            - secretRef:
+                name: foxglove-site-token
+                optional: true
+          env:
+            {{- with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
+            ## The lookup is required here. The pod may have access to GCP through other means, but
+            ## the credentials in this env var take precedence, even if it's empty. An empty variable
+            ## essentially blocks GCP access.
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credentials.json
+            {{- end }}
+            - name: FOXGLOVE_API_URL
+              value: "{{ .Values.globals.foxgloveApiUrl }}"
+            {{- if .Values.globals.siteToken }}
+            - name: FOXGLOVE_SITE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: foxglove-site
+                  key: token
+                  optional: false
+            {{- end }}
+            - name: STORAGE_PROVIDER
+              value: "{{ .Values.globals.indexInPlace.storageProvider }}"
+            - name: STORAGE_BUCKET_NAME
+              value: "{{ .Values.globals.indexInPlace.bucketName }}"
+            - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
+              value: "{{ .Values.globals.azure.storageAccountName }}"
+            - name: STORAGE_AZURE_SERVICE_URL
+              value: "{{ .Values.globals.azure.serviceUrl }}"
+            - name: AWS_REGION
+              value: "{{ .Values.globals.aws.region }}"
+            - name: AWS_SDK_LOAD_CONFIG
+              value: "true"
+            - name: LIVENESS_PORT
+              value: "6002"
+            - name: PROMETHEUS_PORT
+              value: "6001"
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: "{{ .Values.indexer.deployment.metrics.namespace }}"
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: "{{ .Values.indexer.deployment.metrics.subsystem }}"
+            - name: PRIMARY_SITE_VERSION
+              value: "{{ .Chart.Version }}"
+            {{- if .Values.globals.proxy.enabled }}
+            - name: HTTP_PROXY
+              value: {{ .Values.globals.proxy.httpProxy }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.globals.proxy.httpsProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.globals.proxy.noProxy }}
+            {{- end }}
+            {{- range $item := .Values.indexer.deployment.env }}
+            - name: {{ $item.name }}
+              value: {{ $item.value | quote}}
+            {{- end }}
+{{- end }}
