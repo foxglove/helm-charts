@@ -1,10 +1,10 @@
-{{- with .Values.streamService }}
+{{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: stream
   annotations:
-    {{- range $key, $value := .service.annotations }}
+    {{- range $key, $value := $values.service.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
@@ -19,5 +19,4 @@ spec:
       protocol: TCP
       targetPort: 6001
   selector:
-    app: stream-service
-{{- end }}
+    app: query-service
