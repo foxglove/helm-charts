@@ -175,11 +175,11 @@ indexer:
       enabled: false
       annotations: {}
 
-streamService:
+queryService:
   service:
     annotations: {}
   deployment:
-    image: "us-central1-docker.pkg.dev/foxglove-images/images/stream-server"
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/query-server"
     replicas: 1
     initContainers: []
     extraVolumes: []
@@ -206,7 +206,7 @@ streamService:
       ## E.g:
       ## enabled: true
       ## annotations:
-      ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-stream-service-sa-role
+      ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-query-service-sa-role
 
 # The site-controller is only deployed if `indexingStrategy` is `split-files`.
 siteController:

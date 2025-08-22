@@ -1,15 +1,16 @@
 {{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
+{{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stream-service
+  name: query-service
   labels:
-    app: stream-service
+    app: query-service
 spec:
-  replicas: {{ .Values.streamService.deployment.replicas }}
+  replicas: {{ $values.deployment.replicas }}
   selector:
     matchLabels:
-      app: stream-service
+      app: query-service
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        app: stream-service
-        {{- range $key, $value := .Values.streamService.deployment.podLabels }}
+        app: query-service
+        {{- range $key, $value := $values.deployment.podLabels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       annotations:
-        {{- range $key, $value := .Values.streamService.deployment.podAnnotations }}
+        {{- range $key, $value := $values.deployment.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
@@ -32,23 +33,23 @@ spec:
           secret:
             secretName: gcp-cloud-credential
             optional: true
-      {{- if .Values.streamService.deployment.extraVolumes }}
-        {{- toYaml .Values.streamService.deployment.extraVolumes | nindent 8 }}
+      {{- if $values.deployment.extraVolumes }}
+        {{- toYaml $values.deployment.extraVolumes | nindent 8 }}
       {{- end }}
-      {{- if .Values.streamService.deployment.initContainers }}
+      {{- if $values.deployment.initContainers }}
       initContainers:
-        {{- toYaml .Values.streamService.deployment.initContainers | nindent 8 }}
+        {{- toYaml $values.deployment.initContainers | nindent 8 }}
       {{- end }}
       containers:
-        - name: stream-service
-          image: {{ .Values.streamService.deployment.image }}:{{ .Chart.AppVersion }}
+        - name: query-service
+          image: {{ $values.deployment.image }}:{{ .Chart.AppVersion }}
           resources:
             requests:
-              cpu: {{ .Values.streamService.deployment.resources.requests.cpu }}
-              memory: {{ .Values.streamService.deployment.resources.requests.memory }}
+              cpu: {{ $values.deployment.resources.requests.cpu }}
+              memory: {{ $values.deployment.resources.requests.memory }}
             limits:
-              cpu: {{ .Values.streamService.deployment.resources.limits.cpu }}
-              memory: {{ .Values.streamService.deployment.resources.limits.memory }}
+              cpu: {{ $values.deployment.resources.limits.cpu }}
+              memory: {{ $values.deployment.resources.limits.memory }}
           ports:
             - name: http
               containerPort: 8080
@@ -57,8 +58,8 @@ spec:
           volumeMounts:
             - mountPath: /secrets
               name: cloud-credentials
-          {{- if .Values.streamService.deployment.extraVolumeMounts }}
-            {{- toYaml .Values.streamService.deployment.extraVolumeMounts | nindent 12 }}
+          {{- if $values.deployment.extraVolumeMounts }}
+            {{- toYaml $values.deployment.extraVolumeMounts | nindent 12 }}
           {{- end }}
           envFrom:
             - secretRef:
@@ -121,12 +122,12 @@ spec:
             - name: STORAGE_AZURE_SERVICE_URL
               value: "{{ .Values.globals.azure.serviceUrl }}"
             - name: PROMETHEUS_METRICS_NAMESPACE
-              value: "{{ .Values.streamService.deployment.metrics.namespace }}"
+              value: "{{ $values.deployment.metrics.namespace }}"
             - name: PROMETHEUS_METRICS_SUBSYSTEM
-              value: "{{ .Values.streamService.deployment.metrics.subsystem }}"
+              value: "{{ $values.deployment.metrics.subsystem }}"
             - name: PRIMARY_SITE_VERSION
               value: "{{ .Chart.Version }}"
-            {{- range $item := .Values.streamService.deployment.env }}
+            {{- range $item := $values.deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
@@ -154,12 +155,12 @@ spec:
             timeoutSeconds: 1
             failureThreshold: 20
       terminationGracePeriodSeconds: 30
-      {{- if .Values.streamService.deployment.serviceAccount.enabled }}
-      serviceAccount: stream-service
+      {{- if $values.deployment.serviceAccount.enabled }}
+      serviceAccount: query-service
       {{- end}}
-      {{- if .Values.streamService.deployment.nodeSelectors }}
+      {{- if $values.deployment.nodeSelectors }}
       nodeSelector:
-        {{- range $key, $value := .Values.streamService.deployment.nodeSelectors }}
+        {{- range $key, $value := $values.deployment.nodeSelectors }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end}}
