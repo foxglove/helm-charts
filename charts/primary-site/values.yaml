@@ -176,6 +176,7 @@ indexer:
       annotations: {}
 
 queryService:
+  useLegacyDeploymentName: false
   service:
     annotations: {}
   deployment:
