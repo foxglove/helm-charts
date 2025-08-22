@@ -1,9 +1,8 @@
 {{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
-{{- $deploymentAndAppName := (ternary "stream-server" "query-server" $values.useLegacyDeploymentName) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: stream
+  name: query
   annotations:
     {{- range $key, $value := $values.service.annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -20,4 +19,4 @@ spec:
       protocol: TCP
       targetPort: 6001
   selector:
-    app: {{ $deploymentAndAppName }}
+    app: query-service

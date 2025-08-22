@@ -1,17 +1,16 @@
 {{- $indexingStrategy := include "primary-site.indexingStrategy" . }}
 {{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
-{{- $deploymentAndAppName := (ternary "stream-server" "query-server" $values.useLegacyDeploymentName) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ $deploymentAndAppName }}
+  name: query-service
   labels:
-    app: {{ $deploymentAndAppName }}
+    app: query-service
 spec:
   replicas: {{ $values.deployment.replicas }}
   selector:
     matchLabels:
-      app: {{ $deploymentAndAppName }}
+      app: query-service
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ $deploymentAndAppName }}
+        app: query-service
         {{- range $key, $value := $values.deployment.podLabels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
