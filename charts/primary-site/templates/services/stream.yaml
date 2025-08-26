@@ -1,0 +1,22 @@
+{{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: stream
+  annotations:
+    {{- range $key, $value := $values.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: metrics
+      port: 6001
+      protocol: TCP
+      targetPort: 6001
+  selector:
+    app: query-service
