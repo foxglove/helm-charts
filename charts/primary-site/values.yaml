@@ -179,7 +179,7 @@ streamService:
   service:
     annotations: {}
   deployment:
-    image: "us-central1-docker.pkg.dev/foxglove-images/images/stream-server"
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/query-server"
     replicas: 1
     initContainers: []
     extraVolumes: []
