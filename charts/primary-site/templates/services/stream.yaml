@@ -1,3 +1,6 @@
+# The "stream" service is deprecated, new deployments should use the "query" service which exposes
+# the same functionality. This service remains in the chart for compatibility with existing
+# deployments.
 {{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
 apiVersion: v1
 kind: Service
