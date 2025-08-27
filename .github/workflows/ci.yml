@@ -21,8 +21,8 @@ jobs:
       - uses: medyagh/setup-minikube@v0.0.20
       - name: Install primary site chart
         env:
-          FOXGLOVE_API_URL: ${{ }}
-          FOXGLOVE_SITE_TOKEN: ${{ }}
+          FOXGLOVE_API_URL: ${{ secrets.TEST_PRIMARY_SITE_API_URL }}
+          FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
         run: |
           set -e
           kubectl create namespace foxglove
