@@ -13,3 +13,45 @@ jobs:
 
       - name: lint
         run: helm lint charts/*
+
+  test_primary_site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: medyagh/setup-minikube@v0.0.20
+      - name: Install primary site chart
+        env:
+          FOXGLOVE_API_URL: ${{ }}
+          FOXGLOVE_SITE_TOKEN: ${{ }}
+        run: |
+          set -e
+          kubectl create namespace foxglove
+          kubectl create secret generic foxglove-site-token --from-literal="FOXGLOVE_SITE_TOKEN=\"$FOXGLOVE_SITE_TOKEN\"" --namespace foxglove
+
+          cat >> ./cloud-credentials-secret.yaml << EOF
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: cloud-credentials
+          type: Opaque
+          stringData:
+            S3_COMPATIBLE_ACCESS_KEY_ID: root
+            S3_COMPATIBLE_SECRET_ACCESS_KEY: password
+            S3_COMPATIBLE_SERVICE_REGION: default
+            S3_COMPATIBLE_SERVICE_URL: http://localhost:9000
+          EOF
+
+          kubectl apply -f ./cloud-credentials-secret.yaml -n foxglove
+
+          cat >> ./values.yaml << EOF
+          globals:
+            foxgloveApiUrl: "$FOXGLOVE_API_URL"
+            inbox:
+              storageProvider: "s3_compatible"
+            lake:
+              storageProvider: "s3_compatible"
+          EOF
+
+          helm upgrade --install foxglove-primary-site ./charts/primary-site \
+            --namespace foxglove \
+            --values ./values.yaml
