@@ -23,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: stream
+                name: query
                 port: 
                   number: 8080
 {{- end }}
