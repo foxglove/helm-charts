@@ -19,6 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: medyagh/setup-minikube@v0.0.20
+        with:
+          addons: ingress
       - name: Install primary site chart
         env:
           FOXGLOVE_API_URL: ${{ secrets.TEST_PRIMARY_SITE_API_URL }}
