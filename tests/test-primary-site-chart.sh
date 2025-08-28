@@ -50,7 +50,8 @@ helm upgrade --install foxglove-primary-site "$chart" \
 	--namespace foxglove \
 	--set globals.foxgloveApiUrl="$api_url" \
 	--set globals.lake.storageProvider="s3_compatible" \
-	--set globals.inbox.storageProvider="s3_compatible"
+	--set globals.inbox.storageProvider="s3_compatible" \
+	--set garbageCollector.schedule="*/1 * * * *"
 
 log_and_exit() {
 	kubectl get pods -n foxglove
@@ -69,10 +70,15 @@ wait_for_pod() {
 	kubectl wait --for=condition=ready pod -l "app=$1" --namespace foxglove --timeout=90s || log_and_exit
 }
 
+# Wait for each of the deployments to complete to make sure pods are created
 wait_for_deployment site-controller
 wait_for_deployment inbox-listener
 wait_for_deployment query-service
 
+# Wait for each of the pods to complete to make sure they didn't fail
 wait_for_pod site-controller
 wait_for_pod inbox-listener
 wait_for_pod query-service
+
+# Wait to make sure the garbage-collector job didn't fail
+kubectl wait --for=condition=complete job -l app=garbage-collector -n foxglove --timeout=90s || log_and_exit

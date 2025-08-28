@@ -12,6 +12,9 @@ spec:
   failedJobsHistoryLimit: {{ .Values.garbageCollector.failedJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ .Values.garbageCollector.successfulJobsHistoryLimit }}
   jobTemplate:
+    metadata:
+      labels:
+        app: garbage-collector
     spec:
       template:
         spec:

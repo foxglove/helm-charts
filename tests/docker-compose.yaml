@@ -2,7 +2,7 @@ services:
   minio:
     image: "minio/minio:latest"
     ports:
-      - "9000:9000"
+      - "0.0.0.0:9000:9000"
     command: [ "server", "--console-address", ":9001", "/data" ]
     environment:
       MINIO_ROOT_USER: root
