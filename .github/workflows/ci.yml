@@ -18,33 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Start minio
+        run: docker compose up -d
+        working-directory: tests
       - uses: medyagh/setup-minikube@v0.0.20
         with:
           addons: ingress
-      - name: Install primary site chart
+      - name: Test primary site chart install
+        timeout-minutes: 5
         env:
           FOXGLOVE_API_URL: ${{ secrets.TEST_PRIMARY_SITE_API_URL }}
           FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
-        run: |
-          set -e
-          kubectl create namespace foxglove
-          kubectl create secret generic foxglove-site-token --from-literal="FOXGLOVE_SITE_TOKEN=\"$FOXGLOVE_SITE_TOKEN\"" --namespace foxglove
+        run: ./tests/test-primary-site-chart.sh ./charts/primary-site
 
-          cat >> ./cloud-credentials-secret.yaml << EOF
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: cloud-credentials
-          type: Opaque
-          stringData:
-            S3_COMPATIBLE_ACCESS_KEY_ID: root
-            S3_COMPATIBLE_SECRET_ACCESS_KEY: password
-            S3_COMPATIBLE_SERVICE_REGION: default
-            S3_COMPATIBLE_SERVICE_URL: http://localhost:9000
-          EOF
-
-          kubectl apply -f ./cloud-credentials-secret.yaml -n foxglove
-
-          helm upgrade --install foxglove-primary-site ./charts/primary-site \
-            --namespace foxglove \
-            --set globals.foxgloveApiUrl="$FOXGLOVE_API_URL"
