@@ -94,4 +94,5 @@ wait_for_pod inbox-listener
 wait_for_pod query-service
 
 # Wait to make sure the garbage-collector job didn't fail
+kubectl wait --for=jsonpath='{.status.active}' cronjob garbage-collector -n foxglove --timeout=90s || log_and_exit
 kubectl wait --for=condition=complete job -l app=garbage-collector -n foxglove --timeout=90s || log_and_exit
