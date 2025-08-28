@@ -9,7 +9,7 @@ services:
       MINIO_ROOT_PASSWORD: password
 
   createbuckets:
-    image: quay.io/minio/mc:RELEASE.2025-03-12T17-29-24Z
+    image: minio/mc:latest
     depends_on:
       - minio
     restart: on-failure
