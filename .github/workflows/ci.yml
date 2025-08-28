@@ -31,4 +31,3 @@ jobs:
           FOXGLOVE_API_URL: ${{ secrets.TEST_PRIMARY_SITE_API_URL }}
           FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
         run: ./tests/test-primary-site-chart.sh ./charts/primary-site
-

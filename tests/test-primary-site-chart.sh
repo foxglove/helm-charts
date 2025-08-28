@@ -55,7 +55,9 @@ helm upgrade --install foxglove-primary-site "$chart" \
 log_and_exit() {
 	kubectl get pods -n foxglove
 	kubectl get events -n foxglove
-	kubectl logs -n foxglove
+	kubectl logs -n foxglove deployment/inbox-listener
+	kubectl logs -n foxglove deployment/query-service
+	kubectl logs -n foxglove deployment/site-controller
 	exit 1
 }
 
