@@ -69,13 +69,6 @@ wait_for_pod() {
 	kubectl wait --for=condition=ready pod -l "app=$1" --namespace foxglove --timeout=90s || log_and_exit
 }
 
-minikube service list
-
-sleep 2
-
-kubectl get pods -A
-
-
 wait_for_deployment site-controller
 wait_for_deployment inbox-listener
 wait_for_deployment query-service
