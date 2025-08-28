@@ -81,11 +81,3 @@ wait_for_deployment query-service
 wait_for_pod site-controller
 wait_for_pod inbox-listener
 wait_for_pod query-service
-
-kubectl port-forward service/stream 4001:8080 -n foxglove &
-kubectl port-forward service/query 4002:8080 -n foxglove &
-
-sleep 2
-
-curl localhost:4001/liveness
-curl localhost:4002/liveness
