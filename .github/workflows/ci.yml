@@ -28,6 +28,6 @@ jobs:
       - name: Test primary site chart install
         timeout-minutes: 5
         env:
-          FOXGLOVE_API_URL: ${{ secrets.TEST_PRIMARY_SITE_API_URL }}
+          FOXGLOVE_API_URL: ${{ vars.TEST_PRIMARY_SITE_API_URL }}
           FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
         run: ./tests/test-primary-site-chart.sh ./charts/primary-site
