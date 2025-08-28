@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Install the primary site helm chart into a fresh minikube instance and validate that all the pods were created correctly.
+#
+# The host environment needs to have the following variables set:
+# - FOXGLOVE_API_URL: the URL to the API version being used
+# - FOXGLOVE_SITE_TOKEN: a site token for a primary site created with the above API
+#
+# The host also needs to have minio with lake and inbox buckets created. It can be started with the following:
+# ```
+# docker compose up -d
+# ```
+#
+# When everything is ready, run the tests with `./test-primary-site-chart.sh ./charts/primary-site`.
+
 set -euo pipefail
 
 chart="${1:-""}"
