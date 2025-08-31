@@ -39,8 +39,7 @@ template:
     {{- end }}
     containers:
       - name: inbox-listener
-        {{- $image := ternary "legacyImage" "image" .Values.inboxListener.useLegacyImage }}
-        image: {{ index .Values.inboxListener.deployment $image }}:{{ .Chart.AppVersion }}
+        image: {{ .Values.inboxListener.deployment.image }}:{{ .Chart.AppVersion }}
         resources:
           requests:
             cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
