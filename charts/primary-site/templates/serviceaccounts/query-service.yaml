@@ -1,11 +1,11 @@
 {{- $values :=  include "primary-site.mergedQueryServiceValues" . | fromYaml -}}
-{{- if .enabled }}
+{{- if $values.deployment.serviceAccount.enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: query-service
   annotations:
-    {{- range $key, $value := $values.annotations }}
+    {{- range $key, $value := $values.deployment.serviceAccount.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 {{- end }}
