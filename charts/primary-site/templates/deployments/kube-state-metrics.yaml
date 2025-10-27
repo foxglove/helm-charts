@@ -5,7 +5,11 @@ metadata:
   labels:
     app: kube-state-metrics
 spec:
-  replicas: {{ if .Values.kubeStateMetrics.enabled }}1{{else}}0{{end}}
+  {{ if .Values.kubeStateMetrics.enabled }}
+  replicas: 1
+  {{ else }}
+  replicas: 0
+  {{ end }}
   selector:
     matchLabels:
       app: kube-state-metrics
@@ -64,7 +68,7 @@ spec:
             - '--port=6001'
             - '--resources=pods,deployments'
             - '--namespaces={{ .Release.Namespace }}'
-            - '--metric-allowlist=kube_pod_container_status_last_terminated_reason,kube_pod_container_status_restarts_total,kube_pod_completion_time,kube_deployment_status_condition,kube_deployment_status_replicas_ready,kube_deployment_status_replicas_unavailable,kube_deployment_status_replicas_available, kube_deployment_status_replicas'
+            - '--metric-allowlist={{ join "," .Values.kubeStateMetrics.metricAllowList }}'
       serviceAccountName: kube-state-metrics
       {{- if .Values.kubeStateMetrics.deployment.nodeSelectors }}
       nodeSelector:
