@@ -249,3 +249,28 @@ garbageCollector:
       ## enabled: true
       ## annotations:
       ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-garbage-collector-sa-role
+
+kubeStateMetrics:
+  enabled: false
+  metricAllowList:
+    - "kube_pod_container_status_last_terminated_reason"
+    - "kube_pod_container_status_restarts_total"
+    - "kube_pod_completion_time"
+    - "kube_deployment_status_condition"
+    - "kube_deployment_status_replicas_ready"
+    - "kube_deployment_status_replicas_unavailable"
+    - "kube_deployment_status_replicas_available"
+    - "kube_deployment_status_replicas"
+  deployment:
+    image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0
+    nodeSelectors: {}
+    resources:
+      requests:
+        cpu: 250m
+        memory: 250Mi
+      limits:
+        cpu: 250m
+        memory: 250Mi
+    podLabels: {}
+    podAnnotations: {}
+    nodeSelectors: {}

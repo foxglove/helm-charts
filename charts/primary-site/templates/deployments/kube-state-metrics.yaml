@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  labels:
+    app: kube-state-metrics
+spec:
+  {{ if .Values.kubeStateMetrics.enabled }}
+  replicas: 1
+  {{ else }}
+  replicas: 0
+  {{ end }}
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        app: kube-state-metrics
+        {{- range $key, $value := .Values.kubeStateMetrics.deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      annotations:
+        {{- range $key, $value := .Values.kubeStateMetrics.deployment.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    spec:
+      automountServiceAccountToken: true
+      containers:
+        - image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0
+          resources:
+            requests:
+              cpu: {{ .Values.kubeStateMetrics.deployment.resources.requests.cpu }}
+              memory: {{ .Values.kubeStateMetrics.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.kubeStateMetrics.deployment.resources.limits.cpu }}
+              memory: {{ .Values.kubeStateMetrics.deployment.resources.limits.memory }}
+
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http-metrics
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          name: kube-state-metrics
+          ports:
+            - containerPort: 6001
+              name: http-metrics
+            - containerPort: 8081
+              name: telemetry
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: telemetry
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          # This is copied from the simple example in the kube-state-metrics repo.
+          # It's not required but best practice to keep it in.
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+          args:
+            - '--port=6001'
+            - '--resources=pods,deployments'
+            - '--namespaces={{ .Release.Namespace }}'
+            - '--metric-allowlist={{ join "," .Values.kubeStateMetrics.metricAllowList }}'
+      serviceAccountName: kube-state-metrics
+      {{- if .Values.kubeStateMetrics.deployment.nodeSelectors }}
+      nodeSelector:
+        {{- range $key, $value := .Values.kubeStateMetrics.deployment.nodeSelectors }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end}}
+
