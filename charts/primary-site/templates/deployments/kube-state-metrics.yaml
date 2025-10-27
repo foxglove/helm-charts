@@ -54,6 +54,8 @@ spec:
               port: telemetry
             initialDelaySeconds: 5
             timeoutSeconds: 5
+          # This is copied from the simple example in the kube-state-metrics repo.
+          # It's not required but best practice to keep it in.
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
