@@ -251,7 +251,7 @@ garbageCollector:
       ##   eks.amazonaws.com/role-arn: arn:aws:iam::xxxxxxxxxxxx:role/foxglove-garbage-collector-sa-role
 
 kubeStateMetrics:
-  enabled: true
+  enabled: false
   metricAllowList:
     - "kube_pod_container_status_last_terminated_reason"
     - "kube_pod_container_status_restarts_total"
