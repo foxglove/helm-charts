@@ -33,6 +33,11 @@ spec:
           containers:
             - name: garbage-collector
               image: {{ .Values.garbageCollector.deployment.image }}:{{ .Chart.AppVersion }}
+              securityContext:
+                allowPrivilegeEscalation: false
+                runAsNonRoot: true
+                runAsUser: 65534
+                runAsGroup: 65534
               volumeMounts:
                 - mountPath: /secrets
                   name: cloud-credentials
