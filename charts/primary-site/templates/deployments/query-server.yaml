@@ -43,6 +43,11 @@ spec:
       containers:
         - name: query-service
           image: {{ $values.deployment.image }}:{{ .Chart.AppVersion }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
           resources:
             requests:
               cpu: {{ $values.deployment.resources.requests.cpu }}
