@@ -40,6 +40,11 @@ template:
     containers:
       - name: inbox-listener
         image: {{ .Values.inboxListener.deployment.image }}:{{ .Chart.AppVersion }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 65534
+          runAsGroup: 65534
         resources:
           requests:
             cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
