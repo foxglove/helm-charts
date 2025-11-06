@@ -23,6 +23,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
+      serviceAccount: site-controller
       {{- if .Values.siteController.deployment.extraVolumes }}
       volumes:
         {{- toYaml .Values.siteController.deployment.extraVolumes | nindent 8 }}
@@ -87,6 +88,14 @@ spec:
               value: {{ .Values.siteController.deployment.metrics.subsystem }}
             - name: PRIMARY_SITE_VERSION
               value: {{ .Chart.Version }}
+            - name: ENABLE_SITE_METRICS
+              value: "{{ .Values.globals.publishSiteMetrics }}"
+            - name: SITE_CONTROLLER_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SITE_CONTROLLER_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{- range $item := .Values.siteController.deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
