@@ -1,0 +1,22 @@
+{{- with .Values.externalConnector.autoscaling -}}
+{{- if .enabled -}}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: external-connector
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: external-connector
+  minReplicas: {{ .minReplicas }}
+  maxReplicas: {{ .minReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .averageCpuUtilization }}
+{{- end -}}
+{{- end -}}

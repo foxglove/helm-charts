@@ -1,0 +1,67 @@
+# Default values for edge-site.
+
+globals:
+  # Environment Secrets
+  # List installed Secrets in the foxglove namespace that will be loaded as
+  # environment variables. A single Secret can contain multiple key-value pairs.
+  secrets:
+  ## E.g.:
+  ## - arbitrary-secret
+  ## - another-secret
+
+  proxy:
+    enabled: false
+
+  aws:
+    ## For example: us-east-1
+    region: ""
+
+  cache:
+    enabled: true
+    bucketName: "foxglove-cache"
+
+ingress:
+  ## If you are configuring your own ingress controller, set this to 'false'
+  enabled: true
+  className:
+  annotations: {}
+  # set the host value for an ingress
+  host:
+  ## This section is only required if TLS is to be enabled for this ingress
+  tls:
+    ## E.g.:
+    ## - hosts:
+    ##   - www.example.com
+    ##   secretName: ingress-tls-csi
+
+externalConnector:
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    averageCpuUtilization: 80
+  service:
+    annotations: {}
+  deployment:
+    image: "us-central1-docker.pkg.dev/foxglove-images/images/external-connector"
+    serviceAccount:
+      enabled: false
+      annotations: {}
+    initContainers: []
+    extraVolumes: []
+    extraVolumeMounts: []
+    resources:
+      requests:
+        cpu: 250m
+        memory: 250Mi
+      limits:
+        cpu: 250m
+        memory: 250Mi
+    podLabels: {}
+    podAnnotations: {}
+    nodeSelectors: {}
+    metrics:
+      namespace: ""
+      subsystem: ""
+    env: []
+    terminationGracePeriodSeconds: 30

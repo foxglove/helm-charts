@@ -1,0 +1,16 @@
+apiVersion: v2
+name: external-connector
+description: Foxglove External Connector
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+#
+# Example versions:
+# 1.0.0-alpha.0
+# 1.0.0-alpha.1
+# 1.0.0
+version: "0.0.1"
+
+appVersion: "22a04afa1b8e1d9ff6263e2a28e8f1b2f19c5552"
