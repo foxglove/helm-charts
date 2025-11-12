@@ -1,6 +1,6 @@
 {{- with .Values.externalConnector.autoscaling -}}
 {{- if .enabled -}}
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: external-connector

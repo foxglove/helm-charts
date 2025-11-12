@@ -32,6 +32,13 @@ spec:
           secret:
             secretName: gcp-cloud-credential
             optional: true
+      {{- if $deployment.extraVolumes }}
+        {{- toYaml $deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- if $deployment.initContainers }}
+      initContainers:
+        {{- toYaml $deployment.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: external-connector
           image: {{ $deployment.image }}:{{ .Chart.AppVersion }}
@@ -57,9 +64,17 @@ spec:
           volumeMounts:
             - mountPath: /secrets
               name: gcp-cloud-credentials
+          {{- if $deployment.extraVolumeMounts }}
+            {{- toYaml $deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
           envFrom:
+            # Secret used to grant access to cache bucket
             - secretRef:
                 name: cloud-credentials
+                optional: true
+            # Secret used to key used to encrypt cookies
+            - secretRef:
+                name: cookie-encryption-key
                 optional: true
             {{- range $k := .Values.globals.secrets }}
             - secretRef:
@@ -99,7 +114,7 @@ spec:
           startupProbe:
             httpGet:
               port: 8080
-              name: "/liveness"
+              path: "/liveness"
             initialDelaySeconds: 1
             periodSeconds: 1
             timeoutSeconds: 1
@@ -118,11 +133,11 @@ spec:
             periodSeconds: 3
             timeoutSeconds: 1
             failureThreshold: 20
-          terminationGracePeriodSeconds: {{ $deployment.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ $deployment.terminationGracePeriodSeconds }}
       {{- if $deployment.serviceAccount.enabled }}
       serviceAccount: external-connector
       {{- end }}
-      {{- if gt (len $deployment.nodeSelectors) 0 }}
+      {{- if $deployment.nodeSelectors }}
       nodeSelector:
         {{- range $key, $value := $deployment.nodeSelectors }}
         {{ $key }}: {{ $value | quote }}

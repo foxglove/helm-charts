@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "resource": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": "string"
+        },
+        "memory": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "requiredProperties": ["cpu", "memory"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "globals": {
+      "type": "object",
+      "properties": {
+        "secrets": {
+          "type": ["array", "null"]
+        },
+        "proxy": {
+          "type": "object"
+        },
+        "aws": {
+          "type": "object"
+        },
+        "azure": {
+          "type": "object"
+        },
+        "cache": {
+          "type": "object",
+          "properties": {
+            "bucketName": {
+              "type": "string"
+            },
+            "storageProvider": {
+              "type": "string",
+              "enum": ["aws", "azure", "google_cloud", "s3_compatible"]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "className": {
+          "type": ["string", "null"]
+        },
+        "annotations": {
+          "type": ["object", "null"]
+        },
+        "host": {
+          "type": ["string", "null"]
+        },
+        "tls": {
+          "type": ["array", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "externalConnector": {
+      "type": "object",
+      "properties": {
+        "autoscaling": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "minReplicas": {
+              "type": "number"
+            },
+            "maxReplicas": {
+              "type": "number"
+            },
+            "averageCpuUtilization": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "service": {
+          "type": "object",
+          "properties": {
+            "annotations": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "image": {
+              "type": "string"
+            },
+            "replicas": {
+              "type": "number"
+            },
+            "initContainers": {
+              "type": "array"
+            },
+            "extraVolumes": {
+              "type": "array"
+            },
+            "extraVolumeMounts": {
+              "type": "array"
+            },
+            "resources": {
+              "type": "object",
+              "properties": {
+                "requests": {
+                  "$ref": "#/definitions/resource"
+                },
+                "limits": {
+                  "$ref": "#/definitions/resource"
+                }
+              },
+              "additionalProperties": false,
+              "requiredProperties": ["requests", "limits"]
+            },
+            "podLabels": {
+              "type": "object"
+            },
+            "podAnnotations": {
+              "type": "object"
+            },
+            "nodeSelectors": {
+              "type": "object"
+            },
+            "metrics": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string"
+                },
+                "subsystem": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "requiredProperties": ["namespace", "subsystem"]
+            },
+            "env": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "terminationGracePeriodSeconds": {
+              "type": "number"
+            },
+            "serviceAccount": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "annotations": {
+                  "type": "object"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "requiredProperties": ["globals", "ingress", "externalConnector"]
+}
