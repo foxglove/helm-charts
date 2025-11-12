@@ -45,6 +45,6 @@ jobs:
       - uses: medyagh/setup-minikube@v0.0.20
         with:
           addons: metrics-server
-      - name: Test primary site chart install
+      - name: Test external connector chart install
         timeout-minutes: 5
         run: ./tests/test-external-connector-chart.sh ./charts/external-connector
