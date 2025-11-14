@@ -42,6 +42,10 @@ template:
         image: {{ .Values.inboxListener.deployment.image }}:{{ .Chart.AppVersion }}
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 65534
           runAsGroup: 65534
