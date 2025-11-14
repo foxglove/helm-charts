@@ -474,6 +474,17 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/edge-site-0.0.0-alpha.0/edge-site-0.0.0-alpha.0.tgz
     version: 0.0.0-alpha.0
+  external-connector:
+  - apiVersion: v2
+    appVersion: b891fd66730df90b7101d2b39cf6c1e777e32da3
+    created: "2025-11-14T10:26:22.470145193Z"
+    description: Foxglove External Connector
+    digest: 575c6233e2855ed1956c38d3dfc616e3deaa1e6a57e7d75e91c849a274eb8273
+    name: external-connector
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/external-connector-0.0.1/external-connector-0.0.1.tgz
+    version: 0.0.1
   primary-site:
   - apiVersion: v2
     appVersion: 22a04afa1b8e1d9ff6263e2a28e8f1b2f19c5552
@@ -1454,4 +1465,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.0-alpha.1/primary-site-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2025-11-10T22:55:40.010251631Z"
+generated: "2025-11-14T10:26:22.470690344Z"
