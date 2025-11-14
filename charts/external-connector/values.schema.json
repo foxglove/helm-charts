@@ -35,6 +35,9 @@
         "cache": {
           "type": "object",
           "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
             "bucketName": {
               "type": "string"
             },
@@ -42,7 +45,8 @@
               "type": "string",
               "enum": ["aws", "azure", "google_cloud", "s3_compatible"]
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false

@@ -28,6 +28,7 @@ globals:
   # Bucket used by the external connector to cache and speed up queries.
   cache:
     enabled: false
+    storageProvider: "s3_compatible"
     bucketName: "foxglove-cache"
 
 ingress:
