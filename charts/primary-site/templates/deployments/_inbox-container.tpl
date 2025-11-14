@@ -49,6 +49,8 @@ template:
           runAsNonRoot: true
           runAsUser: 65534
           runAsGroup: 65534
+          seccompProfile:
+            type: RuntimeDefault
         resources:
           requests:
             cpu: {{ .Values.inboxListener.deployment.resources.requests.cpu }}
