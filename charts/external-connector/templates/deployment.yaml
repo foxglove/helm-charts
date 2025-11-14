@@ -1,0 +1,145 @@
+{{- $deployment := .Values.externalConnector.deployment -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-connector
+  labels:
+    app: external-connector
+spec:
+  replicas: {{ $deployment.replicas }}
+  selector:
+    matchLabels:
+      app: external-connector
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: external-connector
+        {{- range $key, $value := $deployment.podLabels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      annotations:
+        {{- range $key, $value := $deployment.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    spec:
+      volumes:
+        - name: gcp-cloud-credentials
+          secret:
+            secretName: gcp-cloud-credential
+            optional: true
+      {{- if $deployment.extraVolumes }}
+        {{- toYaml $deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- if $deployment.initContainers }}
+      initContainers:
+        {{- toYaml $deployment.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: external-connector
+          image: {{ $deployment.image }}:{{ .Chart.AppVersion }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+          resources:
+            {{- with $deployment.resources }}
+            requests:
+              cpu: {{ .requests.cpu }}
+              memory: {{ .requests.memory }}
+            limits:
+              cpu: {{ .limits.cpu }}
+              memory: {{ .limits.memory }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 6001
+          volumeMounts:
+            - mountPath: /secrets
+              name: gcp-cloud-credentials
+          {{- if $deployment.extraVolumeMounts }}
+            {{- toYaml $deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+          envFrom:
+            # Secret used to grant access to cache bucket
+            - secretRef:
+                name: cloud-credentials
+                optional: true
+            # Secret used to key used to encrypt cookies
+            - secretRef:
+                name: cookie-encryption-key
+                optional: true
+            {{- range $k := .Values.globals.secrets }}
+            - secretRef:
+                name: {{ $k }}
+            {{- end }}
+          env:
+            {{- with lookup "v1" "Secret" .Release.Namespace "gcp-cloud-credential" }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/credentials.json
+            {{- end }}
+            {{- if .Values.globals.proxy.enabled }}
+            - name: HTTP_PROXY
+              value: {{ .Values.globals.proxy.httpProxy }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.globals.proxy.httpsProxy }}
+            - name: NO_PROXY
+              value: {{ .Values.globals.proxy.noProxy }}
+            {{- end }}
+            - name: ADDRESS
+              value: "0.0.0.0:8080"
+            - name: PROMETHEUS_ADDRESS
+              value: "0.0.0.0:6001"
+            - name: AWS_REGION
+              value: "{{ .Values.globals.aws.region }}"
+            - name: AWS_SDK_LOAD_CONFIG
+              value: "true"
+            - name: PROMETHEUS_METRICS_NAMESPACE
+              value: "{{ $deployment.metrics.namespace }}"
+            - name: PROMETHEUS_METRICS_SUBSYSTEM
+              value: "{{ $deployment.metrics.subsystem }}"
+            - name: EXTERNAL_CONNECTOR_VERSION
+              value: "{{ .Chart.Version }}"
+            {{- range $item := $deployment.env }}
+            - name: {{ $item.name }}
+              value: {{ $item.value | quote}}
+            {{- end }}
+          startupProbe:
+            httpGet:
+              port: 8080
+              path: "/liveness"
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            timeoutSeconds: 1
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /liveness
+            periodSeconds: 3
+            timeoutSeconds: 1
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /liveness
+            periodSeconds: 3
+            timeoutSeconds: 1
+            failureThreshold: 20
+      terminationGracePeriodSeconds: {{ $deployment.terminationGracePeriodSeconds }}
+      {{- if $deployment.serviceAccount.enabled }}
+      serviceAccount: external-connector
+      {{- end }}
+      {{- if $deployment.nodeSelectors }}
+      nodeSelector:
+        {{- range $key, $value := $deployment.nodeSelectors }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end}}
