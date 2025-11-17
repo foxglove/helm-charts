@@ -34,10 +34,16 @@ spec:
             - name: garbage-collector
               image: {{ .Values.garbageCollector.deployment.image }}:{{ .Chart.AppVersion }}
               securityContext:
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
                 allowPrivilegeEscalation: false
                 runAsNonRoot: true
                 runAsUser: 65534
                 runAsGroup: 65534
+                seccompProfile:
+                  type: RuntimeDefault
               volumeMounts:
                 - mountPath: /secrets
                   name: cloud-credentials
