@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Install the external connector helm chart into a fresh minikube instance and validate that all the pods were created correctly.
+# Install the remote data loader helm chart into a fresh minikube instance and validate that all the pods were created correctly.
 #
 # The host also needs to have minio with cache bucket created. It can be started with the following:
 #
@@ -8,14 +8,14 @@
 # docker compose up -d
 # ```
 #
-# When everything is ready, run the tests with `./test-external-connector-chart.sh ./charts/external-connector`.
+# When everything is ready, run the tests with `./test-remote-data-loader-chart.sh ./charts/remote-data-loader`.
 
 set -euo pipefail
 
 chart="${1:-""}"
 
 if [ -z "$chart" ]; then
-	echo "usage: ./test-external-connector-chart.sh <path to external connector chart>"
+	echo "usage: ./test-remote-data-loader-chart.sh <path to remote data loader chart>"
 	exit 1
 fi
 
@@ -49,14 +49,14 @@ kubectl create namespace foxglove
 
 kubectl apply -f "$cloud_credentials_file" --namespace foxglove
 
-helm upgrade --install foxglove-external-connector "$chart" \
+helm upgrade --install foxglove-remote-data-loader "$chart" \
 	--namespace foxglove \
 	--set globals.cache.storageProvider="s3_compatible"
 
 log_and_exit() {
 	kubectl get pods -n foxglove
 	kubectl get events -n foxglove
-	kubectl logs -n foxglove deployment/external-connector
+	kubectl logs -n foxglove deployment/remote-data-loader
 	exit 1
 }
 
@@ -69,7 +69,7 @@ wait_for_pod() {
 }
 
 # Wait for each of the deployments to complete to make sure pods are created
-wait_for_deployment external-connector
+wait_for_deployment remote-data-loader
 
 # Wait for each of the pods to complete to make sure they didn't fail
-wait_for_pod external-connector
+wait_for_pod remote-data-loader

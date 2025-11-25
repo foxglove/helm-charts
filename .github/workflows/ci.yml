@@ -32,7 +32,7 @@ jobs:
           FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
         run: ./tests/test-primary-site-chart.sh ./charts/primary-site
 
-  test_external_connector:
+  test_remote_data_loader:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +45,6 @@ jobs:
       - uses: medyagh/setup-minikube@v0.0.20
         with:
           addons: metrics-server
-      - name: Test external connector chart install
+      - name: Test remote data loader chart install
         timeout-minutes: 5
-        run: ./tests/test-external-connector-chart.sh ./charts/external-connector
+        run: ./tests/test-remote-data-loader-chart.sh ./charts/remote-data-loader

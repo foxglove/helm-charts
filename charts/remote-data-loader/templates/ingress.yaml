@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: external-connector
+  name: remote-data-loader
   annotations:
     {{- range $key, $value := .annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -23,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: external-connector
+                name: remote-data-loader
                 port: 
                   number: 8080
 {{- end }}
