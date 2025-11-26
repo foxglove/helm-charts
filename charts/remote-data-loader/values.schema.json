@@ -20,6 +20,9 @@
     "globals": {
       "type": "object",
       "properties": {
+        "manifestEndpoint": {
+          "type": "string"
+        },
         "secrets": {
           "type": ["array", "null"]
         },
@@ -49,6 +52,7 @@
           "additionalProperties": false
         }
       },
+      "requiredProperties": ["manifestEndpoint"],
       "additionalProperties": false
     },
     "ingress": {
@@ -72,7 +76,7 @@
       },
       "additionalProperties": false
     },
-    "externalConnector": {
+    "remoteDataLoader": {
       "type": "object",
       "properties": {
         "autoscaling": {
@@ -192,5 +196,5 @@
     }
   },
   "additionalProperties": false,
-  "requiredProperties": ["globals", "ingress", "externalConnector"]
+  "requiredProperties": ["globals", "ingress", "remoteDataLoader"]
 }

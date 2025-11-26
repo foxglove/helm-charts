@@ -1,14 +1,14 @@
-{{- with .Values.externalConnector.autoscaling -}}
+{{- with .Values.remoteDataLoader.autoscaling -}}
 {{- if .enabled -}}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: external-connector
+  name: remote-data-loader
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: external-connector
+    name: remote-data-loader
   minReplicas: {{ .minReplicas }}
   maxReplicas: {{ .minReplicas }}
   metrics:

@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: external-connector
+  name: remote-data-loader
   annotations:
-    {{- range $key, $value := .Values.externalConnector.service.annotations }}
+    {{- range $key, $value := .Values.remoteDataLoader.service.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
   selector:
-    app: external-connector
+    app: remote-data-loader
   ports:
     - name: controller
       protocol: TCP
