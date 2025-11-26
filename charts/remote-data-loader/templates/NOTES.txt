@@ -1,0 +1,9 @@
+Welcome to your Foxglove Remote Data Loader!
+
+See the status of your release:
+
+    helm status -n foxglove foxglove-remote-data-loader
+
+Complete your installation:
+
+    https://docs.foxglove.dev/docs/visualization/connecting/remote-data-loader

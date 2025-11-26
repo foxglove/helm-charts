@@ -1,15 +1,15 @@
-{{- $deployment := .Values.externalConnector.deployment -}}
+{{- $deployment := .Values.remoteDataLoader.deployment -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: external-connector
+  name: remote-data-loader
   labels:
-    app: external-connector
+    app: remote-data-loader
 spec:
   replicas: {{ $deployment.replicas }}
   selector:
     matchLabels:
-      app: external-connector
+      app: remote-data-loader
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: external-connector
+        app: remote-data-loader
         {{- range $key, $value := $deployment.podLabels }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
@@ -40,7 +40,7 @@ spec:
         {{- toYaml $deployment.initContainers | nindent 8 }}
       {{- end }}
       containers:
-        - name: external-connector
+        - name: remote-data-loader
           image: {{ $deployment.image }}:{{ .Chart.AppVersion }}
           securityContext:
             allowPrivilegeEscalation: false
@@ -105,7 +105,7 @@ spec:
               value: "{{ $deployment.metrics.namespace }}"
             - name: PROMETHEUS_METRICS_SUBSYSTEM
               value: "{{ $deployment.metrics.subsystem }}"
-            - name: EXTERNAL_CONNECTOR_VERSION
+            - name: REMOTE_DATA_LOADER_VERSION
               value: "{{ .Chart.Version }}"
             {{- range $item := $deployment.env }}
             - name: {{ $item.name }}
@@ -135,7 +135,7 @@ spec:
             failureThreshold: 20
       terminationGracePeriodSeconds: {{ $deployment.terminationGracePeriodSeconds }}
       {{- if $deployment.serviceAccount.enabled }}
-      serviceAccount: external-connector
+      serviceAccount: remote-data-loader
       {{- end }}
       {{- if $deployment.nodeSelectors }}
       nodeSelector:

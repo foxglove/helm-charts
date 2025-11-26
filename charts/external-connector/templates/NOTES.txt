@@ -1,9 +1,0 @@
-Welcome to your Foxglove External Connector!
-
-See the status of your release:
-
-    helm status -n foxglove foxglove-external-connector
-
-Complete your installation:
-
-    https://docs.foxglove.dev/docs/visualization/connecting/external-connector

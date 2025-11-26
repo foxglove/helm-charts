@@ -72,7 +72,7 @@
       },
       "additionalProperties": false
     },
-    "externalConnector": {
+    "remoteDataLoader": {
       "type": "object",
       "properties": {
         "autoscaling": {
@@ -192,5 +192,5 @@
     }
   },
   "additionalProperties": false,
-  "requiredProperties": ["globals", "ingress", "externalConnector"]
+  "requiredProperties": ["globals", "ingress", "remoteDataLoader"]
 }
