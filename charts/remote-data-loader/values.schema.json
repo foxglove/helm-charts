@@ -20,6 +20,9 @@
     "globals": {
       "type": "object",
       "properties": {
+        "manifestEndpoint": {
+          "type": "string"
+        },
         "secrets": {
           "type": ["array", "null"]
         },
@@ -49,6 +52,7 @@
           "additionalProperties": false
         }
       },
+      "requiredProperties": ["manifestEndpoint"],
       "additionalProperties": false
     },
     "ingress": {

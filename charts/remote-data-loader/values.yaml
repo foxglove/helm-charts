@@ -1,6 +1,8 @@
 # Default values for remote-data-loader
 
 globals:
+  # Configure the endpoint the remote data loader will retrieve manifests from.
+  manifestEndpoint: ""
   # Environment Secrets
   # List installed Secrets in the foxglove namespace that will be loaded as
   # environment variables. A single Secret can contain multiple key-value pairs.

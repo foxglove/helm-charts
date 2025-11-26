@@ -93,6 +93,8 @@ spec:
             - name: NO_PROXY
               value: {{ .Values.globals.proxy.noProxy }}
             {{- end }}
+            - name: MANIFEST_ENDPOINT
+              value: {{ .Values.globals.manifestEndpoint }}
             - name: ADDRESS
               value: "0.0.0.0:8080"
             - name: PROMETHEUS_ADDRESS

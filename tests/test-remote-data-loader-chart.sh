@@ -51,7 +51,8 @@ kubectl apply -f "$cloud_credentials_file" --namespace foxglove
 
 helm upgrade --install foxglove-remote-data-loader "$chart" \
 	--namespace foxglove \
-	--set globals.cache.storageProvider="s3_compatible"
+	--set globals.cache.storageProvider="s3_compatible" \
+	--set globals.manifestEndpoint="https://manifest.foxglove.dev"
 
 log_and_exit() {
 	kubectl get pods -n foxglove
