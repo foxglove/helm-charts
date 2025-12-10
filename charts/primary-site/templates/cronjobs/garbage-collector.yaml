@@ -33,6 +33,13 @@ spec:
           containers:
             - name: garbage-collector
               image: {{ .Values.garbageCollector.deployment.image }}:{{ .Chart.AppVersion }}
+              resources:
+                requests:
+                  cpu: {{ .Values.garbageCollector.deployment.resources.requests.cpu }}
+                  memory: {{ .Values.garbageCollector.deployment.resources.requests.memory }}
+              limits:
+                cpu: {{ .Values.garbageCollector.deployment.resources.limits.cpu }}
+                memory: {{ .Values.garbageCollector.deployment.resources.limits.memory }}
               securityContext:
                 readOnlyRootFilesystem: true
                 capabilities:
