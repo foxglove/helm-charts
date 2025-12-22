@@ -72,9 +72,9 @@ spec:
             - secretRef:
                 name: cloud-credentials
                 optional: true
-            # Secret used to key used to encrypt cookies
+            # Secret used to set options for auth / cookies
             - secretRef:
-                name: cookie-encryption-key
+                name: auth-credentials
                 optional: true
             {{- range $k := .Values.globals.secrets }}
             - secretRef:
