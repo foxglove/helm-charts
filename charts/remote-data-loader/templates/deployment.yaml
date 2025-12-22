@@ -1,4 +1,6 @@
 {{- $deployment := .Values.remoteDataLoader.deployment -}}
+{{- $cache := .Values.globals.cache -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -109,6 +111,12 @@ spec:
               value: "{{ $deployment.metrics.subsystem }}"
             - name: REMOTE_DATA_LOADER_VERSION
               value: "{{ .Chart.Version }}"
+            {{- if $cache.enabled }}
+            - name: REQUEST_CACHE_STORAGE_PROVIDER
+              value: {{ required "globals.cache.storageProvider is required when cache is enabled" $cache.storageProvider }}
+            - name: REQUEST_CACHE_BUCKET_NAME
+              value: {{ required "globals.cache.bucketName is required when cache is enabled" $cache.bucketName }}"
+            {{- end }}
             {{- range $item := $deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
