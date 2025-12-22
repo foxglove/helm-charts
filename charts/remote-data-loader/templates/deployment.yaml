@@ -115,7 +115,7 @@ spec:
             - name: REQUEST_CACHE_STORAGE_PROVIDER
               value: {{ required "globals.cache.storageProvider is required when cache is enabled" $cache.storageProvider }}
             - name: REQUEST_CACHE_BUCKET_NAME
-              value: {{ required "globals.cache.bucketName is required when cache is enabled" $cache.bucketName }}"
+              value: {{ required "globals.cache.bucketName is required when cache is enabled" $cache.bucketName }}
             {{- end }}
             {{- range $item := $deployment.env }}
             - name: {{ $item.name }}
