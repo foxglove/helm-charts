@@ -27,7 +27,7 @@ globals:
     bucketName: foxglove-inbox
   indexInPlace:
     storageProvider: google_cloud
-    # Muliple buckets can be provided as a comma-delimited list.
+    # Multiple buckets can be provided as a comma-delimited list.
     bucketName: foxglove-index-in-place
 
   ## Publish metrics from the primary site to Foxglove
