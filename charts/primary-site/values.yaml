@@ -27,6 +27,7 @@ globals:
     bucketName: foxglove-inbox
   indexInPlace:
     storageProvider: google_cloud
+    # Multiple buckets can be provided as a comma-delimited list.
     bucketName: foxglove-index-in-place
 
   ## Publish metrics from the primary site to Foxglove
@@ -169,7 +170,11 @@ indexer:
     metrics:
       namespace: ""
       subsystem: ""
-    env: []
+    env:
+      []
+      # MAX_CONCURRENCY: adjust the number of concurrent workers for indexing recordings.
+      # - name: MAX_CONCURRENCY
+      #   value: 4
     serviceAccount:
       enabled: false
       annotations: {}
@@ -272,7 +277,7 @@ kubeStateMetrics:
     - "kube_deployment_status_replicas_available"
     - "kube_deployment_status_replicas"
   deployment:
-    image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0
+    image: "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0"
     nodeSelectors: {}
     resources:
       requests:
