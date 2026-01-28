@@ -14,7 +14,7 @@ jobs:
       - name: lint
         run: helm lint charts/*
 
-  test_primary_site:
+  test_query_optimized_primary_site:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +30,24 @@ jobs:
         env:
           FOXGLOVE_API_URL: ${{ vars.TEST_PRIMARY_SITE_API_URL }}
           FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
-        run: ./tests/test-primary-site-chart.sh ./charts/primary-site
+        run: ./tests/test-query-optimized-primary-site-chart.sh ./charts/primary-site
+  test_index_in_place_primary_site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start minio
+        run: docker compose up minio -d
+        working-directory: tests
+      - name: Create minio buckets
+        run: docker compose up createbuckets
+        working-directory: tests
+      - uses: medyagh/setup-minikube@v0.0.20
+      - name: Test primary site chart install
+        timeout-minutes: 5
+        env:
+          FOXGLOVE_API_URL: ${{ vars.TEST_PRIMARY_SITE_API_URL }}
+          FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
+        run: ./tests/test-index-in-place-primary-site-chart.sh ./charts/primary-site
 
   test_remote_data_loader:
     runs-on: ubuntu-latest
