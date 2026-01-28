@@ -6,19 +6,19 @@
 # - FOXGLOVE_API_URL: the URL to the API version being used
 # - FOXGLOVE_SITE_TOKEN: a site token for a primary site created with the above API
 #
-# The host also needs to have minio with lake and inbox buckets created. It can be started with the following:
+# The host also needs to have minio with an index-in-place bucket created. It can be started with the following:
 # ```
 # docker compose up -d
 # ```
 #
-# When everything is ready, run the tests with `./test-primary-site-chart.sh ./charts/primary-site`.
+# When everything is ready, run the tests with `./test-index-in-place-primary-site-chart.sh ./charts/primary-site`.
 
 set -euo pipefail
 
 chart="${1:-""}"
 
 if [ -z "$chart" ]; then
-	echo "usage: ./test-primary-site-chart.sh <path to primary site chart>"
+	echo "usage: ./test-index-in-place-primary-site-chart.sh <path to primary site chart>"
 	exit 1
 fi
 
@@ -62,14 +62,13 @@ kubectl apply -f "$cloud_credentials_file" --namespace foxglove
 helm upgrade --install foxglove-primary-site "$chart" \
 	--namespace foxglove \
 	--set globals.foxgloveApiUrl="$api_url" \
-	--set globals.lake.storageProvider="s3_compatible" \
-	--set globals.inbox.storageProvider="s3_compatible" \
-	--set garbageCollector.schedule="*/1 * * * *"
+	--set globals.indexingStrategy="index-in-place" \
+	--set globals.indexInPlace.storageProvider="s3_compatible"
 
 log_and_exit() {
 	kubectl get pods -n foxglove
 	kubectl get events -n foxglove
-	kubectl logs -n foxglove deployment/inbox-listener
+	kubectl logs -n foxglove deployment/indexer
 	kubectl logs -n foxglove deployment/query-service
 	kubectl logs -n foxglove deployment/site-controller
 	exit 1
@@ -85,14 +84,10 @@ wait_for_pod() {
 
 # Wait for each of the deployments to complete to make sure pods are created
 wait_for_deployment site-controller
-wait_for_deployment inbox-listener
+wait_for_deployment indexer
 wait_for_deployment query-service
 
 # Wait for each of the pods to complete to make sure they didn't fail
 wait_for_pod site-controller
-wait_for_pod inbox-listener
+wait_for_pod indexer
 wait_for_pod query-service
-
-# Wait to make sure the garbage-collector job didn't fail
-kubectl wait --for=jsonpath='{.status.active}' cronjob garbage-collector -n foxglove --timeout=90s || log_and_exit
-kubectl wait --for=condition=complete job -l app=garbage-collector -n foxglove --timeout=90s || log_and_exit
