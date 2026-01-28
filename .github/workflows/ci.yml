@@ -46,7 +46,7 @@ jobs:
         timeout-minutes: 5
         env:
           FOXGLOVE_API_URL: ${{ vars.TEST_PRIMARY_SITE_API_URL }}
-          FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_PRIMARY_SITE_TOKEN }}
+          FOXGLOVE_SITE_TOKEN: ${{ secrets.TEST_INDEX_IN_PLACE_PRIMARY_SITE_TOKEN }}
         run: ./tests/test-index-in-place-primary-site-chart.sh ./charts/primary-site
 
   test_remote_data_loader:
