@@ -35,6 +35,9 @@
         "azure": {
           "type": "object"
         },
+        "disableAuth": {
+          "type": "boolean"
+        },
         "cache": {
           "type": "object",
           "properties": {

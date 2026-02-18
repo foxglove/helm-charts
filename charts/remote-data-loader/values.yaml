@@ -27,6 +27,9 @@ globals:
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
 
+  # Set to true to disable authentication (not recommended for production)
+  disableAuth: false
+
   # Bucket used by the remote data loader to cache and speed up queries.
   cache:
     enabled: false

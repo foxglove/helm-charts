@@ -111,6 +111,10 @@ spec:
               value: "{{ $deployment.metrics.subsystem }}"
             - name: REMOTE_DATA_LOADER_VERSION
               value: "{{ .Chart.Version }}"
+            {{- if .Values.globals.disableAuth }}
+            - name: DISABLE_AUTH
+              value: "true"
+            {{- end }}
             {{- if $cache.enabled }}
             - name: REQUEST_CACHE_STORAGE_PROVIDER
               value: {{ required "globals.cache.storageProvider is required when cache is enabled" $cache.storageProvider }}
