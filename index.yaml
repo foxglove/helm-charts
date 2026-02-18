@@ -1555,6 +1555,16 @@ entries:
     version: 0.0.0-alpha.1
   remote-data-loader:
   - apiVersion: v2
+    appVersion: 97c061bec4b2073b76eef1e568ce521ef90b9933
+    created: "2026-02-18T04:05:31.376867288Z"
+    description: Foxglove Remote Data Loader
+    digest: e55e5a1d7f877338dd04e04d0ee8ac4b334130b67d680faf66bbe5e85db1e2e0
+    name: remote-data-loader
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/remote-data-loader-0.0.3/remote-data-loader-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     appVersion: 24e79cafd7f2fbe44e6e5b14b7c96590e2491a74
     created: "2025-12-22T04:16:38.116876198Z"
     description: Foxglove Remote Data Loader
@@ -1574,4 +1584,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/remote-data-loader-0.0.1/remote-data-loader-0.0.1.tgz
     version: 0.0.1
-generated: "2026-01-28T21:25:11.336255905Z"
+generated: "2026-02-18T04:05:31.377227977Z"
