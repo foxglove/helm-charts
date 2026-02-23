@@ -105,6 +105,10 @@ spec:
               value: "{{ .Values.globals.aws.region }}"
             - name: AWS_SDK_LOAD_CONFIG
               value: "true"
+            - name: STORAGE_AZURE_STORAGE_ACCOUNT_NAME
+              value: "{{ .Values.globals.azure.storageAccountName }}"
+            - name: STORAGE_AZURE_SERVICE_URL
+              value: "{{ .Values.globals.azure.serviceUrl }}"
             - name: PROMETHEUS_METRICS_NAMESPACE
               value: "{{ $deployment.metrics.namespace }}"
             - name: PROMETHEUS_METRICS_SUBSYSTEM

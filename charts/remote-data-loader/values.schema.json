@@ -33,7 +33,16 @@
           "type": "object"
         },
         "azure": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "storageAccountName": {
+              "type": "string"
+            },
+            "serviceUrl": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         },
         "disableAuth": {
           "type": "boolean"
