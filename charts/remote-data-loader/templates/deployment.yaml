@@ -129,6 +129,27 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
             {{- end }}
+            # Cache behavior configuration
+            {{- if $cache.partListTouchIntervalMs }}
+            - name: REQUEST_CACHE_PART_LIST_TOUCH_INTERVAL_MS
+              value: "{{ $cache.partListTouchIntervalMs }}"
+            {{- end }}
+            {{- if $cache.maxBytesWaitMs }}
+            - name: REQUEST_CACHE_MAX_BYTES_WAIT_MS
+              value: "{{ $cache.maxBytesWaitMs }}"
+            {{- end }}
+            {{- if $cache.slowPartListUpdateThresholdMs }}
+            - name: REQUEST_CACHE_SLOW_PART_LIST_UPDATE_THRESHOLD_MS
+              value: "{{ $cache.slowPartListUpdateThresholdMs }}""
+            {{- end }}
+            {{- if $cache.slowPartUploadThresholdMs }}
+            - name: REQUEST_CACHE_SLOW_PART_UPLOAD_THRESHOLD_MS
+              value: "{{ $cache.slowPartUploadThresholdMs }}"
+            {{- end }}
+            {{- if $cache.slowBytesThresholdMs }}
+            - name: REQUEST_CACHE_SLOW_BYTES_THRESHOLD_MS
+              value: "{{ $cache.slowBytesThresholdMs }}"
+            {{- end }}
           startupProbe:
             httpGet:
               port: 8080
