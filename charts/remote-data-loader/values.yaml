@@ -35,6 +35,9 @@ globals:
     enabled: false
     storageProvider: "s3_compatible"
     bucketName: "foxglove-cache"
+    # Cache write tuning variables
+    # maxIncompletePartListAgeMs: 20000     # An incomplete part list is considered stale if it has not been updated in this period.
+    # partListWriteMinIntervalMs: 1000      # Writes to the part list will be throttled to at least this interval.
     # partListTouchIntervalMs: 5000         # How often to update the part list while waiting for parts to finish
     # maxBytesWaitMs: 30000                 # Maximum time to wait for bytes to be uploaded before giving up
     # slowPartListUpdateThresholdMs: 2000   # A warning will be logged if a single write to the part list takes longer than this.

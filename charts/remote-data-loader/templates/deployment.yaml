@@ -124,12 +124,14 @@ spec:
               value: {{ required "globals.cache.storageProvider is required when cache is enabled" $cache.storageProvider }}
             - name: REQUEST_CACHE_BUCKET_NAME
               value: {{ required "globals.cache.bucketName is required when cache is enabled" $cache.bucketName }}
+            {{- if $cache.partListWriteMinIntervalMs}}
+            - name: REQUEST_CACHE_PART_LIST_WRITE_MIN_INTERVAL_MS
+              value: "{{ $cache.partListWriteMinIntervalMs }}"
             {{- end }}
-            {{- range $item := $deployment.env }}
-            - name: {{ $item.name }}
-              value: {{ $item.value | quote}}
+            {{- if $cache.maxIncompletePartListAgeMs}}
+            - name: REQUEST_CACHE_MAX_INCOMPLETE_PART_LIST_AGE_MS
+              value: "{{ $cache.maxIncompletePartListAgeMs }}"
             {{- end }}
-            # Cache behavior configuration
             {{- if $cache.partListTouchIntervalMs }}
             - name: REQUEST_CACHE_PART_LIST_TOUCH_INTERVAL_MS
               value: "{{ $cache.partListTouchIntervalMs }}"
@@ -140,7 +142,7 @@ spec:
             {{- end }}
             {{- if $cache.slowPartListUpdateThresholdMs }}
             - name: REQUEST_CACHE_SLOW_PART_LIST_UPDATE_THRESHOLD_MS
-              value: "{{ $cache.slowPartListUpdateThresholdMs }}""
+              value: "{{ $cache.slowPartListUpdateThresholdMs }}"
             {{- end }}
             {{- if $cache.slowPartUploadThresholdMs }}
             - name: REQUEST_CACHE_SLOW_PART_UPLOAD_THRESHOLD_MS
@@ -149,6 +151,11 @@ spec:
             {{- if $cache.slowBytesThresholdMs }}
             - name: REQUEST_CACHE_SLOW_BYTES_THRESHOLD_MS
               value: "{{ $cache.slowBytesThresholdMs }}"
+            {{- end }}
+            {{- end }}
+            {{- range $item := $deployment.env }}
+            - name: {{ $item.name }}
+              value: {{ $item.value | quote}}
             {{- end }}
           startupProbe:
             httpGet:

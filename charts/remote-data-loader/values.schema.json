@@ -60,6 +60,14 @@
               "type": "string",
               "enum": ["aws", "azure", "google_cloud", "s3_compatible"]
             },
+            "partListWriteMinIntervalMs": {
+              "type": "number",
+              "description": "Writes to the part list will be throttled to at least this interval"
+            },
+            "maxIncompletePartListAgeMs": {
+              "type": "number",
+              "description": "An incomplete part list is considered stale if it has not been updated in this period."
+            },
             "partListTouchIntervalMs": {
               "type": "number",
               "description": "How often to update the part list while waiting for parts to finish"
