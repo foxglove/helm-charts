@@ -59,6 +59,34 @@
             "storageProvider": {
               "type": "string",
               "enum": ["aws", "azure", "google_cloud", "s3_compatible"]
+            },
+            "partListWriteMinIntervalMs": {
+              "type": "number",
+              "description": "Writes to the part list will be throttled to at least this interval"
+            },
+            "maxIncompletePartListAgeMs": {
+              "type": "number",
+              "description": "An incomplete part list is considered stale if it has not been updated in this period."
+            },
+            "partListTouchIntervalMs": {
+              "type": "number",
+              "description": "How often to update the part list while waiting for parts to finish"
+            },
+            "maxBytesWaitMs": {
+              "type": "number",
+              "description": "Maximum time to wait for bytes to be uploaded before giving up"
+            },
+            "slowPartListUpdateThresholdMs": {
+              "type": "number",
+              "description": "A warning will be logged if a single write to the part list takes longer than this."
+            },
+            "slowPartUploadThresholdMs": {
+              "type": "number",
+              "description": "A warning will be logged if a single upload to the part list takes longer than this."
+            },
+            "slowBytesThresholdMs": {
+              "type": "number",
+              "description": "A warning will be logged if reading from the backend pauses for longer than this."
             }
           },
           "additionalProperties": false
