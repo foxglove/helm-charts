@@ -30,6 +30,9 @@ globals:
   # Set to true to disable authentication (not recommended for production)
   disableAuth: false
 
+  # Set to true to allow HTTP sources.
+  allowHttpSources: false
+
   # Bucket used by the remote data loader to cache and speed up queries.
   cache:
     enabled: false
