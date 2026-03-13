@@ -47,6 +47,9 @@
         "disableAuth": {
           "type": "boolean"
         },
+        "allowHttpSources": {
+          "type": "boolean"
+        },
         "cache": {
           "type": "object",
           "properties": {
@@ -58,7 +61,7 @@
             },
             "storageProvider": {
               "type": "string",
-              "enum": ["aws", "azure", "google_cloud", "s3_compatible"]
+              "enum": ["aws", "azure", "google_cloud", "s3_compatible", "in_memory"]
             },
             "partListWriteMinIntervalMs": {
               "type": "number",

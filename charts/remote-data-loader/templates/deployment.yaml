@@ -119,6 +119,10 @@ spec:
             - name: DISABLE_AUTH
               value: "true"
             {{- end }}
+            {{- if .Values.globals.allowHttpSources }}
+            - name: ALLOW_HTTP_SOURCES
+              value: "true"
+            {{- end }}
             {{- if $cache.enabled }}
             - name: REQUEST_CACHE_STORAGE_PROVIDER
               value: {{ required "globals.cache.storageProvider is required when cache is enabled" $cache.storageProvider }}
