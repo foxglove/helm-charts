@@ -27,10 +27,11 @@ globals:
     ## For example: https://<resourcegroup>.blob.core.windows.net
     serviceUrl: ""
 
-  # Set to true to disable authentication (not recommended for production)
+  # Set to true to disable authentication. This should only used in development or
+  # when using an alternative authentication mechanism such as a VPN or identity-aware proxy.
   disableAuth: false
 
-  # Set to true to allow HTTP sources.
+  # Set to true to allow connections to the backend using HTTP.
   allowHttpSources: false
 
   # Bucket used by the remote data loader to cache and speed up queries.
