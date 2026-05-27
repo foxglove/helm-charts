@@ -74,10 +74,10 @@ inboxListener:
     resources:
       requests:
         cpu: 1000m
-        memory: 4Gi
+        memory: 8Gi
       limits:
         cpu: 1000m
-        memory: 4Gi
+        memory: 8Gi
     podLabels: {}
     podAnnotations: {}
     nodeSelectors: {}
