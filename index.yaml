@@ -487,6 +487,17 @@ entries:
     version: 0.0.1
   primary-site:
   - apiVersion: v2
+    appVersion: 2a0f890e28706f8b57e91bf72f95fa537236a148
+    created: "2026-06-12T06:12:28.945844404Z"
+    description: Foxglove Primary Site
+    digest: d5a9baaf078bf0fdfc9a68d1ef20144a4b59b716c41d6d83102795702b085766
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: primary-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.103/primary-site-0.0.103.tgz
+    version: 0.0.103
+  - apiVersion: v2
     appVersion: e7d45e2df04f772bbf527699d354271c34a75f7d
     created: "2026-06-04T21:36:51.208552003Z"
     description: Foxglove Primary Site
@@ -1713,4 +1724,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/remote-data-loader-0.0.1/remote-data-loader-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-04T21:36:51.209142679Z"
+generated: "2026-06-12T06:12:28.946242183Z"
