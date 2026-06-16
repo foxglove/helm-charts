@@ -1,5 +1,6 @@
 {{- $deployment := .Values.remoteDataLoader.deployment -}}
 {{- $cache := .Values.globals.cache -}}
+{{- $manifestCache := .Values.globals.manifestCache -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -122,6 +123,14 @@ spec:
             {{- if .Values.globals.allowHttpSources }}
             - name: ALLOW_HTTP_SOURCES
               value: "true"
+            {{- end }}
+            {{- if and $manifestCache $manifestCache.ttlMs }}
+            - name: MANIFEST_CACHE_TTL_MS
+              value: "{{ $manifestCache.ttlMs }}"
+            {{- if $manifestCache.maxCapacity }}
+            - name: MANIFEST_CACHE_MAX_CAPACITY
+              value: "{{ $manifestCache.maxCapacity }}"
+            {{- end }}
             {{- end }}
             {{- if $cache.enabled }}
             - name: REQUEST_CACHE_STORAGE_PROVIDER
