@@ -50,6 +50,20 @@
         "allowHttpSources": {
           "type": "boolean"
         },
+        "manifestCache": {
+          "type": "object",
+          "properties": {
+            "ttlMs": {
+              "type": "number",
+              "description": "Cache successful manifest responses for this many milliseconds. 0 disables manifest caching. Must be <= 30000."
+            },
+            "maxCapacity": {
+              "type": "number",
+              "description": "Maximum number of manifest entries to cache. Must be > 0."
+            }
+          },
+          "additionalProperties": false
+        },
         "cache": {
           "type": "object",
           "properties": {

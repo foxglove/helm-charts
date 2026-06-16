@@ -34,6 +34,14 @@ globals:
   # Set to true to allow connections to the backend using HTTP.
   allowHttpSources: false
 
+  # In-memory cache for manifest responses. Set ttlMs > 0 to enable.
+  manifestCache:
+    # Cache successful manifest responses for this many milliseconds. 0 disables
+    # manifest caching. Must be <= 30000.
+    ttlMs: 0
+    # Maximum number of manifest entries to cache. Must be > 0.
+    maxCapacity: 1024
+
   # Bucket used by the remote data loader to cache and speed up queries.
   cache:
     enabled: false
