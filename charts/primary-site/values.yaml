@@ -33,6 +33,11 @@ globals:
   ## Publish metrics from the primary site to Foxglove
   publishSiteMetrics: true
 
+  ## Raise the open-file (RLIMIT_NOFILE) soft limit on Foxglove pods that support it,
+  ## via the MAX_OPEN_FILES environment variable. Clamped to the container's hard limit.
+  ## Set to empty to leave the platform default untouched.
+  maxOpenFiles: 65535
+
   ## Configure an http/https egress proxy if your environment requires outgoing connections to be proxied. Set `enabled` to `true` and appropriate values for `httpProxy`, `httpsProxy` and `noProxy`.
   proxy:
     enabled: false
@@ -193,14 +198,20 @@ queryService:
         cpu: 1000m
         memory: 2Gi
       limits:
-        cpu: 1000m
-        memory: 2Gi
+        cpu: 4000m
+        memory: 8Gi
     podLabels: {}
     podAnnotations: {}
     nodeSelectors: {}
     metrics:
       namespace: ""
       subsystem: ""
+    topicExec:
+      ## Number of partitions a topic's files are read across in parallel.
+      ## Defaults to the CPU limit rounded up to whole cores when left empty.
+      partitionCount: ""
+      ## Max concurrent object reads buffered per partition.
+      bufferedObjectLimit: 8
     env: []
     serviceAccount:
       enabled: false
