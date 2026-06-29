@@ -101,6 +101,10 @@ spec:
             {{- end }}
             - name: FOXGLOVE_API_URL
               value: "{{ .Values.globals.foxgloveApiUrl }}"
+            {{- if .Values.globals.maxOpenFiles }}
+            - name: MAX_OPEN_FILES
+              value: {{ .Values.globals.maxOpenFiles | quote }}
+            {{- end }}
             {{- if .Values.globals.siteToken }}
             - name: FOXGLOVE_SITE_TOKEN
               valueFrom:
@@ -138,6 +142,22 @@ spec:
               value: "{{ $values.deployment.metrics.subsystem }}"
             - name: PRIMARY_SITE_VERSION
               value: "{{ .Chart.Version }}"
+            ## Emitted before deployment.env so a target can also override either by
+            ## setting the same variable in queryService.deployment.env (last value wins).
+            {{- if $values.deployment.topicExec.partitionCount }}
+            - name: TOPIC_EXEC_PARTITION_COUNT
+              value: {{ $values.deployment.topicExec.partitionCount | quote }}
+            {{- else }}
+            ## Default the partition count to the CPU limit rounded up to whole cores.
+            - name: TOPIC_EXEC_PARTITION_COUNT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: query-service
+                  resource: limits.cpu
+                  divisor: "1"
+            {{- end }}
+            - name: TOPIC_EXEC_BUFFERED_OBJECT_LIMIT
+              value: {{ $values.deployment.topicExec.bufferedObjectLimit | quote }}
             {{- range $item := $values.deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}

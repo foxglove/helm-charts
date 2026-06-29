@@ -78,6 +78,10 @@ spec:
                 {{ end }}
                 - name: FOXGLOVE_API_URL
                   value: "{{ .Values.globals.foxgloveApiUrl }}"
+                {{- if .Values.globals.maxOpenFiles }}
+                - name: MAX_OPEN_FILES
+                  value: {{ .Values.globals.maxOpenFiles | quote }}
+                {{- end }}
                 {{- if .Values.globals.siteToken }}
                 - name: FOXGLOVE_SITE_TOKEN
                   valueFrom:
