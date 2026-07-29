@@ -111,11 +111,11 @@ inboxListener:
       # exceeded. If the limit is exceeded, local disk or lake storage is used instead of memory.
       # - name: SCRATCH_BUFFER_CAPACITY_BYTES
       #   value: "1073741824"
-      # MERGE_FOXGLOVE_MCAP_METADATA: when reading recording context from MCAP metadata,
-      # merge every "foxglove" metadata record in the file, with later records overriding
-      # earlier keys (default: true). Set to false to use only the last record.
-      # - name: MERGE_FOXGLOVE_MCAP_METADATA
-      #   value: "false"
+    ## When resolving a recording's context from MCAP metadata, merge every "foxglove"
+    ## metadata record in the file, with later records overriding earlier keys and an empty
+    ## string value unsetting a key. Set to false to use only the last "foxglove" record,
+    ## which is how the inbox listener behaved before primary site 0.0.106.
+    mergeFoxgloveMcapMetadata: true
     localScratch:
       # If your primary site is expected to process unindexed MCAP or ROS 1 BAG files, consider
       # configuring your inbox listener deployment with local scratch storage. We recommend

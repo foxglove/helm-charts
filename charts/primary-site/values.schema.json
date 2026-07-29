@@ -35,6 +35,19 @@
         }
       ]
     },
+    "mcapMetadataValues": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "mergeFoxgloveMcapMetadata": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
     "queryServiceValues": {
       "type": "object",
       "properties": {
@@ -106,17 +119,10 @@
       ]
     },
     "indexer": {
-      "type": "object",
-      "properties": {
-        "deployment": {
-          "type": "object",
-          "properties": {
-            "mergeFoxgloveMcapMetadata": {
-              "type": "boolean"
-            }
-          }
-        }
-      }
+      "$ref": "#/definitions/mcapMetadataValues"
+    },
+    "inboxListener": {
+      "$ref": "#/definitions/mcapMetadataValues"
     },
     "queryService": {
       "$ref": "#/definitions/queryServiceValues"

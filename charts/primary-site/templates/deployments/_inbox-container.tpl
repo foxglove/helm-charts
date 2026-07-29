@@ -134,6 +134,9 @@ template:
             value: "{{ .Values.inboxListener.deployment.metrics.subsystem }}"
           - name: PRIMARY_SITE_VERSION
             value: "{{ .Chart.Version }}"
+          ## Not `| default true`, which would flip an explicit false back to true.
+          - name: MERGE_FOXGLOVE_MCAP_METADATA
+            value: {{ dig "mergeFoxgloveMcapMetadata" true .Values.inboxListener.deployment | quote }}
           {{- range $item := .Values.inboxListener.deployment.env }}
           - name: {{ $item.name }}
             value: {{ $item.value | quote}}
