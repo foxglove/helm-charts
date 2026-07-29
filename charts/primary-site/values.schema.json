@@ -105,6 +105,19 @@
         "foxgloveApiUrl"
       ]
     },
+    "indexer": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "mergeFoxgloveMcapMetadata": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
     "queryService": {
       "$ref": "#/definitions/queryServiceValues"
     },

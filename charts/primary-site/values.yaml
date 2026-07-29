@@ -180,16 +180,16 @@ indexer:
     metrics:
       namespace: ""
       subsystem: ""
+    ## When resolving a recording's context from MCAP metadata, merge every "foxglove"
+    ## metadata record in the file, with later records overriding earlier keys and an empty
+    ## string value unsetting a key. Set to false to use only the last "foxglove" record,
+    ## which is how the indexer behaved before primary site 0.0.106.
+    mergeFoxgloveMcapMetadata: true
     env:
       []
       # MAX_CONCURRENCY: adjust the number of concurrent workers for indexing recordings.
       # - name: MAX_CONCURRENCY
       #   value: 4
-      # MERGE_FOXGLOVE_MCAP_METADATA: when reading recording context from MCAP metadata,
-      # merge every "foxglove" metadata record in the file, with later records overriding
-      # earlier keys (default: true). Set to false to use only the last record.
-      # - name: MERGE_FOXGLOVE_MCAP_METADATA
-      #   value: "false"
     serviceAccount:
       enabled: false
       annotations: {}
