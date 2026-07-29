@@ -158,6 +158,47 @@ spec:
             {{- end }}
             - name: TOPIC_EXEC_BUFFERED_OBJECT_LIMIT
               value: {{ $values.deployment.topicExec.bufferedObjectLimit | quote }}
+            {{- if $values.deployment.enableBetaStreamExecutor }}
+            {{- $streamExecutor := $values.deployment.streamExecutor }}
+            - name: ENABLE_NEW_STREAM_EXECUTOR
+              value: "true"
+            {{- if $streamExecutor.partitionCount }}
+            - name: STREAM_EXECUTOR_PARTITION_COUNT
+              value: {{ int64 $streamExecutor.partitionCount | quote }}
+            {{- else }}
+            ## Default the partition count to the CPU limit rounded up to whole cores.
+            - name: STREAM_EXECUTOR_PARTITION_COUNT
+              valueFrom:
+                resourceFieldRef:
+                  containerName: query-service
+                  resource: limits.cpu
+                  divisor: "1"
+            {{- end }}
+            {{- if $streamExecutor.partitionBatchBytes }}
+            - name: STREAM_EXECUTOR_PARTITION_BATCH_BYTES
+              value: {{ int64 $streamExecutor.partitionBatchBytes | quote }}
+            {{- end }}
+            {{- if $streamExecutor.chunkGroupBytes }}
+            - name: STREAM_EXECUTOR_GROUP_BYTES
+              value: {{ int64 $streamExecutor.chunkGroupBytes | quote }}
+            {{- end }}
+            {{- if $streamExecutor.coalesceGapBytes }}
+            - name: STREAM_EXECUTOR_COALESCE_GAP_BYTES
+              value: {{ int64 $streamExecutor.coalesceGapBytes | quote }}
+            {{- end }}
+            {{- if $streamExecutor.summaryFetchConcurrency }}
+            - name: STREAM_EXECUTOR_SUMMARY_FETCH_CONCURRENCY
+              value: {{ int64 $streamExecutor.summaryFetchConcurrency | quote }}
+            {{- end }}
+            {{- if $streamExecutor.bufferedChildLimit }}
+            - name: STREAM_EXECUTOR_BUFFERED_CHILD_LIMIT
+              value: {{ int64 $streamExecutor.bufferedChildLimit | quote }}
+            {{- end }}
+            {{- if $streamExecutor.lookbackConcurrency }}
+            - name: STREAM_EXECUTOR_LOOKBACK_CONCURRENCY
+              value: {{ int64 $streamExecutor.lookbackConcurrency | quote }}
+            {{- end }}
+            {{- end }}
             {{- range $item := $values.deployment.env }}
             - name: {{ $item.name }}
               value: {{ $item.value | quote}}
