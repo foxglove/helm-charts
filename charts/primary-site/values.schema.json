@@ -17,7 +17,7 @@
           ]
         }
       },
-      "requiredProperties": [
+      "required": [
         "bucketName",
         "storageProvider"
       ]
@@ -101,7 +101,7 @@
           "$ref": "#/definitions/objectStore"
         }
       },
-      "requiredProperties": [
+      "required": [
         "foxgloveApiUrl"
       ]
     },
@@ -112,7 +112,7 @@
       "$ref": "#/definitions/queryServiceValues"
     }
   },
-  "requiredProperties": [
+  "required": [
     "globals"
   ]
 }
