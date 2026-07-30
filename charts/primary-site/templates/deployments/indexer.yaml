@@ -123,6 +123,9 @@ spec:
               value: "{{ .Values.indexer.deployment.metrics.subsystem }}"
             - name: PRIMARY_SITE_VERSION
               value: "{{ .Chart.Version }}"
+            ## Not `| default true`, which would flip an explicit false back to true.
+            - name: MERGE_FOXGLOVE_MCAP_METADATA
+              value: {{ dig "mergeFoxgloveMcapMetadata" true .Values.indexer.deployment | quote }}
             {{- if .Values.globals.proxy.enabled }}
             - name: HTTP_PROXY
               value: {{ .Values.globals.proxy.httpProxy }}

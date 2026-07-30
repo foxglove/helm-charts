@@ -111,6 +111,11 @@ inboxListener:
       # exceeded. If the limit is exceeded, local disk or lake storage is used instead of memory.
       # - name: SCRATCH_BUFFER_CAPACITY_BYTES
       #   value: "1073741824"
+    ## When resolving a recording's context from MCAP metadata, merge every "foxglove"
+    ## metadata record in the file, with later records overriding earlier keys and an empty
+    ## string value unsetting a key. Set to false to use only the last "foxglove" record,
+    ## which is how the inbox listener behaved before primary site 0.0.106.
+    mergeFoxgloveMcapMetadata: true
     localScratch:
       # If your primary site is expected to process unindexed MCAP or ROS 1 BAG files, consider
       # configuring your inbox listener deployment with local scratch storage. We recommend
@@ -175,6 +180,11 @@ indexer:
     metrics:
       namespace: ""
       subsystem: ""
+    ## When resolving a recording's context from MCAP metadata, merge every "foxglove"
+    ## metadata record in the file, with later records overriding earlier keys and an empty
+    ## string value unsetting a key. Set to false to use only the last "foxglove" record,
+    ## which is how the indexer behaved before primary site 0.0.106.
+    mergeFoxgloveMcapMetadata: true
     env:
       []
       # MAX_CONCURRENCY: adjust the number of concurrent workers for indexing recordings.
@@ -212,6 +222,38 @@ queryService:
       partitionCount: ""
       ## Max concurrent object reads buffered per partition.
       bufferedObjectLimit: 8
+    ## Beta: read streamed messages with the new multi-threaded stream executor.
+    ## It reads a stream's MCAP chunks across several parallel partitions, which can
+    ## substantially improve streaming throughput on multi-core query service pods.
+    ## Disabled by default; the values under `streamExecutor` only apply when enabled.
+    enableBetaStreamExecutor: false
+    streamExecutor:
+      ## Number of partitions the stream's merge is fanned out across, each on its own
+      ## task. Defaults to the CPU limit rounded up to whole cores when left empty.
+      ## Set to 1 to run the merge inline on a single task.
+      partitionCount: ""
+      ## Payload bytes batched from a partition before handing off to the root merge.
+      ## Leave empty for the service default (8388608, 8 MiB).
+      partitionBatchBytes: ""
+      ## Target byte span of a coalesced group of MCAP chunks. Neighbouring chunks are
+      ## fetched in one read up to this size, so raising it trades memory for fewer,
+      ## larger reads. A single chunk larger than this forms its own group.
+      ## Leave empty for the service default (33554432, 32 MiB).
+      chunkGroupBytes: ""
+      ## Chunks separated by at most this many bytes are coalesced into one group,
+      ## reading the gap between them rather than issuing a second request.
+      ## Leave empty for the service default (1048576, 1 MiB).
+      coalesceGapBytes: ""
+      ## Number of MCAP summary sections fetched concurrently. Files whose summary has
+      ## not landed yet hold up message release, so a wide window helps wide streams.
+      ## Leave empty for the service default (256).
+      summaryFetchConcurrency: ""
+      ## Max chunk groups buffered per partition merge.
+      ## Leave empty for the service default (8).
+      bufferedChildLimit: ""
+      ## Number of files whose chunk lookback passes run at one time.
+      ## Leave empty for the service default (256).
+      lookbackConcurrency: ""
     env: []
     serviceAccount:
       enabled: false

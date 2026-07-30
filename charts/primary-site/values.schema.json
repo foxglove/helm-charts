@@ -17,10 +17,76 @@
           ]
         }
       },
-      "requiredProperties": [
+      "required": [
         "bucketName",
         "storageProvider"
       ]
+    },
+    "streamExecutorLever": {
+      "description": "A positive integer, or empty to fall through to the service default.",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9]*$"
+        }
+      ]
+    },
+    "mcapMetadataValues": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "mergeFoxgloveMcapMetadata": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "queryServiceValues": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "enableBetaStreamExecutor": {
+              "type": "boolean"
+            },
+            "streamExecutor": {
+              "type": "object",
+              "properties": {
+                "partitionCount": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "partitionBatchBytes": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "chunkGroupBytes": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "coalesceGapBytes": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "summaryFetchConcurrency": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "bufferedChildLimit": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                },
+                "lookbackConcurrency": {
+                  "$ref": "#/definitions/streamExecutorLever"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
     }
   },
   "type": "object",
@@ -48,12 +114,24 @@
           "$ref": "#/definitions/objectStore"
         }
       },
-      "requiredProperties": [
+      "required": [
         "foxgloveApiUrl"
       ]
+    },
+    "indexer": {
+      "$ref": "#/definitions/mcapMetadataValues"
+    },
+    "inboxListener": {
+      "$ref": "#/definitions/mcapMetadataValues"
+    },
+    "queryService": {
+      "$ref": "#/definitions/queryServiceValues"
+    },
+    "streamService": {
+      "$ref": "#/definitions/queryServiceValues"
     }
   },
-  "requiredProperties": [
+  "required": [
     "globals"
   ]
 }
