@@ -238,7 +238,7 @@ queryService:
       ## Target byte span of a coalesced group of MCAP chunks. Neighbouring chunks are
       ## fetched in one read up to this size, so raising it trades memory for fewer,
       ## larger reads. A single chunk larger than this forms its own group.
-      ## Leave empty for the service default (4194304, 4 MiB).
+      ## Leave empty for the service default (33554432, 32 MiB).
       chunkGroupBytes: ""
       ## Chunks separated by at most this many bytes are coalesced into one group,
       ## reading the gap between them rather than issuing a second request.
