@@ -222,11 +222,12 @@ queryService:
       partitionCount: ""
       ## Max concurrent object reads buffered per partition.
       bufferedObjectLimit: 8
-    ## Beta: read streamed messages with the new multi-threaded stream executor.
+    ## Read streamed messages with the multi-threaded stream executor.
     ## It reads a stream's MCAP chunks across several parallel partitions, which can
     ## substantially improve streaming throughput on multi-core query service pods.
-    ## Disabled by default; the values under `streamExecutor` only apply when enabled.
-    enableBetaStreamExecutor: false
+    ## Set to false to fall back to the single-threaded reader; the values under
+    ## `streamExecutor` only apply when enabled.
+    enableBetaStreamExecutor: true
     streamExecutor:
       ## Number of partitions the stream's merge is fanned out across, each on its own
       ## task. Defaults to the CPU limit rounded up to whole cores when left empty.
