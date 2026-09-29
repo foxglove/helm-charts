@@ -87,8 +87,8 @@ spec:
             {{- end }}
             - name: PRIMARY_SITE_MODE
               value: "{{ .Values.globals.upload.primarySiteMode }}"
-            - name: DATABASE_CONNECTION_STRING
-              value: sqlite://file:/data/index/foxglove.db?_journal_mode=WAL
+            - name: VARDIR
+              value: /data/index
             - name: STORAGE_ROOT
               value: /data/storage
             - name: RECORDING_STORAGE_PROVIDER
