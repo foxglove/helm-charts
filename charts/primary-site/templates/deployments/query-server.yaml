@@ -158,10 +158,7 @@ spec:
             {{- end }}
             - name: TOPIC_EXEC_BUFFERED_OBJECT_LIMIT
               value: {{ $values.deployment.topicExec.bufferedObjectLimit | quote }}
-            {{- if $values.deployment.enableBetaStreamExecutor }}
             {{- $streamExecutor := $values.deployment.streamExecutor }}
-            - name: ENABLE_NEW_STREAM_EXECUTOR
-              value: "true"
             {{- if $streamExecutor.partitionCount }}
             - name: STREAM_EXECUTOR_PARTITION_COUNT
               value: {{ int64 $streamExecutor.partitionCount | quote }}
@@ -197,7 +194,6 @@ spec:
             {{- if $streamExecutor.lookbackConcurrency }}
             - name: STREAM_EXECUTOR_LOOKBACK_CONCURRENCY
               value: {{ int64 $streamExecutor.lookbackConcurrency | quote }}
-            {{- end }}
             {{- end }}
             {{- range $item := $values.deployment.env }}
             - name: {{ $item.name }}
