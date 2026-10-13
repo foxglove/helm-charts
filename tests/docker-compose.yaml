@@ -9,7 +9,7 @@ services:
       MINIO_ROOT_PASSWORD: password
 
   createbuckets:
-    image: minio/mc:latest
+    image: "us-central1-docker.pkg.dev/foxglove-images/docker-cache/minio/minio"
     depends_on:
       - minio
     restart: on-failure
