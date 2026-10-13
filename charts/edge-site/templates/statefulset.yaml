@@ -20,6 +20,7 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
+      restartPolicy: Always
       volumes:
         {{ if eq .Values.recordingStorage.provider "local" }}
         - name: storage-root
@@ -89,6 +90,10 @@ spec:
               value: "{{ .Values.globals.upload.primarySiteMode }}"
             - name: VARDIR
               value: /data/index
+            - name: ENABLE_SERVER
+              value: "true"
+            - name: SERVER_ADDRESS
+              value: "0.0.0.0"
             - name: STORAGE_ROOT
               value: /data/storage
             - name: RECORDING_STORAGE_PROVIDER
