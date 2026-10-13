@@ -54,9 +54,6 @@
         "deployment": {
           "type": "object",
           "properties": {
-            "enableBetaStreamExecutor": {
-              "type": "boolean"
-            },
             "streamExecutor": {
               "type": "object",
               "properties": {
