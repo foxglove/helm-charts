@@ -20,7 +20,6 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
-      restartPolicy: Always
       volumes:
         {{ if eq .Values.recordingStorage.provider "local" }}
         - name: storage-root
