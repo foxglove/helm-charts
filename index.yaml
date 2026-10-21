@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   edge-site:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2026-10-21T18:48:30.573143015Z"
+    description: Foxglove Edge Site
+    digest: a751860b2c731b664f09ba1e22f9f2fbb1ad11cbca5a1cfb2745147ef3d3551d
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: edge-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/edge-site-0.1.1/edge-site-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2026-10-20T16:09:45.430533488Z"
     description: Foxglove Edge Site
@@ -497,6 +508,17 @@ entries:
     - https://github.com/foxglove/helm-charts/releases/download/external-connector-0.0.1/external-connector-0.0.1.tgz
     version: 0.0.1
   primary-site:
+  - apiVersion: v2
+    appVersion: 76ec1030c054e021ef0807e4d92fa63dfde2c996
+    created: "2026-10-21T18:48:30.860581839Z"
+    description: Foxglove Primary Site
+    digest: c37a31f5d2fa09728ffa12f5459231190b9b9eb866281cb6ad6076b768c2f6f7
+    icon: https://foxglove.dev/images/logo-icon-round.png
+    name: primary-site
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/primary-site-0.0.109/primary-site-0.0.109.tgz
+    version: 0.0.109
   - apiVersion: v2
     appVersion: 3e4aacb551e2681b700cb09e26fdc8b9a60fe7eb
     created: "2026-09-07T05:07:25.104954585Z"
@@ -1731,6 +1753,16 @@ entries:
     version: 0.0.0-alpha.1
   remote-data-loader:
   - apiVersion: v2
+    appVersion: 76ec1030c054e021ef0807e4d92fa63dfde2c996
+    created: "2026-10-21T18:48:31.168967156Z"
+    description: Foxglove Remote Data Loader
+    digest: 2dab6c1fd9b25cbbeda89256934f455423911722b6a25273022ad72667bfcbc3
+    name: remote-data-loader
+    type: application
+    urls:
+    - https://github.com/foxglove/helm-charts/releases/download/remote-data-loader-0.0.12/remote-data-loader-0.0.12.tgz
+    version: 0.0.12
+  - apiVersion: v2
     appVersion: cfcf9b0b04b6840306959865e57e9eb20f4afdb0
     created: "2026-08-13T06:11:44.401270058Z"
     description: Foxglove Remote Data Loader
@@ -1840,4 +1872,4 @@ entries:
     urls:
     - https://github.com/foxglove/helm-charts/releases/download/remote-data-loader-0.0.1/remote-data-loader-0.0.1.tgz
     version: 0.0.1
-generated: "2026-10-20T16:09:45.431899513Z"
+generated: "2026-10-21T18:48:31.169556714Z"
