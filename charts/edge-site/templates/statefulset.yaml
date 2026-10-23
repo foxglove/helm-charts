@@ -50,6 +50,23 @@ spec:
             limits:
               memory: {{ .Values.edgeController.resources.limits.memory }}
               cpu: {{ .Values.edgeController.resources.limits.cpu }}
+          ports:
+            - name: api
+              containerPort: 9099
+            - name: metrics
+              containerPort: 6001
+          {{- with .Values.edgeController.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.edgeController.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.edgeController.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             {{- if .Values.edgeController.extraVolumeMounts }}
               {{- toYaml .Values.edgeController.extraVolumeMounts | nindent 12 }}

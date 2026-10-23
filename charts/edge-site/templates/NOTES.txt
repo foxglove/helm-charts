@@ -3,6 +3,14 @@ Welcome to your Foxglove Edge Site!
 See the status of your release:
 
     helm status -n foxglove foxglove-edge-site
+{{- if .Values.edgeController.readinessProbe }}
+
+The edge controller pod becomes Ready once it has reached the Foxglove API and its recordings API
+is serving. Until then, check its logs for errors:
+
+    kubectl get pod -n {{ .Release.Namespace }} site-controller-0
+    kubectl logs -n {{ .Release.Namespace }} site-controller-0
+{{- end }}
 
 Complete your site installation:
 
