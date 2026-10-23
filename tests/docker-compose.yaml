@@ -1,6 +1,6 @@
 services:
   minio:
-    image: "us-central1-docker.pkg.dev/foxglove-images/docker-cache/minio/minio"
+    image: "us-central1-docker.pkg.dev/foxglove-images/docker-cache/pgsty/silo:RELEASE.2026-10-18T00-00-00Z"
     ports:
       - "0.0.0.0:9000:9000"
     command: [ "server", "--console-address", ":9001", "/data" ]
@@ -9,7 +9,7 @@ services:
       MINIO_ROOT_PASSWORD: password
 
   createbuckets:
-    image: "us-central1-docker.pkg.dev/foxglove-images/docker-cache/minio/minio"
+    image: "us-central1-docker.pkg.dev/foxglove-images/docker-cache/pgsty/mc:RELEASE.2026-10-18T00-00-00Z"
     depends_on:
       - minio
     restart: on-failure
