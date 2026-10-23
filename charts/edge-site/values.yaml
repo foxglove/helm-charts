@@ -56,6 +56,42 @@ edgeController:
     limits:
       memory: "256Mi"
       cpu: "250m"
+  # Readiness probe for the edge controller container. The controller opens its API port (9099,
+  # named `api`) only after it has reached the Foxglove API and initialized the site, so the pod
+  # stays NotReady, and out of the `edge-controller` Service, until it can serve requests.
+  # Fields merge with your values; set to `null` to remove the probe.
+  readinessProbe:
+    httpGet:
+      path: /v1/liveness
+      port: api
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 6
+  # Liveness and startup probes are off by default. While the Foxglove API is unreachable, the
+  # controller stays up and retries site initialization with its API port closed, so any probe of
+  # that port fails and a liveness probe would restart a pod that is only waiting on Foxglove.
+  # The controller exits on fatal errors, so Kubernetes restarts it without a liveness probe.
+  # If you set `livenessProbe`, also set a `startupProbe` whose `periodSeconds` x
+  # `failureThreshold` covers the longest Foxglove API outage the pod should wait through when it
+  # starts. Kubernetes runs neither the readiness nor the liveness probe until the startup probe
+  # succeeds, so a long `periodSeconds` delays readiness. Both take a standard Kubernetes probe
+  # spec, for example:
+  #
+  # startupProbe:
+  #   httpGet:
+  #     path: /v1/liveness
+  #     port: api
+  #   periodSeconds: 10
+  #   failureThreshold: 8640  # 24 hours
+  # livenessProbe:
+  #   httpGet:
+  #     path: /v1/liveness
+  #     port: api
+  #   periodSeconds: 30
+  #   timeoutSeconds: 10
+  #   failureThreshold: 10
+  livenessProbe: {}
+  startupProbe: {}
   podLabels: {}
   podAnnotations: {}
   serviceLabels: {}
