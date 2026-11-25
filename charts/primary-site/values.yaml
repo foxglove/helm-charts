@@ -67,6 +67,13 @@ ingress:
     ## - hosts:
     ##   - www.example.com
     ##   secretName: ingress-tls-csi
+  ## Puts an AWS Global Accelerator in front of the ALB that the AWS Load Balancer Controller creates
+  ## for this ingress. Requires AWS Load Balancer Controller v2.17.0 or later with the
+  ## GlobalAcceleratorController and EnableRGTAPI feature gates and its Global Accelerator IAM policy.
+  globalAccelerator:
+    enabled: false
+    ## Name of the accelerator in AWS. The controller generates one when this is empty.
+    name: ""
 
 # The inbox listener is only deployed if `indexingStrategy` is `split-files`.
 inboxListener:
