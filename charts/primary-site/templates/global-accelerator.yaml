@@ -1,0 +1,21 @@
+{{- with .Values.ingress }}
+{{- if .globalAccelerator.enabled }}
+{{- if not .enabled }}
+{{- fail "ingress.globalAccelerator.enabled needs ingress.enabled, because the accelerator points at the chart's Ingress" }}
+{{- end }}
+apiVersion: aga.k8s.aws/v1beta1
+kind: GlobalAccelerator
+metadata:
+  name: site
+spec:
+  {{- with .globalAccelerator.name }}
+  name: {{ . | quote }}
+  {{- end }}
+  listeners:
+    # The AWS Load Balancer Controller takes the protocol and ports from the Ingress's ALB listeners.
+    - endpointGroups:
+        - endpoints:
+            - type: Ingress
+              name: site
+{{- end }}
+{{- end }}
